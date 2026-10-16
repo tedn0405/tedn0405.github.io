@@ -178,6 +178,11 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
   .steps li .mh { grid-row: span 2; }
 }
 
+.pub { display: grid; gap: 10px; justify-items: start; margin-top: 8px; padding: 16px; background: var(--sheet); border: 1px solid var(--line); border-left: 3px solid var(--pipe); }
+.pub p { color: var(--ink-soft); }
+.pub .cite { color: var(--ink); font-size: 0.9375rem; }
+.pub .cite b { font-weight: 600; }
+
 /* Contact */
 .contact { display: grid; gap: 24px; }
 .contact-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; }
@@ -412,6 +417,12 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
             <h3>Probabilistic assessment of tornado and flash flood events</h3>
             <p>Graduate research using copula-based statistics in ArcGIS Pro and R to assess flood risk for infrastructure resilience planning across Canada.</p>
             <p class="award">Winner, Civil Engineering Three-Minute Thesis (3MT). Presented at the AGU annual conference.</p>
+            <div class="pub">
+              <span class="note">Peer-reviewed publication · 2023</span>
+              <p class="cite"><b>Ngui, Y.D.</b>, Najafi, M.R., de Souza, C., and Sills, D. (2023). Probabilistic assessment of concurrent tornado and storm-related flash flood events. <i>International Journal of Climatology</i>, 43, 4231–4247.</p>
+              <p>Tornadoes and flash floods can hit the same place at the same time, and their safety advice conflicts: shelter underground, or move to high ground. The paper uses copula models to estimate how often the two occur together across Canada. The link between tornado wind speed and rainfall was strongest in Saskatchewan.</p>
+              <a class="btn" href="https://doi.org/10.1002/joc.8084" target="_blank" rel="noopener">Read the paper ↗</a>
+            </div>
           </div>
           <div class="entry">
             <span class="note">Western University · 2020</span>
