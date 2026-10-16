@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ted Ngui, E.I.T.</title>
+<meta name="description" content="Ted Ngui, E.I.T. Land development engineer in Ontario: grading, servicing, stormwater management and erosion and sediment control.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..800&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+/* Layout: one drawing sheet. A contour plan sits behind the hero, the body reads as plan notes, and the page closes on a title block. */
+:root {
+  --paper: #f2f4f1;
+  --sheet: #fbfcfa;
+  --ink: #18252a;
+  --ink-soft: #4b5b60;
+  --line: #c9d2cf;
+  --contour: #9fb3ae;
+  --pipe: #1d5a9e;
+  --flag: #d21f6a;       /* survey flagging tape, used sparingly */
+  --flag-wash: #fbe3ed;
+
+  --f-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Public Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --f-note: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --s-1: 0.8125rem; --s0: 1rem; --s1: 1.25rem; --s2: 1.75rem; --s3: 2.5rem; --s4: clamp(2.75rem, 7vw, 5rem);
+  --wrap: 72rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f1517; --sheet: #141c1f; --ink: #e2e9e6; --ink-soft: #9fb0ad;
+    --line: #2b383c; --contour: #3c5a57; --pipe: #7fb2ee; --flag: #ff5c9b; --flag-wash: #3a1626;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0f1517; --sheet: #141c1f; --ink: #e2e9e6; --ink-soft: #9fb0ad;
+  --line: #2b383c; --contour: #3c5a57; --pipe: #7fb2ee; --flag: #ff5c9b; --flag-wash: #3a1626;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+img { max-width: 100%; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: var(--s0);
+  line-height: 1.6;
+}
+a { color: var(--pipe); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--flag); outline-offset: 3px; border-radius: 2px; }
+
+.wrap {
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.note {
+  font-family: var(--f-note);
+  font-size: var(--s-1);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; }
+h2 { font-size: var(--s3); font-weight: 750; font-stretch: 78%; line-height: 1.05; }
+h3 { font-size: var(--s1); font-weight: 700; font-stretch: 90%; line-height: 1.2; }
+p { margin: 0; }
+
+/* Top bar */
+.topbar { border-bottom: 1px solid var(--line); background: var(--sheet); }
+.topbar .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; padding-block: 12px; }
+.topbar nav { display: flex; flex-wrap: wrap; gap: 4px 20px; }
+.topbar nav a { color: var(--ink-soft); text-decoration: none; font-family: var(--f-note); font-size: var(--s-1); text-transform: uppercase; letter-spacing: 0.06em; }
+.topbar nav a:hover { color: var(--ink); }
+
+/* Hero */
+.hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); background: var(--sheet); }
+#plan {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.35) 35%, #000 70%);
+          mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.35) 35%, #000 70%);
+}
+.hero .wrap { position: relative; padding-block: clamp(48px, 9vw, 112px); display: grid; gap: 20px; }
+.hero h1 { font-size: var(--s4); font-weight: 800; font-stretch: 72%; line-height: 0.95; letter-spacing: -0.01em; }
+.hero h1 span { color: var(--ink-soft); font-weight: 600; }
+.hero .lede { max-width: 38rem; font-size: var(--s1); line-height: 1.5; }
+.hero .meta { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+.stake { display: inline-flex; align-items: center; gap: 8px; }
+.stake::before { content: ""; width: 9px; height: 9px; background: var(--flag); transform: rotate(45deg); flex: none; }
+
+/* Sections */
+section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--line); }
+.sec-head { display: grid; gap: 8px; margin-bottom: 32px; max-width: 44rem; }
+.sec-head p { color: var(--ink-soft); }
+
+/* Figures */
+.figures { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 2px solid var(--ink); }
+.fig { padding: 20px 20px 4px 0; display: grid; gap: 6px; align-content: start; }
+.fig + .fig { padding-left: 20px; border-left: 1px solid var(--line); }
+.fig b { font-family: var(--f-display); font-size: var(--s3); font-weight: 800; font-stretch: 75%; line-height: 1; font-variant-numeric: tabular-nums; }
+.fig b em { font-style: normal; color: var(--flag); }
+.fig span { color: var(--ink-soft); font-size: 0.9375rem; line-height: 1.45; }
+@media (max-width: 760px) {
+  .figures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fig:nth-child(3) { padding-left: 0; border-left: 0; }
+  .fig:nth-child(n+3) { border-top: 1px solid var(--line); }
+}
+
+/* Case notes */
+.cases { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.case { background: var(--sheet); padding: 24px; display: grid; gap: 12px; grid-template-rows: auto auto 1fr auto; min-width: 0; }
+.case .result { font-weight: 600; border-left: 3px solid var(--flag); padding-left: 12px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tags li { list-style: none; font-family: var(--f-note); font-size: 0.75rem; padding: 2px 8px; border: 1px solid var(--line); border-radius: 2px; color: var(--ink-soft); }
+.tags { margin: 0; padding: 0; }
+
+/* Experience */
+.timeline { display: grid; gap: 0; }
+.role { display: grid; grid-template-columns: 13rem minmax(0, 1fr); gap: 8px 32px; padding-block: 28px; border-top: 1px solid var(--line); }
+.role:first-child { border-top: 2px solid var(--ink); }
+.role .when { display: grid; gap: 4px; align-content: start; }
+.role .when b { font-family: var(--f-note); font-weight: 500; font-size: 0.875rem; font-variant-numeric: tabular-nums; }
+.role .what { display: grid; gap: 10px; min-width: 0; }
+.role .firm { color: var(--ink-soft); }
+.role ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 6px; max-width: 46rem; }
+.role li::marker { color: var(--flag); }
+@media (max-width: 760px) { .role { grid-template-columns: minmax(0, 1fr); } }
+
+/* Toolkit */
+.kit { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 32px; }
+.kit div { display: grid; gap: 10px; align-content: start; border-top: 2px solid var(--ink); padding-top: 14px; }
+.kit ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+
+/* Research & credentials */
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 40px; }
+.entry { display: grid; gap: 6px; padding-block: 16px; border-top: 1px solid var(--line); }
+.entry:first-of-type { border-top: 2px solid var(--ink); }
+.entry p { color: var(--ink-soft); }
+.entry .award { color: var(--ink); }
+.entry .award::before { content: "★ "; color: var(--flag); }
+
+/* P.Eng. path: a pipe run with a maintenance hole per step */
+.peng { display: grid; gap: 20px; }
+.peng-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; }
+.peng-head b { font-family: var(--f-display); font-stretch: 80%; font-weight: 800; font-size: var(--s2); font-variant-numeric: tabular-nums; }
+.peng-head b em { font-style: normal; color: var(--flag); }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); position: relative; }
+.steps::before, .steps::after { content: ""; position: absolute; top: 13px; height: 4px; left: 8.333%; border-radius: 2px; }
+.steps::before { right: 8.333%; background: repeating-linear-gradient(90deg, var(--line) 0 10px, transparent 10px 14px); }
+.steps::after { width: var(--done, 0%); background: var(--pipe); }
+.steps li { position: relative; z-index: 1; display: grid; justify-items: center; text-align: center; gap: 6px; padding-inline: 4px; min-width: 0; }
+.mh { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--line); background: var(--sheet); display: grid; place-items: center; font: 600 0.8125rem/1 var(--f-note); color: var(--ink-soft); }
+.steps .done .mh { background: var(--pipe); border-color: var(--pipe); color: var(--sheet); }
+.steps .now .mh { border-color: var(--flag); color: var(--flag); box-shadow: 0 0 0 5px var(--flag-wash); }
+.steps .now .mh::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--flag); }
+.steps .now .mh span { display: none; }
+.steps strong { font-family: var(--f-display); font-stretch: 88%; font-size: 1.0625rem; line-height: 1.2; }
+.steps li { align-content: start; }
+@media (min-width: 601px) { .steps strong { min-height: 2.4em; display: flex; align-items: flex-start; justify-content: center; } }
+.steps small { font-family: var(--f-note); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); }
+.steps .now small { color: var(--flag); }
+@media (prefers-reduced-motion: no-preference) { .steps .now .mh { animation: ping 2.4s ease-in-out infinite; } }
+@keyframes ping { 50% { box-shadow: 0 0 0 9px var(--flag-wash); } }
+@media (max-width: 600px) {
+  .steps { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .steps::before, .steps::after { left: 13px; top: 15px; width: 4px; height: auto; }
+  .steps::before { right: auto; bottom: 15px; background: repeating-linear-gradient(180deg, var(--line) 0 10px, transparent 10px 14px); }
+  .steps::after { height: var(--done-v, 0%); bottom: auto; }
+  .steps li { grid-template-columns: 30px minmax(0, 1fr); justify-items: start; text-align: left; column-gap: 14px; row-gap: 0; padding-inline: 0; }
+  .steps li .mh { grid-row: span 2; }
+}
+
+/* Contact */
+.contact { display: grid; gap: 24px; }
+.contact-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; }
+.email { font-family: var(--f-note); font-size: var(--s1); user-select: all; word-break: break-all; }
+.btn {
+  font: 500 var(--s-1)/1 var(--f-note); text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 10px 14px; border: 1.5px solid var(--ink); background: transparent; color: var(--ink);
+  cursor: pointer; border-radius: 2px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+}
+.btn:hover { background: var(--ink); color: var(--sheet); }
+.btn.copied { border-color: var(--flag); color: var(--flag); background: var(--flag-wash); }
+
+/* Title block */
+.titleblock { padding-block: 40px 56px; }
+.tb { display: grid; grid-template-columns: 2fr 1.4fr 1fr 1fr; border: 2px solid var(--ink); background: var(--sheet); }
+.tb > div { padding: 10px 14px; border-left: 1px solid var(--ink); display: grid; gap: 2px; min-width: 0; }
+.tb > div:first-child { border-left: 0; }
+.tb b { font-family: var(--f-display); font-stretch: 85%; font-weight: 700; font-size: 1.0625rem; }
+.tb .issued { color: var(--flag); }
+@media (max-width: 760px) {
+  .tb { grid-template-columns: 1fr 1fr; }
+  .tb > div:nth-child(3) { border-left: 0; }
+  .tb > div:nth-child(n+3) { border-top: 1px solid var(--ink); }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <span class="note">T. Ngui · Land Development</span>
+    <nav aria-label="Sections">
+      <a href="#peng">P.Eng.</a>
+      <a href="#work">Work</a>
+      <a href="#experience">Experience</a>
+      <a href="#toolkit">Toolkit</a>
+      <a href="#research">Research</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <canvas id="plan" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <span class="note">Land development engineer · Ontario</span>
+      <h1>Ted Ngui<span>, E.I.T.</span></h1>
+      <p class="lede">I design grading, servicing, stormwater management and erosion and sediment control for residential, industrial and commercial sites across the GTA, and carry them through municipal and Conservation Authority approval.</p>
+      <div class="meta note">
+        <span class="stake">3+ years in Ontario land development</span>
+        <span class="stake">5.5+ years in engineering, Canada and U.S.</span>
+        <span class="stake">NPPE passed · P.Eng. in progress</span>
+      </div>
+    </div>
+  </div>
+
+  <section aria-labelledby="fig-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="note" id="fig-h">By the numbers</span>
+      </div>
+      <div class="figures">
+        <div class="fig"><b>40%<em>+</em></b><span>fewer structures on one servicing design, saving an estimated $50,000</span></div>
+        <div class="fig"><b>20<em>+</em></b><span>site and subdivision developments worked on across Ontario</span></div>
+        <div class="fig"><b>25</b><span>municipalities audited under EPA risk-based assessments in Texas</span></div>
+        <div class="fig"><b>100<em>+</em></b><span>wastewater permit applications reviewed for state and federal compliance</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="peng" aria-labelledby="peng-h">
+    <div class="wrap peng">
+      <div class="peng-head">
+        <div class="sec-head" style="margin-bottom:0">
+          <span class="note">Licensure</span>
+          <h2 id="peng-h">Path to P.Eng.</h2>
+          <p>Licensure with Professional Engineers Ontario. I've passed the NPPE and am completing my competency-based assessment (CBA), the experience record PEO uses to assess 34 engineering competencies.</p>
+        </div>
+        <b>2 <em>of</em> 6 steps done</b>
+      </div>
+      <ol class="steps" style="--done:33.34%;--done-v:40%" aria-label="P.Eng. licensure progress: 2 of 6 steps complete, CBA in progress">
+        <li class="done"><span class="mh" aria-hidden="true"><span>✓</span></span><strong>E.I.T.</strong><small>Enrolled</small></li>
+        <li class="done"><span class="mh" aria-hidden="true"><span>✓</span></span><strong>NPPE</strong><small>Passed</small></li>
+        <li class="now"><span class="mh" aria-hidden="true"><span>3</span></span><strong>CBA experience record</strong><small>In progress</small></li>
+        <li><span class="mh" aria-hidden="true"><span>4</span></span><strong>Application</strong><small>Academic, ID, good character</small></li>
+        <li><span class="mh" aria-hidden="true"><span>5</span></span><strong>PEO review</strong><small>Next</small></li>
+        <li><span class="mh" aria-hidden="true"><span>6</span></span><strong>P.Eng. licence</strong><small>Goal</small></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="work" aria-labelledby="work-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="note">Selected work</span>
+        <h2 id="work-h">Problems I've solved on real sites</h2>
+        <p>Client and project names are left out. Each note covers what came up, what I did, and how it ended.</p>
+      </div>
+      <div class="cases">
+        <article class="case">
+          <span class="note">SLA · Stormwater</span>
+          <h3>Found a flaw in an approved SWM design</h3>
+          <p>A stormwater design already had municipal sign-off. I re-checked it from first principles and found it did not meet the required groundwater clearance.</p>
+          <p class="result">Delivered a corrected design despite the existing approval.</p>
+          <ul class="tags"><li>SWM</li><li>Groundwater</li><li>Design review</li></ul>
+        </article>
+        <article class="case">
+          <span class="note">SLA · Servicing</span>
+          <h3>Cut the structure count by over 40%</h3>
+          <p>I optimized the servicing design on one project to reduce servicing costs, cutting the number of structures it needed.</p>
+          <p class="result">An estimated $50,000 saved.</p>
+          <ul class="tags"><li>Servicing</li><li>Cost estimating</li><li>Civil 3D</li></ul>
+        </article>
+        <article class="case">
+          <span class="note">SLA · Approvals</span>
+          <h3>Fixed a Conservation Authority setback</h3>
+          <p>The setback the client gave us didn't match the official mapping. I raised it with the Conservation Authority and settled it with them directly.</p>
+          <p class="result">The permit went ahead without a delay.</p>
+          <ul class="tags"><li>Conservation Authority</li><li>Permitting</li></ul>
+        </article>
+        <article class="case">
+          <span class="note">Burnside · Municipal servicing</span>
+          <h3>Took over a design left unfinished</h3>
+          <p>A previous engineer left a municipal servicing design incomplete with a deadline close. I took ownership, corrected the design and revised the supporting documents.</p>
+          <p class="result">Design and documents corrected on a compressed timeline.</p>
+          <ul class="tags"><li>Servicing</li><li>Deadline recovery</li></ul>
+        </article>
+        <article class="case">
+          <span class="note">Burnside · Solid waste</span>
+          <h3>Waste plans approved with zero comments</h3>
+          <p>I owned several solid waste management plans from concept to approval, working directly with architects and municipal and agency reviewers.</p>
+          <p class="result">Every submission came back with no review comments.</p>
+          <ul class="tags"><li>Solid waste</li><li>Agency coordination</li></ul>
+        </article>
+        <article class="case">
+          <span class="note">Candevcon · Stormwater</span>
+          <h3>Split clean and treated runoff</h3>
+          <p>I designed the stormwater system segment by segment and separated the clean and treated runoff streams.</p>
+          <p class="result">Fewer treatment units and less required storage volume.</p>
+          <ul class="tags"><li>SWM</li><li>Optimization</li></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" aria-labelledby="exp-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="note">Experience</span>
+        <h2 id="exp-h">Where I've worked</h2>
+      </div>
+      <div class="timeline">
+        <div class="role">
+          <div class="when"><b>Jun 2026 – Present</b><span class="note">Burlington, ON</span></div>
+          <div class="what">
+            <h3>Intermediate Project Designer</h3>
+            <span class="firm">S. Llewellyn &amp; Associates Limited (SLA)</span>
+            <ul>
+              <li>Lead grading, servicing, SWM and erosion and sediment control design for residential, industrial and commercial site plans, from concept through municipal approval.</li>
+              <li>Carry submissions through municipal and Conservation Authority review, working with reviewers to resolve comments.</li>
+              <li>Support designs with PCSWMM, HEC-RAS, HEC-HMS and Visual OTTHYMO modelling alongside Civil 3D.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="role">
+          <div class="when"><b>Dec 2024 – Jun 2026</b><span class="note">Mississauga, ON</span></div>
+          <div class="what">
+            <h3>Engineering Assistant, Land Development</h3>
+            <span class="firm">R.J. Burnside and Associates · Land Development and Solid Waste</span>
+            <ul>
+              <li>Prepared grading, servicing and utility drawings in Civil 3D, including sewer network analysis, surcharge checks and MIDUSS modelling to resize and relocate a site-constrained pond.</li>
+              <li>Wrote functional servicing and SWM reports, cost estimates and permitting documents for municipal and Conservation Authority approval.</li>
+              <li>Supported watermain design and water supply analysis in InfoWater for a residential subdivision.</li>
+              <li>Co-authored proposals and fee estimates for two service lines, with a high win rate.</li>
+              <li>Steered a design away from a client's preferred approach that posed a contamination risk, which regulatory review later confirmed.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="role">
+          <div class="when"><b>Jun 2023 – Dec 2024</b><span class="note">Brampton, ON</span></div>
+          <div class="what">
+            <h3>Municipal Design Engineer in Training</h3>
+            <span class="firm">Candevcon Group Inc. · Water Infrastructure Design and Planning</span>
+            <ul>
+              <li>Worked on 20+ site and subdivision developments, meeting pre-development peak flow targets with Visual OTTHYMO and Civil 3D.</li>
+              <li>Managed grading and servicing for multi-million-dollar high-density residential and mid-rise apartment site plans.</li>
+              <li>Prepared tender packages and cost estimates, and set up a drawing-control protocol after tracing a field discrepancy to version control.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="role">
+          <div class="when"><b>Jun 2016 – Dec 2018</b><span class="note">Austin, TX</span></div>
+          <div class="what">
+            <h3>Environmental Engineering Specialist II</h3>
+            <span class="firm">Texas Commission on Environmental Quality · Wastewater/Pretreatment</span>
+            <ul>
+              <li>Led annual EPA risk-based audits for 25 municipalities, raising productivity 30% and cutting project duration 50%. Named Outstanding Employee.</li>
+              <li>Managed 13 pretreatment programs and reviewed 100+ wastewater permit applications.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="toolkit" aria-labelledby="kit-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="note">Toolkit</span>
+        <h2 id="kit-h">Software I design with</h2>
+      </div>
+      <div class="kit">
+        <div><span class="note">Design and drafting</span><ul><li>AutoCAD Civil 3D</li><li>AutoCAD</li><li>AutoTURN</li></ul></div>
+        <div><span class="note">Hydrology and hydraulics</span><ul><li>PCSWMM</li><li>Visual OTTHYMO</li><li>MIDUSS</li><li>HEC-HMS</li><li>HEC-RAS</li></ul></div>
+        <div><span class="note">Water distribution</span><ul><li>InfoWater</li></ul></div>
+        <div><span class="note">GIS and analysis</span><ul><li>ArcGIS Pro</li><li>R</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="research" aria-labelledby="res-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="note">Research and credentials</span>
+        <h2 id="res-h">Background in water resources</h2>
+      </div>
+      <div class="two">
+        <div>
+          <div class="entry">
+            <span class="note">Western University · 2020–2022</span>
+            <h3>Probabilistic assessment of tornado and flash flood events</h3>
+            <p>Graduate research using copula-based statistics in ArcGIS Pro and R to assess flood risk for infrastructure resilience planning across Canada.</p>
+            <p class="award">Winner, Civil Engineering Three-Minute Thesis (3MT). Presented at the AGU annual conference.</p>
+          </div>
+          <div class="entry">
+            <span class="note">Western University · 2020</span>
+            <h3>Duffins Creek floodplain analysis and culvert design</h3>
+            <p>Project lead. Built a HEC-HMS model of the watershed and ran flood risk assessments in HEC-RAS to recommend culvert design and river flow improvements.</p>
+          </div>
+        </div>
+        <div>
+          <div class="entry">
+            <span class="note">Licence</span>
+            <h3>Engineer-in-Training (E.I.T.)</h3>
+            <p>Passed the NPPE. Completing the CBA experience package for P.Eng. licensure in Ontario.</p>
+          </div>
+          <div class="entry">
+            <span class="note">2022</span>
+            <h3>M.E.Sc., Civil and Environmental Engineering</h3>
+            <p>Western University, London, ON</p>
+          </div>
+          <div class="entry">
+            <span class="note">2016</span>
+            <h3>B.S., Environmental Engineering</h3>
+            <p>University at Buffalo (SUNY), Buffalo, NY</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" aria-labelledby="con-h">
+    <div class="wrap contact">
+      <div class="sec-head" style="margin-bottom:0">
+        <span class="note">Contact</span>
+        <h2 id="con-h">Get in touch</h2>
+        <p>I'm based in Toronto and work across the GTA and surrounding municipalities.</p>
+      </div>
+      <div class="contact-row">
+        <span class="email" id="email">tedn0405@gmail.com</span>
+        <button class="btn" id="copy" type="button">Copy email</button>
+        <a class="btn" href="https://www.linkedin.com/in/yeudeckngui" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="titleblock">
+  <div class="wrap">
+    <div class="tb" role="contentinfo">
+      <div><span class="note">Project</span><b>Ted Ngui, E.I.T.</b></div>
+      <div><span class="note">Drawing</span><b>Professional portfolio</b></div>
+      <div><span class="note">Scale</span><b>N.T.S.</b></div>
+      <div><span class="note">Status</span><b class="issued">Issued for review</b></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Copy email
+  var btn = document.getElementById("copy");
+  var email = document.getElementById("email");
+  btn.addEventListener("click", function () {
+    var text = email.textContent.trim();
+    function done() { btn.textContent = "Copied"; btn.classList.add("copied"); setTimeout(function () { btn.textContent = "Copy email"; btn.classList.remove("copied"); }, 1800); }
+    function fallback() { var r = document.createRange(); r.selectNodeContents(email); var s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = "Selected, press Ctrl+C"; }
+    try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
+  });
+
+  // Contour plan: a fixed terrain drawn with marching squares, 0.5 m intervals, index contours every 2.5 m.
+  var canvas = document.getElementById("plan");
+  var ctx = canvas.getContext("2d");
+  var hills = [
+    [0.78, 0.30, 0.22, 1.0], [0.58, 0.75, 0.18, 0.7], [0.95, 0.85, 0.20, 0.55],
+    [0.40, 0.25, 0.14, -0.45], [0.70, 0.55, 0.10, -0.35], [0.25, 0.80, 0.25, 0.4]
+  ];
+  function field(u, v) {
+    var z = 0.35 + 0.25 * u;
+    for (var i = 0; i < hills.length; i++) {
+      var h = hills[i], dx = u - h[0], dy = v - h[1];
+      z += h[3] * Math.exp(-(dx * dx + dy * dy) / (2 * h[2] * h[2]));
+    }
+    return z;
+  }
+  function draw() {
+    var cs = getComputedStyle(document.documentElement);
+    var cContour = cs.getPropertyValue("--contour").trim();
+    var cInk = cs.getPropertyValue("--ink-soft").trim();
+    var cSheet = cs.getPropertyValue("--sheet").trim();
+    var cPipe = cs.getPropertyValue("--pipe").trim();
+    var w = canvas.clientWidth, h = canvas.clientHeight;
+    if (!w || !h) return;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+
+    var step = 7, cols = Math.ceil(w / step) + 1, rows = Math.ceil(h / step) + 1;
+    var aspect = h / w, Z = new Float32Array(cols * rows), zmin = Infinity, zmax = -Infinity;
+    for (var j = 0; j < rows; j++) for (var i = 0; i < cols; i++) {
+      var z = field(i * step / w, (j * step / w) / Math.max(aspect, 0.35) * 0.6 + 0.1);
+      Z[j * cols + i] = z; if (z < zmin) zmin = z; if (z > zmax) zmax = z;
+    }
+    var base = 180, span = 9; // metres
+    function elev(z) { return base + (z - zmin) / (zmax - zmin) * span; }
+    var labels = [];
+    for (var L = Math.ceil(base * 2) / 2 + 0.5; L < base + span; L += 0.5) {
+      var isIndex = Math.abs((L / 2.5) - Math.round(L / 2.5)) < 1e-6;
+      ctx.beginPath();
+      ctx.strokeStyle = cContour;
+      ctx.lineWidth = isIndex ? 1.4 : 0.7;
+      var labelAt = null;
+      for (var j = 0; j < rows - 1; j++) for (var i = 0; i < cols - 1; i++) {
+        var a = elev(Z[j * cols + i]), b = elev(Z[j * cols + i + 1]), c = elev(Z[(j + 1) * cols + i + 1]), d = elev(Z[(j + 1) * cols + i]);
+        var idx = (a > L ? 8 : 0) | (b > L ? 4 : 0) | (c > L ? 2 : 0) | (d > L ? 1 : 0);
+        if (idx === 0 || idx === 15) continue;
+        var x = i * step, y = j * step;
+        var top = [x + step * (L - a) / (b - a), y], right = [x + step, y + step * (L - b) / (c - b)];
+        var bot = [x + step * (L - d) / (c - d), y + step], left = [x, y + step * (L - a) / (d - a)];
+        var segs;
+        switch (idx) {
+          case 1: case 14: segs = [[left, bot]]; break;
+          case 2: case 13: segs = [[bot, right]]; break;
+          case 3: case 12: segs = [[left, right]]; break;
+          case 4: case 11: segs = [[top, right]]; break;
+          case 6: case 9: segs = [[top, bot]]; break;
+          case 7: case 8: segs = [[left, top]]; break;
+          case 5: segs = [[left, top], [bot, right]]; break;
+          case 10: segs = [[left, bot], [top, right]]; break;
+        }
+        for (var s = 0; s < segs.length; s++) {
+          ctx.moveTo(segs[s][0][0], segs[s][0][1]); ctx.lineTo(segs[s][1][0], segs[s][1][1]);
+          if (isIndex && !labelAt) {
+            var mx = (segs[s][0][0] + segs[s][1][0]) / 2, my = (segs[s][0][1] + segs[s][1][1]) / 2;
+            if (mx > w * 0.62 && mx < w - 50 && my > 30 && my < h - 20) labelAt = [mx, my, Math.atan2(segs[s][1][1] - segs[s][0][1], segs[s][1][0] - segs[s][0][0])];
+          }
+        }
+      }
+      ctx.stroke();
+      if (labelAt) labels.push([labelAt, L.toFixed(1)]);
+    }
+    if (w < 720) return; // keep annotations off narrow screens, where they collide with the hero text
+    // Index contour labels with a knockout
+    ctx.font = "500 10px 'IBM Plex Mono', ui-monospace, monospace";
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    labels.forEach(function (l) {
+      var p = l[0], ang = p[2];
+      if (ang > Math.PI / 2) ang -= Math.PI; if (ang < -Math.PI / 2) ang += Math.PI;
+      ctx.save(); ctx.translate(p[0], p[1]); ctx.rotate(ang);
+      var tw = ctx.measureText(l[1]).width + 8;
+      ctx.fillStyle = cSheet; ctx.fillRect(-tw / 2, -7, tw, 14);
+      ctx.fillStyle = cInk; ctx.fillText(l[1], 0, 0.5);
+      ctx.restore();
+    });
+    // Storm sewer run with maintenance holes along the lower edge
+    var y0 = h - 34, x0 = w * 0.55, x1 = w - 40;
+    if (x1 - x0 > 120) {
+      ctx.strokeStyle = cPipe; ctx.lineWidth = 1.6; ctx.setLineDash([10, 4, 2, 4]);
+      ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y0); ctx.stroke(); ctx.setLineDash([]);
+      var n = 3;
+      for (var k = 0; k <= n; k++) {
+        var mxh = x0 + (x1 - x0) * k / n;
+        ctx.fillStyle = cSheet; ctx.beginPath(); ctx.arc(mxh, y0, 5, 0, Math.PI * 2); ctx.fill();
+        ctx.lineWidth = 1.4; ctx.stroke();
+      }
+      ctx.fillStyle = cPipe; ctx.textAlign = "left";
+      ctx.fillText("300ø STM @ 0.50%", x0 + 12, y0 - 12);
+    }
+  }
+  var t;
+  function redraw() { clearTimeout(t); t = setTimeout(draw, 80); }
+  window.addEventListener("resize", redraw);
+  try { matchMedia("(prefers-color-scheme: dark)").addEventListener("change", draw); } catch (e) {}
+  new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+  draw();
+})();
+</script>
+</body>
+</html>
