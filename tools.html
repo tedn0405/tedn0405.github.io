@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SWM Toolkit · Ted Ngui, E.I.T.</title>
+<meta name="description" content="Free stormwater and sewer design tools for land development engineers in Ontario, with Excel downloads. A new tool each week.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..800&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+/* Layout: same drawing-sheet system as the portfolio. The tool reads like a calc sheet: inputs left, results and section right. */
+:root {
+  --paper: #f2f4f1; --sheet: #fbfcfa; --ink: #18252a; --ink-soft: #4b5b60; --line: #c9d2cf;
+  --contour: #9fb3ae; --pipe: #1d5a9e; --water: #9cc3ea; --flag: #d21f6a; --flag-wash: #fbe3ed;
+  --ok: #2e7d32; --bad: #c62828;
+  --f-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Public Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --f-note: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --s-1: 0.8125rem; --s0: 1rem; --s1: 1.25rem; --s2: 1.75rem; --s3: 2.5rem; --wrap: 72rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f1517; --sheet: #141c1f; --ink: #e2e9e6; --ink-soft: #9fb0ad; --line: #2b383c;
+    --contour: #3c5a57; --pipe: #7fb2ee; --water: #2c5a86; --flag: #ff5c9b; --flag-wash: #3a1626;
+    --ok: #7bd389; --bad: #ff8a80; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0f1517; --sheet: #141c1f; --ink: #e2e9e6; --ink-soft: #9fb0ad; --line: #2b383c;
+  --contour: #3c5a57; --pipe: #7fb2ee; --water: #2c5a86; --flag: #ff5c9b; --flag-wash: #3a1626;
+  --ok: #7bd389; --bad: #ff8a80; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: var(--s0); line-height: 1.6; }
+a { color: var(--pipe); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--flag); outline-offset: 2px; }
+.wrap { max-width: var(--wrap); margin-inline: auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.note { font-family: var(--f-note); font-size: var(--s-1); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 800; font-stretch: 72%; line-height: 0.98; }
+h2 { font-size: var(--s3); font-weight: 750; font-stretch: 78%; line-height: 1.05; }
+h3 { font-size: var(--s1); font-weight: 700; font-stretch: 90%; line-height: 1.2; }
+p { margin: 0; }
+
+.topbar { border-bottom: 1px solid var(--line); background: var(--sheet); }
+.topbar .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; padding-block: 12px; }
+.topbar a { font-family: var(--f-note); font-size: var(--s-1); text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); text-decoration: none; }
+.topbar a:hover { color: var(--ink); }
+
+header.intro { background: var(--sheet); border-bottom: 1px solid var(--line); }
+header.intro .wrap { padding-block: clamp(40px, 7vw, 80px); display: grid; gap: 16px; }
+header.intro p { max-width: 42rem; font-size: 1.125rem; }
+
+section { padding-block: clamp(40px, 6vw, 72px); border-bottom: 1px solid var(--line); }
+.tool-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px 32px; margin-bottom: 28px; }
+.tool-head > div { display: grid; gap: 8px; max-width: 44rem; }
+.tool-head p { color: var(--ink-soft); }
+.week { display: inline-flex; align-items: center; gap: 8px; }
+.week::before { content: ""; width: 9px; height: 9px; background: var(--flag); transform: rotate(45deg); }
+
+.calc { display: grid; grid-template-columns: minmax(0, 22rem) minmax(0, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+@media (max-width: 820px) { .calc { grid-template-columns: minmax(0, 1fr); } }
+.panel { background: var(--sheet); padding: 24px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; align-content: start; min-width: 0; }
+.field { display: grid; gap: 6px; }
+.field label { font-weight: 600; font-size: 0.9375rem; }
+.hint { font-size: var(--s-1); color: var(--ink-soft); }
+.inrow { display: flex; align-items: stretch; border: 1.5px solid var(--line); border-radius: 2px; background: var(--paper); }
+.inrow:focus-within { border-color: var(--pipe); }
+.inrow input, .inrow select { flex: 1; min-width: 0; width: 100%; border: 0; background: transparent; color: var(--ink); font: 500 1rem var(--f-note); padding: 10px 12px; font-variant-numeric: tabular-nums; }
+.inrow input:focus, .inrow select:focus { outline: none; }
+.inrow .unit { font-family: var(--f-note); font-size: var(--s-1); color: var(--ink-soft); padding: 0 12px; display: grid; place-items: center; border-left: 1px solid var(--line); min-width: 3.5rem; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.results { display: grid; grid-template-columns: minmax(0, 1fr) 13rem; gap: 24px; align-items: start; }
+@media (max-width: 560px) { .results { grid-template-columns: minmax(0, 1fr); } }
+.kv { display: grid; grid-template-columns: minmax(0, 1fr) auto; border-top: 2px solid var(--ink); }
+.kv dt, .kv dd { margin: 0; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.kv dt { color: var(--ink-soft); }
+.kv dd { font-family: var(--f-note); font-weight: 500; text-align: right; font-variant-numeric: tabular-nums; }
+.kv dd small { color: var(--ink-soft); font-weight: 400; }
+.kv .big dd { font-family: var(--f-display); font-stretch: 80%; font-weight: 800; font-size: var(--s2); line-height: 1.1; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: 500 var(--s-1)/1 var(--f-note); text-transform: uppercase; letter-spacing: 0.05em; padding: 7px 10px; border-radius: 2px; border: 1.5px solid currentColor; }
+.chip.ok { color: var(--ok); } .chip.bad { color: var(--bad); } .chip.na { color: var(--ink-soft); }
+.section-fig { display: grid; gap: 8px; justify-items: center; }
+.section-fig svg { width: 100%; max-width: 13rem; height: auto; }
+.section-fig figcaption { font-family: var(--f-note); font-size: var(--s-1); color: var(--ink-soft); text-align: center; }
+
+.dl { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 20px 24px; border: 1px solid var(--line); border-top: 0; background: var(--sheet); }
+.dl p { color: var(--ink-soft); flex: 1 1 18rem; }
+.btn { font: 500 var(--s-1)/1 var(--f-note); text-transform: uppercase; letter-spacing: 0.06em; padding: 12px 16px; border: 1.5px solid var(--ink); background: var(--ink); color: var(--sheet); border-radius: 2px; text-decoration: none; display: inline-flex; gap: 8px; align-items: center; }
+.btn:hover { background: transparent; color: var(--ink); }
+
+.method { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: 32px; margin-top: 32px; }
+.method div { display: grid; gap: 8px; align-content: start; border-top: 2px solid var(--ink); padding-top: 14px; }
+.method p, .method li { color: var(--ink-soft); }
+.method ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 4px; }
+code { font-family: var(--f-note); font-size: 0.9em; }
+
+.next { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.next li { background: var(--sheet); padding: 20px; display: grid; gap: 6px; align-content: start; }
+.next li p { color: var(--ink-soft); font-size: 0.9375rem; }
+
+.terms { display: grid; gap: 10px; max-width: 46rem; }
+.terms p { color: var(--ink-soft); }
+footer { padding-block: 32px 48px; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+</style>
+</head>
+<body>
+<nav class="topbar" aria-label="Site">
+  <div class="wrap">
+    <a href="./">← Ted Ngui, E.I.T.</a>
+    <span class="note">SWM Toolkit</span>
+  </div>
+</nav>
+
+<header class="intro">
+  <div class="wrap">
+    <span class="note">Free tools for land development engineers</span>
+    <h1>SWM Toolkit</h1>
+    <p>Calculators I use for stormwater and sewer design in Ontario, each with an Excel version you can download and use on your own projects. I add a new tool each week.</p>
+  </div>
+</header>
+
+<main>
+  <section id="pipe-flow" aria-labelledby="pf-h">
+    <div class="wrap">
+      <div class="tool-head">
+        <div>
+          <span class="note week">Tool 01 · Storm and sanitary sewers</span>
+          <h2 id="pf-h">Pipe flow and velocity calculator</h2>
+          <p>Full-flow capacity and velocity of a circular pipe from Manning's equation, plus the depth and velocity at your design flow, checked against the velocity limits you set.</p>
+        </div>
+      </div>
+
+      <form class="calc" id="calc" onsubmit="return false" aria-label="Pipe flow calculator">
+        <div class="panel">
+          <div class="field">
+            <label for="dia">Inside diameter</label>
+            <div class="inrow">
+              <select id="dia" aria-describedby="dia-h">
+                <option>200</option><option>250</option><option selected>300</option><option>375</option><option>450</option><option>525</option><option>600</option><option>675</option><option>750</option><option>825</option><option>900</option><option>1050</option><option>1200</option><option>1350</option><option>1500</option><option>1650</option><option>1800</option><option>2100</option><option>2400</option><option value="custom">Other…</option>
+              </select>
+              <span class="unit">mm</span>
+            </div>
+            <div class="inrow" id="dia-custom-row" hidden>
+              <input id="diaCustom" type="number" inputmode="decimal" min="50" step="1" value="300" aria-label="Custom inside diameter in millimetres">
+              <span class="unit">mm</span>
+            </div>
+            <span class="hint" id="dia-h">Nominal sizes. Choose Other for an exact inside diameter.</span>
+          </div>
+          <div class="field">
+            <label for="slope">Slope</label>
+            <div class="inrow"><input id="slope" type="number" inputmode="decimal" min="0.01" step="0.01" value="0.50"><span class="unit">%</span></div>
+          </div>
+          <div class="field">
+            <label for="n">Manning's n</label>
+            <div class="inrow"><input id="n" type="number" inputmode="decimal" min="0.005" step="0.001" value="0.013"><span class="unit">–</span></div>
+            <span class="hint">0.013 is common for concrete and PVC. Use your municipality's value.</span>
+          </div>
+          <div class="field">
+            <label for="q">Design flow</label>
+            <div class="inrow"><input id="q" type="number" inputmode="decimal" min="0" step="0.1" value="50"><span class="unit">L/s</span></div>
+            <span class="hint">Leave at 0 to see full-flow values only.</span>
+          </div>
+          <div class="pair">
+            <div class="field">
+              <label for="vmin">Min. velocity</label>
+              <div class="inrow"><input id="vmin" type="number" inputmode="decimal" min="0" step="0.05" value="0.75"><span class="unit">m/s</span></div>
+            </div>
+            <div class="field">
+              <label for="vmax">Max. velocity</label>
+              <div class="inrow"><input id="vmax" type="number" inputmode="decimal" min="0" step="0.1" value="4.0"><span class="unit">m/s</span></div>
+            </div>
+          </div>
+          <span class="hint">Velocity limits vary by municipality. Set them to the standard you're designing to.</span>
+        </div>
+
+        <div class="panel" aria-live="polite">
+          <div class="chips" id="chips"></div>
+          <div class="results">
+            <dl class="kv">
+              <div class="big" style="display:contents"><dt>Full-flow capacity</dt><dd id="o-qf">–</dd></div>
+              <dt>Full-flow velocity</dt><dd id="o-vf">–</dd>
+              <dt>Q / Qfull</dt><dd id="o-ratio">–</dd>
+              <dt>Depth ratio, d/D</dt><dd id="o-dd">–</dd>
+              <dt>Flow depth</dt><dd id="o-d">–</dd>
+              <dt>Velocity at design flow</dt><dd id="o-v">–</dd>
+              <dt>Spare capacity</dt><dd id="o-spare">–</dd>
+            </dl>
+            <figure class="section-fig" style="margin:0">
+              <svg id="xs" viewBox="0 0 200 200" role="img" aria-labelledby="xs-cap">
+                <defs><clipPath id="clip"><circle cx="100" cy="100" r="80"></circle></clipPath></defs>
+                <rect id="xs-water" x="0" y="180" width="200" height="0" fill="var(--water)" clip-path="url(#clip)"></rect>
+                <circle cx="100" cy="100" r="80" fill="none" stroke="var(--ink)" stroke-width="5"></circle>
+                <line id="xs-line" x1="20" x2="180" y1="180" y2="180" stroke="var(--pipe)" stroke-width="2" clip-path="url(#clip)"></line>
+              </svg>
+              <figcaption id="xs-cap">Pipe section at design flow</figcaption>
+            </figure>
+          </div>
+        </div>
+      </form>
+
+      <div class="dl">
+        <p><b>Excel version.</b> The same check, with a pipe schedule tab for up to 30 runs and a partial-flow table. Formulas only, no macros.</p>
+        <a class="btn" href="downloads/pipe-flow-calculator.xlsx" download>Download .xlsx</a>
+      </div>
+
+      <div class="method">
+        <div>
+          <span class="note">Method</span>
+          <p>Manning's equation in SI units: <code>Q = (1/n) · A · R<sup>2/3</sup> · S<sup>1/2</sup></code>, with <code>A = πD²/4</code> and <code>R = D/4</code> for a full pipe.</p>
+          <p>For a partly full pipe, the calculator solves for the water depth whose flow equals your design flow, assuming n is constant at all depths.</p>
+        </div>
+        <div>
+          <span class="note">Good to know</span>
+          <ul>
+            <li>A circular pipe carries its maximum flow at about 94% depth, roughly 1.08 × Qfull. Flows above Qfull are flagged as surcharged here, which is how most design criteria treat them.</li>
+            <li>The web version solves depth exactly. The Excel version reads it from a 1% table and rounds up, so it can show a slightly deeper flow.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="next-h">
+    <div class="wrap">
+      <div class="tool-head"><div><span class="note">Coming next</span><h2 id="next-h">On the list</h2></div></div>
+      <ul class="next">
+        <li><h3>Rational Method peak flow</h3><p>Pre- and post-development flows with the IDF coefficients from your municipality.</p></li>
+        <li><h3>Stage-storage-discharge table</h3><p>Pond or tank storage with orifice and weir outlets, ready for your model input.</p></li>
+        <li><h3>Storm sewer design sheet</h3><p>A running Rational Method sheet with time of concentration carried down the network.</p></li>
+        <li><h3>GTA design standards directory</h3><p>Links to each municipality's current storm and sewer design criteria.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section aria-labelledby="terms-h">
+    <div class="wrap terms">
+      <span class="note">Terms of use</span>
+      <h2 id="terms-h">Free to use, with the usual care</h2>
+      <p>These tools and downloads are free, under the <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">Creative Commons Attribution 4.0</a> licence: use, change and share them, and credit the source.</p>
+      <p>They're for checking and preliminary design. Confirm every input and limit against the governing municipal standard. The tools are provided as is, without warranty, and don't replace engineering judgement or a design sealed by a licensed Professional Engineer.</p>
+      <p>Spot an error or want a tool added? Email <span style="user-select:all">tedn0405@gmail.com</span>.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="note">© Ted Ngui · CC BY 4.0</span>
+    <a class="note" href="./">Back to portfolio</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var dia = $("dia"), diaCustom = $("diaCustom"), customRow = $("dia-custom-row");
+  function num(el) { var v = parseFloat(el.value); return isFinite(v) ? v : NaN; }
+  function fmt(v, d) { return v.toLocaleString("en-CA", { minimumFractionDigits: d, maximumFractionDigits: d }); }
+
+  // Ratios for a circular pipe at depth ratio y (constant n).
+  function ratios(y) {
+    var th = 2 * Math.acos(1 - 2 * y);
+    var a = (th - Math.sin(th)) / (2 * Math.PI);
+    var r = 1 - Math.sin(th) / th;
+    return { q: a * Math.pow(r, 2 / 3), v: Math.pow(r, 2 / 3) };
+  }
+  // Smallest y with Q/Qfull = target, on the rising limb (y up to 0.938).
+  function solveDepth(target) {
+    var lo = 1e-6, hi = 0.938;
+    for (var i = 0; i < 60; i++) {
+      var mid = (lo + hi) / 2;
+      if (ratios(mid).q < target) lo = mid; else hi = mid;
+    }
+    return hi;
+  }
+  function chip(text, cls) { return '<span class="chip ' + cls + '">' + text + "</span>"; }
+
+  function run() {
+    customRow.hidden = dia.value !== "custom";
+    var Dmm = dia.value === "custom" ? num(diaCustom) : parseFloat(dia.value);
+    var Spct = num($("slope")), n = num($("n")), Q = num($("q")), vmin = num($("vmin")), vmax = num($("vmax"));
+    var ids = ["o-qf", "o-vf", "o-ratio", "o-dd", "o-d", "o-v", "o-spare"];
+    if (!(Dmm > 0 && Spct > 0 && n > 0)) {
+      ids.forEach(function (k) { $(k).textContent = "–"; });
+      $("chips").innerHTML = chip("Enter a diameter, slope and n above 0", "na");
+      drawSection(0); return;
+    }
+    if (!(Q >= 0)) Q = 0;
+    var D = Dmm / 1000, S = Spct / 100;
+    var A = Math.PI * D * D / 4, R = D / 4;
+    var Qf = (1 / n) * A * Math.pow(R, 2 / 3) * Math.sqrt(S); // m3/s
+    var Vf = Qf / A;
+    $("o-qf").innerHTML = fmt(Qf * 1000, 1) + " <small>L/s</small>";
+    $("o-vf").innerHTML = fmt(Vf, 2) + " <small>m/s</small>";
+
+    var chips = [], vCheck = Vf, y = 0;
+    if (Q > 0) {
+      var ratio = (Q / 1000) / Qf;
+      $("o-ratio").textContent = fmt(ratio, 2);
+      if (ratio > 1) {
+        var Vs = (Q / 1000) / A;
+        $("o-dd").textContent = "Surcharged";
+        $("o-d").textContent = "Full";
+        $("o-v").innerHTML = fmt(Vs, 2) + " <small>m/s</small>";
+        $("o-spare").textContent = "None";
+        chips.push(chip("Over capacity", "bad"));
+        vCheck = Vs; y = 1;
+      } else {
+        y = solveDepth(ratio);
+        var V = ratios(y).v * Vf;
+        $("o-dd").textContent = fmt(y, 2);
+        $("o-d").innerHTML = fmt(y * Dmm, 0) + " <small>mm</small>";
+        $("o-v").innerHTML = fmt(V, 2) + " <small>m/s</small>";
+        $("o-spare").textContent = fmt((1 - ratio) * 100, 0) + "%";
+        chips.push(chip("Capacity OK", "ok"));
+        vCheck = V;
+      }
+    } else {
+      ["o-ratio", "o-dd", "o-d", "o-v", "o-spare"].forEach(function (k) { $(k).textContent = "–"; });
+    }
+    var basis = Q > 0 ? "" : " (full flow)";
+    if (vmin >= 0 && vCheck < vmin) chips.push(chip("Below min. velocity" + basis, "bad"));
+    else if (vmax > 0 && vCheck > vmax) chips.push(chip("Above max. velocity" + basis, "bad"));
+    else chips.push(chip("Velocity OK" + basis, "ok"));
+    $("chips").innerHTML = chips.join("");
+    drawSection(y);
+    $("xs-cap").textContent = Q > 0 ? (y >= 1 ? "Pipe flowing full (surcharged)" : "Pipe section at design flow, " + fmt(y * 100, 0) + "% full") : "Enter a design flow to see the depth";
+  }
+  function drawSection(y) {
+    var top = 180 - 160 * Math.min(Math.max(y, 0), 1);
+    var w = $("xs-water"); w.setAttribute("y", top); w.setAttribute("height", 180 - top);
+    var l = $("xs-line"); l.setAttribute("y1", top); l.setAttribute("y2", top);
+    l.style.display = y > 0 && y < 1 ? "" : "none";
+  }
+  $("calc").addEventListener("input", run);
+  $("calc").addEventListener("change", run);
+  run();
+})();
+</script>
+</body>
+</html>
