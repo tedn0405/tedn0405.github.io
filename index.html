@@ -183,6 +183,16 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
 .pub .cite { color: var(--ink); font-size: 0.9375rem; }
 .pub .cite b { font-weight: 600; }
 
+/* Field note of the day */
+.fact { background: var(--sheet); border-bottom: 1px solid var(--line); }
+.fact .wrap { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px 24px; align-items: center; padding-block: 20px; }
+.fact .tag { display: grid; gap: 2px; }
+.fact .where { font-family: var(--f-display); font-stretch: 85%; font-weight: 700; font-size: 1.0625rem; }
+.fact p { max-width: 52rem; }
+.fact button { font: 500 var(--s-1)/1 var(--f-note); text-transform: uppercase; letter-spacing: 0.06em; padding: 9px 12px; border: 1.5px solid var(--line); background: transparent; color: var(--ink-soft); border-radius: 2px; cursor: pointer; white-space: nowrap; }
+.fact button:hover { border-color: var(--ink); color: var(--ink); }
+@media (max-width: 760px) { .fact .wrap { grid-template-columns: minmax(0, 1fr); } .fact button { justify-self: start; } }
+
 /* Contact */
 .contact { display: grid; gap: 24px; }
 .contact-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; }
@@ -240,6 +250,14 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
       </div>
     </div>
   </div>
+
+  <aside class="fact" aria-labelledby="fact-h">
+    <div class="wrap">
+      <div class="tag"><span class="note" id="fact-h">Field note of the day</span><span class="where" id="fact-where">Rome, Italy</span></div>
+      <p id="fact-text">The Cloaca Maxima, begun around the 6th century BC to drain the valley of the Roman Forum, is one of the world's oldest sewers. Parts of it still carry water today.</p>
+      <button type="button" id="fact-next">Another one</button>
+    </div>
+  </aside>
 
   <section aria-labelledby="fig-h">
     <div class="wrap">
@@ -334,12 +352,11 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
     <div class="wrap">
       <div class="sec-head">
         <span class="note">SWM Toolkit</span>
-        <h2 id="swm-h">Free design tools, one a week</h2>
-        <p>Stormwater and sewer calculators I use in practice, each with an Excel version to download. This week: a pipe flow and velocity calculator based on Manning's equation.</p>
+        <h2 id="swm-h">Stormwater design tools</h2>
+        <p>Stormwater and sewer calculators I use in practice, each with an Excel version to download. Start with the pipe flow and velocity calculator, based on Manning's equation.</p>
       </div>
       <div class="contact-row">
         <a class="btn" href="tools.html">Open the toolkit →</a>
-        <span class="note">Next: Rational Method · Stage-storage-discharge · Storm sewer design sheet</span>
       </div>
     </div>
   </section>
@@ -612,6 +629,20 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
   new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
   draw();
+})();
+</script>
+<script>
+(function () {
+  var facts = [["Rome, Italy", "The Cloaca Maxima, begun around the 6th century BC to drain the valley of the Roman Forum, is one of the world's oldest sewers. Parts of it still carry water today."], ["Mohenjo-daro, Pakistan", "Around 2500 BC, the Indus Valley city of Mohenjo-daro had brick-lined drains running along its streets, with house drains connecting into them."], ["London, UK", "After the \"Great Stink\" of 1858, Joseph Bazalgette built London's main intercepting sewers. He reportedly doubled the pipe sizes his calculations called for, and that margin helped the system cope with growth for well over a century."], ["Tokyo, Japan", "Tokyo's G-Cans flood tunnel ends in a surge tank about 177 m long and 25 m high, held up by 59 concrete pillars. It is often called the \"underground temple\"."], ["Chicago, USA", "Chicago's Deep Tunnel (TARP) stores combined sewer overflow in about 175 km of tunnels and large quarry reservoirs. Work started in 1975."], ["Kuala Lumpur, Malaysia", "The SMART Tunnel is both a motorway and a stormwater tunnel. During big storms the road section is closed and allowed to fill with floodwater."], ["Ontario, Canada", "Hurricane Hazel in October 1954 killed 81 people in the Toronto area. It led to the Toronto and Region Conservation Authority in 1957 and to floodplain rules still used across Ontario."], ["Ontario, Canada", "Across much of the GTA, the Regulatory flood is based on the Hurricane Hazel storm, transposed over each watershed. A 1954 storm still shapes where you can build today."], ["Ireland", "Robert Manning, an Irish engineer, presented the flow formula now named after him in 1889. Every gravity sewer you design leans on his equation."], ["Ireland and the USA", "The Rational Method, Q = CiA, traces back to Thomas Mulvaney in Ireland in 1851 and was popularized in the US by Emil Kuichling in 1889."], ["Netherlands", "About a quarter of the Netherlands lies below sea level, protected by dikes, dunes, pumps and storm surge barriers."], ["Rotterdam, Netherlands", "Each arm of the Maeslantkering storm surge barrier is about as long as the Eiffel Tower is tall. The two arms swing shut across the river when a major surge is forecast."], ["Venice, Italy", "The MOSE system protects Venice with 78 mobile gates at the lagoon inlets. They lie flat on the seabed and rise when a high tide is forecast."], ["Singapore", "The Marina Barrage dams the mouth of the Marina Channel, creating a freshwater reservoir in the middle of the city and helping keep low-lying areas from flooding."], ["Copenhagen, Denmark", "A cloudburst in July 2011 flooded large parts of Copenhagen. The city answered with a Cloudburst Management Plan that turns streets and parks into places to store and convey storm runoff."], ["China", "China's Sponge City program aims for 80% of urban areas to absorb and reuse 70% of rainwater by 2030, using green roofs, wetlands and permeable surfaces."], ["Toronto, Canada", "Toronto was the first city in North America to require green roofs on many new developments, under a bylaw adopted in 2009."], ["Toronto, Canada", "Deep Lake Water Cooling draws cold water from about 83 m down in Lake Ontario to cool downtown Toronto buildings."], ["Paris, France", "The Paris sewers have street-name signs underground that match the streets above, and part of the network has been open to visitors since the 19th century."], ["Nîmes, France", "The Roman aqueduct that crosses the Pont du Gard drops only about 12.6 m over roughly 50 km, a very gentle and very precise grade."], ["Rome, Italy", "The Pantheon's dome, about 43 m across, is still the largest unreinforced concrete dome in the world, nearly 1,900 years after it was built."], ["Nevada and Arizona, USA", "Engineers estimated that Hoover Dam's concrete would take over a century to cool if poured in one piece, so they built it in blocks and ran cold water through embedded pipes."], ["Panama", "Each ship passing through the Panama Canal uses roughly 200,000 m³ of fresh water from Gatun Lake to work the locks."], ["Ontario, Canada", "The Welland Canal lifts ships about 100 m over the Niagara Escarpment through eight locks, connecting Lake Ontario and Lake Erie."], ["Ottawa, Canada", "The Rideau Canal, opened in 1832, is the oldest continuously operated canal in North America. It became a UNESCO World Heritage Site in 2007, and in winter it becomes a skateway."], ["Yichang, China", "The Three Gorges Dam is the world's largest power station by installed capacity, at about 22,500 MW."], ["Rule of thumb", "1 mm of rain on 1 hectare is 10 m³ of water. A 25 mm storm on a 1 ha site produces 250 m³, about a tenth of an Olympic pool."], ["Rule of thumb", "A 100 m² roof sheds about 2,500 litres in a 25 mm rainfall, enough to fill a dozen bathtubs."], ["Rule of thumb", "A circular pipe carries its maximum flow at about 94% full, not 100%. Near the crown, the extra wetted perimeter costs more in friction than the extra area adds."], ["Rule of thumb", "In a full circular pipe, the hydraulic radius is simply D/4. A 1.2 m pipe has a hydraulic radius of 0.3 m."]];
+  var start = new Date(2026, 0, 1), now = new Date();
+  var day = Math.floor((new Date(now.getFullYear(), now.getMonth(), now.getDate()) - start) / 86400000);
+  var i = ((day % facts.length) + facts.length) % facts.length;
+  function show() {
+    document.getElementById("fact-where").textContent = facts[i][0];
+    document.getElementById("fact-text").textContent = facts[i][1];
+  }
+  document.getElementById("fact-next").addEventListener("click", function () { i = (i + 1) % facts.length; show(); });
+  show();
 })();
 </script>
 </body>
