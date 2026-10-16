@@ -234,6 +234,19 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
 .pond-hint { display: none; font-family: var(--f-note); font-size: 0.75rem; color: var(--ink-soft); margin-top: -14px; }
 @media (max-width: 800px) { .pond-hint { display: block; } }
 
+.pond .grate-bars { stroke: var(--sheet); stroke-width: 1.5; stroke-dasharray: 3 3; }
+.pond .rip { fill: var(--ink-soft); opacity: 0.55; }
+.pond .tob { stroke: var(--ink); stroke-width: 1.2; stroke-dasharray: 10 4 2 4; }
+.pond .lvl-e { stroke: var(--flag); }
+.pond .tri-e, .pond .m-flag { fill: var(--flag); }
+.pond .lbl-e { fill: var(--flag); }
+.pond .flow-e { stroke: var(--flag); stroke-width: 2; fill: none; stroke-dasharray: 6 4; }
+.why { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 40px; }
+.why > div { display: grid; gap: 8px; align-content: start; border-top: 2px solid var(--ink); padding-top: 14px; }
+.why ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 6px; color: var(--ink-soft); font-size: 0.9375rem; }
+.why li::marker { color: var(--flag); }
+@media (max-width: 700px) { .why { grid-template-columns: minmax(0, 1fr); } }
+
 /* Contact */
 .contact { display: grid; gap: 24px; }
 .contact-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; }
@@ -449,6 +462,112 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
           <li><b>Outlet.</b> To the receiving watercourse.</li>
         </ol>
         <figcaption>Schematic, not to scale. Depth, slope and freeboard values follow the province's <a href="https://www.ontario.ca/document/stormwater-management-planning-and-design-manual" target="_blank" rel="noopener">Stormwater Management Planning and Design Manual</a> (2003). Municipal and Conservation Authority criteria can be stricter.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="dry-pond" aria-labelledby="dry-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="note">My approach</span>
+        <h2 id="dry-h">Dry pond with a DICB outlet</h2>
+        <p>Where the site allows it, this is the facility I prefer to design. The pond drains completely between storms, and the outlet control sits in a standard ditch inlet catch basin at the toe of the slope, where a crew can inspect it from the surface.</p>
+      </div>
+      <figure class="pond">
+        <div class="pond-scroll">
+          <svg viewBox="0 0 1100 400" role="img" aria-labelledby="dry-t dry-d">
+            <title id="dry-t">Dry pond cross-section with a DICB outlet</title>
+            <desc id="dry-d">Overland flow enters the pond over the left bank onto a flat pond bottom. A ditch inlet catch basin sits at the toe of the downstream slope, with its sloped grate set in the slope and its lip at the bottom of the pond. An orifice plate on the outlet pipe inside the catch basin controls the release, and the outlet pipe runs under the berm. At the top of the pond, a weir with its crest 0.15 m below the top of pond carries emergency flow over the berm.</desc>
+            <defs>
+              <pattern id="d-earth" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                <line x1="0" y1="0" x2="0" y2="9" class="p-hatch"></line>
+              </pattern>
+              <marker id="d-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" class="m-fill"></path>
+              </marker>
+              <marker id="d-arrow-e" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" class="m-flag"></path>
+              </marker>
+              <marker id="d-tick" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+                <path d="M1,9 L9,1" class="m-line"></path>
+              </marker>
+            </defs>
+
+            <!-- Earth mass -->
+            <path d="M0,96 L110,110 L230,290 L760,290 L930,118 L1000,118 L1100,262 L1100,400 L0,400 Z" class="earth"></path>
+            <path d="M0,96 L110,110 L230,290 L760,290 L930,118 L1000,118 L1100,262 L1100,400 L0,400 Z" fill="url(#d-earth)"></path>
+
+            <!-- Outlet pipe from the DICB under the berm -->
+            <path d="M812,318 L1100,336 L1100,350 L812,332 Z" class="pipe-buried"></path>
+            <line x1="1040" y1="344" x2="1094" y2="347" class="flow" marker-end="url(#d-arrow)"></line>
+
+            <!-- DICB at the toe of the slope: sloped grate in the slope, lip at the pond bottom -->
+            <path d="M760,290 L812,237 L812,352 L760,352 Z" class="concrete"></path>
+            <path d="M767,290 L805,251 L805,345 L767,345 Z" class="structure-in"></path>
+            <line x1="757" y1="293" x2="815" y2="234" class="grate"></line>
+            <line x1="767" y1="285" x2="805" y2="246" class="grate-bars"></line>
+            <rect x="801" y="312" width="5" height="7" class="orifice-gap"></rect>
+            <rect x="801" y="326" width="5" height="10" class="orifice-gap"></rect>
+            <line x1="778" y1="323" x2="798" y2="323" class="flow" marker-end="url(#d-arrow)"></line>
+            <path d="M690,262 Q748,256 772,282" class="flow" marker-end="url(#d-arrow)"></path>
+
+            <!-- Profile -->
+            <path d="M0,96 L110,110 L230,290 L760,290 L930,118 L1000,118 L1100,262" class="profile"></path>
+
+            <!-- Weir crest, 0.15 m below top of pond -->
+            <line x1="912" y1="140" x2="1016" y2="140" class="lvl lvl-e"></line>
+            <line x1="1000" y1="118" x2="1046" y2="118" class="ext"></line>
+            <line x1="1016" y1="140" x2="1046" y2="140" class="ext"></line>
+            <line x1="1038" y1="120" x2="1038" y2="138" class="dim" marker-start="url(#d-tick)" marker-end="url(#d-tick)"></line>
+            <text x="1046" y="134" class="lbl">0.15 m</text>
+
+            <!-- Emergency flow over the weir -->
+            <path d="M944,128 Q1012,102 1052,180" class="flow-e" marker-end="url(#d-arrow-e)"></path>
+
+            <!-- Overland inflow -->
+            <path d="M24,44 Q120,40 168,150" class="flow" marker-end="url(#d-arrow)"></path>
+
+            <!-- Labels -->
+            <g class="labels">
+              <text x="24" y="34" class="lbl lbl-strong">Overland flow</text>
+              <text x="420" y="318" class="lbl">Bottom of pond</text>
+              <text x="874" y="96" class="lbl lbl-strong" text-anchor="end">Top of pond</text>
+              <line x1="880" y1="93" x2="938" y2="116" class="leader"></line>
+              <text x="830" y="164" class="lbl lbl-strong" text-anchor="end">Weir</text>
+              <line x1="836" y1="160" x2="914" y2="141" class="leader"></line>
+              <text x="1096" y="92" class="lbl lbl-e" text-anchor="end">Emergency flow</text>
+              <text x="700" y="214" class="lbl lbl-strong" text-anchor="end">DICB</text>
+              <line x1="706" y1="210" x2="782" y2="262" class="leader"></line>
+              <text x="826" y="388" class="lbl lbl-strong">Orifice plate</text>
+              <line x1="846" y1="376" x2="808" y2="332" class="leader"></line>
+              <text x="970" y="388" class="lbl lbl-strong">Outlet pipe</text>
+              <line x1="1000" y1="376" x2="1004" y2="346" class="leader"></line>
+            </g>
+
+            <text x="16" y="388" class="lbl lbl-strong">DRY POND · DICB OUTLET</text>
+            <text x="16" y="370" class="lbl">N.T.S.</text>
+          </svg>
+        </div>
+        <span class="pond-hint">Scroll sideways to see the full section →</span>
+        <div class="why">
+          <div>
+            <span class="note">Why I like it</span>
+            <ul>
+              <li>No permanent pool to dewater before maintenance. Sediment is removed from a dry pond bottom.</li>
+              <li>All flow enters through the DICB grate, which screens debris before it reaches the orifice plate, and the plate can be checked from the surface.</li>
+              <li>A DICB is a standard structure that municipal crews already know how to inspect and maintain.</li>
+            </ul>
+          </div>
+          <div>
+            <span class="note">Design notes</span>
+            <ul>
+              <li>The DICB lip sits at the bottom of the pond, so the pond drains completely between storms.</li>
+              <li>The weir at the top of the pond is typically 0.5 to 1.0 m wide, with its crest 0.15 m below the top of pond, and carries emergency flow over the berm.</li>
+              <li>A dry pond gives limited water quality treatment on its own, so I pair it with quality control upstream, such as an oil-grit separator or LID measures.</li>
+            </ul>
+          </div>
+        </div>
+        <figcaption>Schematic, not to scale. Orifice size, weir dimensions and storage levels come from the storage-discharge design for each site and the governing municipal and Conservation Authority criteria.</figcaption>
       </figure>
     </div>
   </section>
