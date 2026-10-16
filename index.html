@@ -20,6 +20,7 @@
   --pipe: #1d5a9e;
   --flag: #d21f6a;       /* survey flagging tape, used sparingly */
   --flag-wash: #fbe3ed;
+  --water: #a7c8e6; --water-2: #cde0f1; --water-3: #e7f0f8; --earth: #e4e8e3;
 
   --f-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
   --f-body: "Public Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -32,12 +33,14 @@
   :root:not([data-theme="light"]) {
     --paper: #0f1517; --sheet: #141c1f; --ink: #e2e9e6; --ink-soft: #9fb0ad;
     --line: #2b383c; --contour: #3c5a57; --pipe: #7fb2ee; --flag: #ff5c9b; --flag-wash: #3a1626;
+    --water: #26507a; --water-2: #1c3b59; --water-3: #172b3e; --earth: #1a2326;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --paper: #0f1517; --sheet: #141c1f; --ink: #e2e9e6; --ink-soft: #9fb0ad;
   --line: #2b383c; --contour: #3c5a57; --pipe: #7fb2ee; --flag: #ff5c9b; --flag-wash: #3a1626;
+    --water: #26507a; --water-2: #1c3b59; --water-3: #172b3e; --earth: #1a2326;
   color-scheme: dark;
 }
 
@@ -193,6 +196,44 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
 .fact button:hover { border-color: var(--ink); color: var(--ink); }
 @media (max-width: 760px) { .fact .wrap { grid-template-columns: minmax(0, 1fr); } .fact button { justify-self: start; } }
 
+/* Wet pond section */
+.pond { margin: 0; display: grid; gap: 24px; }
+.pond-scroll { overflow-x: auto; border: 1px solid var(--line); background: var(--sheet); -webkit-overflow-scrolling: touch; }
+.pond svg { display: block; width: 100%; min-width: 760px; height: auto; }
+.pond .lbl { font: 500 13px var(--f-note); letter-spacing: 0.03em; fill: var(--ink-soft); paint-order: stroke; stroke: var(--sheet); stroke-width: 4px; stroke-linejoin: round; }
+.pond .lbl-strong { fill: var(--ink); }
+.pond .earth { fill: var(--earth); }
+.pond .p-hatch { stroke: var(--contour); stroke-width: 1; }
+.pond .w-pp { fill: var(--water); }
+.pond .w-ed { fill: var(--water-2); }
+.pond .w-active { fill: var(--water-3); }
+.pond .p-active { stroke: var(--water-2); stroke-width: 2; }
+.pond .silt { fill: var(--line); }
+.pond .p-dot { fill: var(--ink-soft); }
+.pond .pipe-buried { fill: var(--sheet); stroke: var(--ink); stroke-width: 1.5; }
+.pond .concrete { fill: var(--line); stroke: var(--ink); stroke-width: 1.5; }
+.pond .structure-in { fill: var(--sheet); }
+.pond .orifice-gap { fill: var(--flag); }
+.pond .grate { stroke: var(--ink); stroke-width: 3; }
+.pond .profile { fill: none; stroke: var(--ink); stroke-width: 2.5; stroke-linejoin: round; }
+.pond .lvl { stroke: var(--pipe); stroke-width: 1.2; stroke-dasharray: 8 5; }
+.pond .lvl-nwl { stroke-dasharray: none; stroke-width: 1.8; }
+.pond .tri, .pond .m-fill { fill: var(--pipe); }
+.pond .flow { stroke: var(--pipe); stroke-width: 2; fill: none; }
+.pond .dim, .pond .m-line { stroke: var(--ink); stroke-width: 1.2; fill: none; }
+.pond .ext { stroke: var(--ink-soft); stroke-width: 1; stroke-dasharray: 2 3; }
+.pond .leader { stroke: var(--ink-soft); stroke-width: 1; }
+.pond .keys circle { fill: var(--flag); }
+.pond .keys text { font: 600 12px var(--f-note); fill: var(--sheet); text-anchor: middle; }
+.pond-key { list-style: none; margin: 0; padding: 0; counter-reset: k; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 40px; }
+@media (max-width: 700px) { .pond-key { grid-template-columns: minmax(0, 1fr); } }
+.pond-key li { counter-increment: k; position: relative; padding-left: 38px; min-height: 24px; color: var(--ink-soft); font-size: 0.9375rem; }
+.pond-key li::before { content: counter(k); position: absolute; left: 0; top: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--flag); color: var(--sheet); font: 600 12px/24px var(--f-note); text-align: center; }
+.pond-key b { color: var(--ink); font-weight: 600; }
+.pond figcaption { font-size: var(--s-1); color: var(--ink-soft); max-width: 52rem; }
+.pond-hint { display: none; font-family: var(--f-note); font-size: 0.75rem; color: var(--ink-soft); margin-top: -14px; }
+@media (max-width: 800px) { .pond-hint { display: block; } }
+
 /* Contact */
 .contact { display: grid; gap: 24px; }
 .contact-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; }
@@ -283,6 +324,132 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
         <li><span class="mh" aria-hidden="true"><span>5</span></span><strong>Application</strong><small>ID, good character, PEO review</small></li>
         <li><span class="mh" aria-hidden="true"><span>6</span></span><strong>P.Eng. licence</strong><small>Goal</small></li>
       </ol>
+    </div>
+  </section>
+
+  <section id="design" aria-labelledby="design-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="note">What I design</span>
+        <h2 id="design-h">Anatomy of a wet pond</h2>
+        <p>A wet pond treats runoff, protects the receiving stream from erosion and controls peak flows, each with its own slice of storage. This is the kind of facility I size, grade and take through approval.</p>
+      </div>
+      <figure class="pond">
+        <div class="pond-scroll">
+          <svg viewBox="0 0 1100 430" role="img" aria-labelledby="pond-t pond-d">
+            <title id="pond-t">Typical wet pond cross-section</title>
+            <desc id="pond-d">Runoff enters through an inlet into a sediment forebay, passes over a submerged berm into the main cell, and leaves through a reverse-slope pipe into an outlet control structure. Water levels from bottom to top: permanent pool, extended detention, and active storage up to the 100-year high water level, with freeboard to the top of berm.</desc>
+            <defs>
+              <pattern id="p-earth" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                <line x1="0" y1="0" x2="0" y2="9" class="p-hatch"></line>
+              </pattern>
+              <pattern id="p-silt" width="5" height="5" patternUnits="userSpaceOnUse">
+                <circle cx="2.5" cy="2.5" r="0.9" class="p-dot"></circle>
+              </pattern>
+              <pattern id="p-active" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+                <line x1="0" y1="0" x2="0" y2="10" class="p-active"></line>
+              </pattern>
+              <marker id="m-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" class="m-fill"></path>
+              </marker>
+              <marker id="m-tick" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+                <path d="M1,9 L9,1" class="m-line"></path>
+              </marker>
+            </defs>
+
+            <!-- Water, drawn full width; the earth mass covers everything outside the pond -->
+            <rect x="0" y="140" width="1100" height="45" class="w-active"></rect>
+            <rect x="0" y="140" width="1100" height="45" fill="url(#p-active)"></rect>
+            <rect x="0" y="185" width="1100" height="40" class="w-ed"></rect>
+            <rect x="0" y="225" width="1100" height="205" class="w-pp"></rect>
+
+            <!-- Earth mass with the pond graded into it -->
+            <path id="ground" d="M0,110 L70,110 L140,190 L320,234 L370,330 L450,330 L490,238 L530,238 L590,350 L770,350 L820,242 L930,216 L985,110 L1100,110 L1100,430 L0,430 Z" class="earth"></path>
+            <path d="M0,110 L70,110 L140,190 L320,234 L370,330 L450,330 L490,238 L530,238 L590,350 L770,350 L820,242 L930,216 L985,110 L1100,110 L1100,430 L0,430 Z" fill="url(#p-earth)"></path>
+
+            <!-- Sediment in the forebay -->
+            <path d="M372,330 Q410,312 448,330 Z" class="silt"></path>
+            <path d="M372,330 Q410,312 448,330 Z" fill="url(#p-silt)"></path>
+
+            <!-- Inlet pipe and headwall -->
+            <rect x="0" y="200" width="168" height="22" class="pipe-buried"></rect>
+            <rect x="166" y="192" width="10" height="36" class="concrete"></rect>
+            <line x1="180" y1="214" x2="232" y2="219" class="flow" marker-end="url(#m-arrow)"></line>
+
+            <!-- Outlet structure, reverse-slope pipe and outlet pipe -->
+            <path d="M797,276 L1018,222 L1018,240 L803,290 Z" class="pipe-buried"></path>
+            <rect x="1010" y="98" width="56" height="212" class="concrete"></rect>
+            <rect x="1018" y="106" width="40" height="196" class="structure-in"></rect>
+            <rect x="1018" y="225" width="16" height="77" class="w-pp"></rect>
+            <rect x="1034" y="185" width="6" height="40" class="concrete"></rect>
+            <rect x="1034" y="233" width="6" height="69" class="concrete"></rect>
+            <rect x="1033" y="225" width="8" height="8" class="orifice-gap"></rect>
+            <rect x="1066" y="280" width="34" height="20" class="pipe-buried"></rect>
+            <line x1="1040" y1="292" x2="1096" y2="292" class="flow" marker-end="url(#m-arrow)"></line>
+            <line x1="1006" y1="98" x2="1070" y2="98" class="grate"></line>
+
+            <!-- Profile line on top -->
+            <path d="M0,110 L70,110 L140,190 L320,234 L370,330 L450,330 L490,238 L530,238 L590,350 L770,350 L820,242 L930,216 L985,110 L1100,110" class="profile"></path>
+
+            <!-- Water levels -->
+            <g class="levels">
+              <line x1="96" y1="140" x2="969" y2="140" class="lvl lvl-hwl"></line>
+              <line x1="136" y1="185" x2="946" y2="185" class="lvl"></line>
+              <line x1="283" y1="225" x2="892" y2="225" class="lvl lvl-nwl"></line>
+              <path d="M598,131 l8,0 l-4,7 z" class="tri"></path>
+              <text x="612" y="136" class="lbl">HWL · 100-year</text>
+              <path d="M598,176 l8,0 l-4,7 z" class="tri"></path>
+              <text x="612" y="181" class="lbl">Extended detention level</text>
+              <path d="M598,216 l8,0 l-4,7 z" class="tri"></path>
+              <text x="612" y="221" class="lbl">NWL · permanent pool</text>
+            </g>
+
+            <!-- Dimensions -->
+            <g class="dims">
+              <line x1="680" y1="229" x2="680" y2="346" class="dim" marker-start="url(#m-tick)" marker-end="url(#m-tick)"></line>
+              <text x="688" y="294" class="lbl">Max. 3.0 m</text>
+              <line x1="24" y1="140" x2="96" y2="140" class="ext"></line>
+              <line x1="40" y1="112" x2="40" y2="138" class="dim" marker-start="url(#m-tick)" marker-end="url(#m-tick)"></line>
+              <text x="12" y="98" class="lbl">Freeboard ≥ 0.3 m</text>
+              <text x="955" y="160" class="lbl" text-anchor="end">Max. 3:1</text>
+              <text x="196" y="176" class="lbl">5:1 safety bench</text>
+              <line x1="240" y1="181" x2="240" y2="212" class="leader"></line>
+            </g>
+
+            <!-- Numbered keys -->
+            <g class="keys">
+              <g transform="translate(100,182)"><circle r="12"></circle><text y="4">1</text></g>
+              <g transform="translate(410,296)"><circle r="12"></circle><text y="4">2</text></g>
+              <g transform="translate(510,214)"><circle r="12"></circle><text y="4">3</text></g>
+              <g transform="translate(560,290)"><circle r="12"></circle><text y="4">4</text></g>
+              <g transform="translate(560,205)"><circle r="12"></circle><text y="4">5</text></g>
+              <g transform="translate(560,162)"><circle r="12"></circle><text y="4">6</text></g>
+              <g transform="translate(860,201)"><circle r="12"></circle><text y="4">7</text></g>
+              <g transform="translate(915,292)"><circle r="12"></circle><text y="4">8</text></g>
+              <g transform="translate(988,60)"><circle r="12"></circle><text y="4">9</text></g>
+              <line x1="998" y1="68" x2="1012" y2="96" class="leader"></line>
+              <g transform="translate(1084,322)"><circle r="12"></circle><text y="4">10</text></g>
+            </g>
+
+            <text x="16" y="414" class="lbl lbl-strong">TYPICAL WET POND · SECTION</text>
+            <text x="1084" y="414" class="lbl" text-anchor="end">N.T.S. · VERTICAL EXAGGERATION</text>
+          </svg>
+        </div>
+        <span class="pond-hint">Scroll sideways to see the full section →</span>
+        <ol class="pond-key">
+          <li><b>Inlet and headwall.</b> Storm sewer outfall, set near the permanent pool level.</li>
+          <li><b>Sediment forebay.</b> Catches coarse sediment where it's easy to clean out.</li>
+          <li><b>Forebay berm.</b> Submerged berm that slows flow into the main cell.</li>
+          <li><b>Permanent pool.</b> Stays wet. Settles fine sediment for water quality treatment.</li>
+          <li><b>Extended detention.</b> Small, frequent storms held and released slowly to protect the stream from erosion.</li>
+          <li><b>Active storage.</b> Fills only in large storms, so peak flows leave at pre-development rates.</li>
+          <li><b>Safety bench.</b> Flat 5:1 grading around the waterline for public safety and planting.</li>
+          <li><b>Reverse-slope pipe.</b> Draws water from below the surface, so floating debris and warm surface water stay behind.</li>
+          <li><b>Outlet control structure.</b> A small orifice through the weir wall at the permanent pool level releases detained water slowly; larger storms rise and flow over the weir.</li>
+          <li><b>Outlet.</b> To the receiving watercourse.</li>
+        </ol>
+        <figcaption>Schematic, not to scale. Depth, slope and freeboard values follow the province's <a href="https://www.ontario.ca/document/stormwater-management-planning-and-design-manual" target="_blank" rel="noopener">Stormwater Management Planning and Design Manual</a> (2003). Municipal and Conservation Authority criteria can be stricter.</figcaption>
+      </figure>
     </div>
   </section>
 
