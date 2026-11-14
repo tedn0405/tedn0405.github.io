@@ -104,6 +104,13 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
 .sec-head { display: grid; gap: 8px; margin-bottom: 32px; max-width: 44rem; }
 .sec-head p { color: var(--ink-soft); }
 
+/* Intro clip */
+.intro { padding-block: clamp(32px, 5vw, 64px); }
+.intro .sec-head { margin-bottom: 16px; }
+.intro-frame { border: 1px solid var(--line); background: #fbfcfa; }
+.intro-frame video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; }
+.intro-desc { margin-top: 12px; max-width: 52rem; font-size: var(--s-1); color: var(--ink-soft); }
+
 /* Figures */
 .figures { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 2px solid var(--ink); }
 .fig { padding: 20px 20px 4px 0; display: grid; gap: 6px; align-content: start; }
@@ -296,14 +303,26 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
     <div class="wrap">
       <span class="note">Stormwater management · Water resources · Ontario</span>
       <h1>Ted Ngui<span>, E.I.T.</span></h1>
-      <p class="lede">I'm a land development engineer focused on stormwater management and water resources. I design SWM systems for residential, industrial and commercial sites across the GTA, together with the grading, servicing and erosion and sediment control around them, and carry them through municipal and Conservation Authority approval.</p>
+      <p class="lede">I am a land development engineer focused on stormwater management and water resources. I design SWM systems for residential, industrial and commercial sites across the GTA, together with the grading, servicing and erosion and sediment control around them, and carry them through municipal and Conservation Authority approval.</p>
       <div class="meta note">
         <span class="stake">3+ years in Ontario land development</span>
         <span class="stake">5.5+ years in engineering, Canada and U.S.</span>
-        <span class="stake">NPPE passed · P.Eng. in progress</span>
+        <span class="stake">NPPE passed · P.Eng. application submitted</span>
       </div>
     </div>
   </div>
+
+  <section class="intro" aria-labelledby="intro-h">
+    <div class="wrap">
+      <div class="sec-head"><span class="note" id="intro-h">Introduction · 25 seconds · no sound</span></div>
+      <div class="intro-frame">
+        <video id="intro-video" muted playsinline controls preload="none" poster="intro-poster.jpg" width="1920" height="1080" aria-describedby="intro-desc">
+          <source src="intro.mp4" type="video/mp4">
+        </video>
+      </div>
+      <p class="intro-desc" id="intro-desc">A silent introduction: who I am, a dry pond with a DICB outlet in operation, my core skills, the Ontario municipalities I have worked in, and how I work between project teams and stakeholders.</p>
+    </div>
+  </section>
 
   <section aria-labelledby="fig-h">
     <div class="wrap">
@@ -325,16 +344,16 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
         <div class="sec-head" style="margin-bottom:0">
           <span class="note">Licensure</span>
           <h2 id="peng-h">Path to P.Eng.</h2>
-          <p>Licensure with Professional Engineers Ontario. My academic requirements are verified and I've passed the NPPE. I'm now completing my competency-based assessment (CBA), the experience record PEO uses to assess 34 engineering competencies, with a target of December 2026.</p>
+          <p>Licensure with Professional Engineers Ontario. My academic requirements are verified and I have passed the NPPE. I submitted my competency-based assessment (CBA), the experience record PEO uses to assess 34 engineering competencies, in November 2026, and my application is now with PEO for review.</p>
         </div>
-        <b>3 <em>of</em> 6 steps done</b>
+        <b>4 <em>of</em> 6 steps done</b>
       </div>
-      <ol class="steps" style="--done:50%;--done-v:58%" aria-label="P.Eng. licensure progress: 3 of 6 steps complete, CBA in progress with a target of December 2026">
+      <ol class="steps" style="--done:66.7%;--done-v:75%" aria-label="P.Eng. licensure progress: 4 of 6 steps complete, CBA submitted in November 2026 and application under PEO review">
         <li class="done"><span class="mh" aria-hidden="true"><span>✓</span></span><strong>Academic</strong><small>Verified</small></li>
         <li class="done"><span class="mh" aria-hidden="true"><span>✓</span></span><strong>E.I.T.</strong><small>Enrolled</small></li>
         <li class="done"><span class="mh" aria-hidden="true"><span>✓</span></span><strong>NPPE</strong><small>Passed</small></li>
-        <li class="now"><span class="mh" aria-hidden="true"><span>4</span></span><strong>CBA experience record</strong><small>Target Dec 2026</small></li>
-        <li><span class="mh" aria-hidden="true"><span>5</span></span><strong>Application</strong><small>ID, good character, PEO review</small></li>
+        <li class="done"><span class="mh" aria-hidden="true"><span>✓</span></span><strong>CBA experience record</strong><small>Submitted Nov 2026</small></li>
+        <li class="now"><span class="mh" aria-hidden="true"><span>5</span></span><strong>Application</strong><small>Under PEO review</small></li>
         <li><span class="mh" aria-hidden="true"><span>6</span></span><strong>P.Eng. licence</strong><small>Goal</small></li>
       </ol>
     </div>
@@ -451,7 +470,7 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
         <span class="pond-hint">Scroll sideways to see the full section →</span>
         <ol class="pond-key">
           <li><b>Inlet and headwall.</b> Storm sewer outfall, set near the permanent pool level.</li>
-          <li><b>Sediment forebay.</b> Catches coarse sediment where it's easy to clean out.</li>
+          <li><b>Sediment forebay.</b> Catches coarse sediment where it is easy to clean out.</li>
           <li><b>Forebay berm.</b> Submerged berm that slows flow into the main cell.</li>
           <li><b>Permanent pool.</b> Stays wet. Settles fine sediment for water quality treatment.</li>
           <li><b>Extended detention.</b> Small, frequent storms held and released slowly to protect the stream from erosion.</li>
@@ -576,16 +595,16 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
     <div class="wrap">
       <div class="sec-head">
         <span class="note">Selected work</span>
-        <h2 id="work-h">Problems I've solved on real sites</h2>
+        <h2 id="work-h">Problems I have solved on real sites</h2>
         <p>Client and project names are left out. Each note covers what came up, what I did, and how it ended.</p>
       </div>
       <div class="cases">
         <article class="case">
-          <span class="note">Current role · Stormwater</span>
-          <h3>Re-checked an approved SWM design</h3>
-          <p>I independently re-verified a stormwater design that already had municipal approval, working from first principles, and found it did not provide the required groundwater clearance.</p>
-          <p class="result">Revised the design so it meets the requirement.</p>
-          <ul class="tags"><li>SWM</li><li>Groundwater</li><li>Design review</li></ul>
+          <span class="note">Candevcon · Corridor design</span>
+          <h3>Took a driveway from alignment to earthwork</h3>
+          <p>I designed a driveway end to end in Civil 3D, building the horizontal and vertical alignment and the corridor model, then ran a cut-and-fill earthwork analysis against the grading design.</p>
+          <p class="result">Full alignment, corridor and earthwork package delivered from concept to grading.</p>
+          <ul class="tags"><li>Civil 3D</li><li>Alignments &amp; corridors</li><li>Cut and fill</li></ul>
         </article>
         <article class="case">
           <span class="note">Candevcon · Stormwater</span>
@@ -602,11 +621,11 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
           <ul class="tags"><li>SWM pond</li><li>MIDUSS</li><li>Hydrology</li></ul>
         </article>
         <article class="case">
-          <span class="note">Current role · Approvals</span>
-          <h3>Fixed a Conservation Authority setback</h3>
-          <p>The setback provided at the start of the project didn't match the official mapping. I raised it with the Conservation Authority and resolved it with them directly.</p>
-          <p class="result">The permit went ahead without a delay.</p>
-          <ul class="tags"><li>Conservation Authority</li><li>Permitting</li></ul>
+          <span class="note">Current role · Servicing</span>
+          <h3>Designed a gravity sewer, septic to sewer</h3>
+          <p>I designed a 200 mm gravity sanitary sewer to connect six homes on septic systems in Hamilton to municipal servicing, including the plan and profile drawings, design sheet and drainage area plan.</p>
+          <p class="result">The slopes and depths allowed a gravity connection, so no new lift station was needed.</p>
+          <ul class="tags"><li>Sanitary sewer</li><li>Gravity design</li><li>Servicing</li></ul>
         </article>
         <article class="case">
           <span class="note">Current role · Servicing</span>
@@ -634,7 +653,7 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
         <p>Stormwater and sewer calculators I use in practice, each with an Excel version to download. Start with the pipe flow and velocity calculator, based on Manning's equation.</p>
       </div>
       <div class="contact-row">
-        <a class="btn" href="tools.html">Open the toolkit →</a>
+        <a class="btn" href="https://tedn0405.github.io/tools.html">Open the toolkit →</a>
       </div>
     </div>
   </section>
@@ -643,7 +662,7 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
     <div class="wrap">
       <div class="sec-head">
         <span class="note">Experience</span>
-        <h2 id="exp-h">Where I've worked</h2>
+        <h2 id="exp-h">Where I have worked</h2>
       </div>
       <div class="timeline">
         <div class="role">
@@ -654,7 +673,8 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
             <ul>
               <li>Lead grading, servicing, SWM and erosion and sediment control design for residential, industrial and commercial site plans, from concept through municipal approval.</li>
               <li>Carry submissions through municipal and Conservation Authority review, working with reviewers to resolve comments.</li>
-              <li>Support designs with PCSWMM, HEC-RAS, HEC-HMS and Visual OTTHYMO modelling alongside Civil 3D.</li>
+              <li>Support designs with PCSWMM and Visual OTTHYMO modelling alongside Civil 3D, including subdivision road alignment work.</li>
+              <li>Designed a 200 mm gravity sanitary sewer connecting six homes on septic systems in Hamilton to municipal servicing, with no new lift station needed.</li>
             </ul>
           </div>
         </div>
@@ -664,11 +684,11 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
             <h3>Engineering Assistant, Land Development</h3>
             <span class="firm">R.J. Burnside and Associates · Land Development and Solid Waste</span>
             <ul>
-              <li>Prepared grading, servicing and utility drawings in Civil 3D, including sewer network analysis, surcharge checks and MIDUSS modelling to resize and relocate a site-constrained pond.</li>
+              <li>Prepared grading, servicing and utility drawings in Civil 3D, including subdivision road alignments, sewer network analysis, surcharge checks and MIDUSS modelling to resize and relocate a site-constrained pond.</li>
+              <li>Contributed sanitary and storm sewer design and SWM design on a major linear municipal water and wastewater replacement infrastructure project, applying PCSWMM for storm maintenance hole flood analysis and coordinating trunk sewer and conveyance system design to municipal standards.</li>
               <li>Wrote functional servicing and SWM reports, cost estimates and permitting documents for municipal and Conservation Authority approval.</li>
               <li>Supported watermain design and water supply analysis in InfoWater for a residential subdivision.</li>
               <li>Co-authored proposals and fee estimates for two service lines, with a high win rate.</li>
-              <li>Steered a design away from a client's preferred approach that posed a contamination risk, which regulatory review later confirmed.</li>
             </ul>
           </div>
         </div>
@@ -679,6 +699,7 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
             <span class="firm">Candevcon Group Inc. · Water Infrastructure Design and Planning</span>
             <ul>
               <li>Worked on 20+ site and subdivision developments, meeting pre-development peak flow targets with Visual OTTHYMO and Civil 3D.</li>
+              <li>Designed a driveway end to end using Civil 3D alignments and corridors, including cut-and-fill earthwork analysis and grading design.</li>
               <li>Managed grading and servicing for multi-million-dollar high-density residential and mid-rise apartment site plans.</li>
               <li>Prepared tender packages and cost estimates, and set up a drawing-control protocol after tracing a field discrepancy to version control.</li>
             </ul>
@@ -706,7 +727,7 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
         <h2 id="kit-h">Software I design with</h2>
       </div>
       <div class="kit">
-        <div><span class="note">Design and drafting</span><ul><li>AutoCAD Civil 3D</li><li>AutoCAD</li><li>AutoTURN</li></ul></div>
+        <div><span class="note">Design and drafting</span><ul><li>AutoCAD Civil 3D</li><li>Civil 3D alignments &amp; corridors</li><li>AutoCAD</li><li>AutoTURN</li></ul></div>
         <div><span class="note">Hydrology and hydraulics</span><ul><li>PCSWMM</li><li>Visual OTTHYMO</li><li>MIDUSS</li><li>HEC-HMS</li><li>HEC-RAS</li></ul></div>
         <div><span class="note">Water distribution</span><ul><li>InfoWater</li></ul></div>
         <div><span class="note">GIS and analysis</span><ul><li>ArcGIS Pro</li><li>R</li></ul></div>
@@ -744,7 +765,7 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
           <div class="entry">
             <span class="note">Licence</span>
             <h3>Engineer-in-Training (E.I.T.)</h3>
-            <p>Passed the NPPE. Completing the CBA experience package for P.Eng. licensure in Ontario.</p>
+            <p>Passed the NPPE. Submitted the CBA experience package for P.Eng. licensure in Ontario in November 2026.</p>
           </div>
           <div class="entry">
             <span class="note">2022</span>
@@ -774,7 +795,7 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
       <div class="sec-head" style="margin-bottom:0">
         <span class="note">Contact</span>
         <h2 id="con-h">Get in touch</h2>
-        <p>I'm based in Toronto and work across the GTA and surrounding municipalities.</p>
+        <p>I am based in Toronto and work across the GTA and surrounding municipalities.</p>
       </div>
       <div class="contact-row">
         <span class="email" id="email">tedn0405@gmail.com</span>
@@ -798,6 +819,20 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
 
 <script>
 (function () {
+  // Intro clip: starts muted when most of it is on screen, pauses when it leaves
+  var clip = document.getElementById("intro-video");
+  var calm = false;
+  try { calm = matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+  if (clip && !calm && "IntersectionObserver" in window) {
+    var played = false;
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting && !played) { played = true; var p = clip.play(); if (p && p.catch) p.catch(function () {}); }
+        else if (!en.isIntersecting && !clip.paused) { clip.pause(); }
+      });
+    }, { threshold: 0.6 }).observe(clip);
+  }
+
   // Copy email
   var btn = document.getElementById("copy");
   var email = document.getElementById("email");
