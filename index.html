@@ -116,6 +116,7 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
   .hero .wrap > :nth-child(3) { animation-delay: 0.75s; }
   .hero .wrap > :nth-child(4) { animation-delay: 1s; }
   .hero .wrap > :nth-child(5) { animation-delay: 1.25s; }
+  .hero .wrap > :nth-child(6) { animation-delay: 1.45s; }
   #plan { animation: hero-wipe 1.7s cubic-bezier(.65,0,.35,1) both; }
 }
 @keyframes hero-rise { from { opacity: 0; transform: translateY(28px); } }
@@ -330,6 +331,13 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
   cursor: pointer; border-radius: 2px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
 }
 .btn:hover { background: var(--ink); color: var(--sheet); }
+.btn-solid { background: var(--ink); color: var(--sheet); }
+.btn-solid:hover { background: var(--flag); border-color: var(--flag); color: #fff; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+.topbar nav a.nav-cta { color: var(--ink); border: 1.5px solid var(--ink); padding: 5px 10px; border-radius: 2px; }
+.topbar nav a.nav-cta:hover { background: var(--ink); color: var(--sheet); }
+.topbar nav { align-items: center; }
+.to-top { margin: 24px 0 0; text-align: center; }
 .btn.copied { border-color: var(--flag); color: var(--flag); background: var(--flag-wash); }
 
 /* Title block */
@@ -357,7 +365,7 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
       <a href="#toolkit-swm">SWM Toolkit</a>
       <a href="#toolkit">Software</a>
       <a href="#research">Research</a>
-      <a href="#contact">Contact</a>
+      <a class="nav-cta" href="#contact">Contact</a>
     </nav>
   </div>
 </header>
@@ -374,6 +382,10 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
         <span class="stake">3+ years in Ontario land development</span>
         <span class="stake">5.5+ years in engineering, Canada and U.S.</span>
         <span class="stake">NPPE passed · P.Eng. application submitted</span>
+      </div>
+      <div class="hero-cta">
+        <a class="btn btn-solid" href="mailto:tedn0405@gmail.com">Email me</a>
+        <a class="btn" href="#work">See my work</a>
       </div>
     </div>
   </div>
@@ -946,9 +958,11 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
       <div class="sec-head" style="margin-bottom:0">
         <span class="note">Contact</span>
         <h2 id="con-h">Get in touch</h2>
+        <p>Hiring for land development or water resources design in the GTA? I would like to hear from you. My resume is available on request.</p>
         <p>I am based in Toronto and work across the GTA and surrounding municipalities.</p>
       </div>
       <div class="contact-row">
+        <a class="btn btn-solid" href="mailto:tedn0405@gmail.com">Email me</a>
         <span class="email" id="email">tedn0405@gmail.com</span>
         <button class="btn" id="copy" type="button">Copy email</button>
         <a class="btn" href="https://www.linkedin.com/in/yeudeckngui" target="_blank" rel="noopener">LinkedIn ↗</a>
@@ -965,6 +979,7 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
       <div><span class="note">Scale</span><b>N.T.S.</b></div>
       <div><span class="note">Status</span><b class="issued">Issued for review</b></div>
     </div>
+    <p class="to-top"><a class="btn" href="#top">Back to top ↑</a></p>
   </div>
 </footer>
 
