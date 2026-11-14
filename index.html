@@ -477,7 +477,7 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
       </div>
       <figure class="pond">
         <div class="pond-scroll">
-          <svg viewBox="0 0 1100 430" role="img" aria-labelledby="pond-t pond-d">
+          <svg id="wet-svg" viewBox="0 0 1100 430" role="img" aria-labelledby="pond-t pond-d">
             <title id="pond-t">Typical wet pond cross-section</title>
             <desc id="pond-d">Runoff enters through an inlet into a sediment forebay, passes over a submerged berm into the main cell, and leaves through a reverse-slope pipe into an outlet control structure. Water levels from bottom to top: permanent pool, extended detention, and active storage up to the 100-year high water level, with freeboard to the top of berm.</desc>
             <defs>
@@ -496,19 +496,19 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
               <marker id="m-tick" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
                 <path d="M1,9 L9,1" class="m-line"></path>
               </marker>
-            </defs>
+            <clipPath id="wclip"><rect id="wrect" x="0" y="140" width="1100" height="300"></rect></clipPath></defs>
 
-            <!-- Water, drawn full width; the earth mass covers everything outside the pond -->
+            <g id="w-water" clip-path="url(#wclip)"><!-- Water, drawn full width; the earth mass covers everything outside the pond -->
             <rect x="0" y="140" width="1100" height="45" class="w-active"></rect>
             <rect x="0" y="140" width="1100" height="45" fill="url(#p-active)"></rect>
             <rect x="0" y="185" width="1100" height="40" class="w-ed"></rect>
             <rect x="0" y="225" width="1100" height="205" class="w-pp"></rect>
 
-            <!-- Earth mass with the pond graded into it -->
+            </g><g id="w-earth"><!-- Earth mass with the pond graded into it -->
             <path id="ground" d="M0,110 L70,110 L140,190 L320,234 L370,330 L450,330 L490,238 L530,238 L590,350 L770,350 L820,242 L930,216 L985,110 L1100,110 L1100,430 L0,430 Z" class="earth"></path>
             <path d="M0,110 L70,110 L140,190 L320,234 L370,330 L450,330 L490,238 L530,238 L590,350 L770,350 L820,242 L930,216 L985,110 L1100,110 L1100,430 L0,430 Z" fill="url(#p-earth)"></path>
 
-            <!-- Sediment in the forebay -->
+            </g><g id="w-struct"><!-- Sediment in the forebay -->
             <path d="M372,330 Q410,312 448,330 Z" class="silt"></path>
             <path d="M372,330 Q410,312 448,330 Z" fill="url(#p-silt)"></path>
 
@@ -521,7 +521,7 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
             <path d="M797,276 L1018,222 L1018,240 L803,290 Z" class="pipe-buried"></path>
             <rect x="1010" y="98" width="56" height="212" class="concrete"></rect>
             <rect x="1018" y="106" width="40" height="196" class="structure-in"></rect>
-            <rect x="1018" y="225" width="16" height="77" class="w-pp"></rect>
+            <rect id="w-swater" x="1018" y="225" width="16" height="77" class="w-pp"></rect>
             <rect x="1034" y="185" width="6" height="40" class="concrete"></rect>
             <rect x="1034" y="233" width="6" height="69" class="concrete"></rect>
             <rect x="1033" y="225" width="8" height="8" class="orifice-gap"></rect>
@@ -529,11 +529,11 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
             <line x1="1040" y1="292" x2="1096" y2="292" class="flow" marker-end="url(#m-arrow)"></line>
             <line x1="1006" y1="98" x2="1070" y2="98" class="grate"></line>
 
-            <!-- Profile line on top -->
-            <path d="M0,110 L70,110 L140,190 L320,234 L370,330 L450,330 L490,238 L530,238 L590,350 L770,350 L820,242 L930,216 L985,110 L1100,110" class="profile"></path>
+            </g>
+            <path d="M0,110 L70,110 L140,190 L320,234 L370,330 L450,330 L490,238 L530,238 L590,350 L770,350 L820,242 L930,216 L985,110 L1100,110" class="profile" id="w-profile" pathLength="1"></path>
 
             <!-- Water levels -->
-            <g class="levels">
+            <g class="levels" id="w-levels">
               <line x1="96" y1="140" x2="969" y2="140" class="lvl lvl-hwl"></line>
               <line x1="136" y1="185" x2="946" y2="185" class="lvl"></line>
               <line x1="283" y1="225" x2="892" y2="225" class="lvl lvl-nwl"></line>
@@ -546,7 +546,7 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
             </g>
 
             <!-- Dimensions -->
-            <g class="dims">
+            <g class="dims" id="w-dims">
               <line x1="680" y1="229" x2="680" y2="346" class="dim" marker-start="url(#m-tick)" marker-end="url(#m-tick)"></line>
               <text x="688" y="294" class="lbl">Max. 3.0 m</text>
               <line x1="24" y1="140" x2="96" y2="140" class="ext"></line>
@@ -558,7 +558,7 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
             </g>
 
             <!-- Numbered keys -->
-            <g class="keys">
+            <g class="keys" id="w-keys">
               <g transform="translate(100,182)"><circle r="12"></circle><text y="4">1</text></g>
               <g transform="translate(410,296)"><circle r="12"></circle><text y="4">2</text></g>
               <g transform="translate(510,214)"><circle r="12"></circle><text y="4">3</text></g>
@@ -1006,6 +1006,29 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
         $$("#d-struct .flow").forEach(function (el) { op(el, seg(t, 1.8, 2.2)); });
         op($("#d-weir"), seg(t, 2.9, 3.3)); op(L[4], seg(t, 2.9, 3.3)); op(L[5], seg(t, 2.9, 3.3));
         op($("#d-emerg"), seg(t, 3.2, 3.6)); op(L[6], seg(t, 3.2, 3.6));
+      }, 0.7);
+    }
+
+    // Wet pond: draws, then fills to the permanent pool, extended detention and 100-year levels
+    var wet = $("#wet-svg");
+    if (wet) {
+      var wprof = $("#w-profile"), wl = $("#w-levels").children, wr = $("#wrect"), wk = $("#w-keys").children;
+      wprof.style.strokeDasharray = 1;
+      add(wet, function (p) {
+        var t = p * 4.6;
+        wprof.style.strokeDashoffset = 1 - io(seg(t, 0, 1.0));
+        op($("#w-earth"), seg(t, 0.7, 1.2));
+        $$("#wet-svg > text").forEach(function (el) { op(el, seg(t, 0.7, 1.2)); });
+        op($("#w-struct"), seg(t, 1.0, 1.5));
+        var y = lerp(352, 225, io(seg(t, 1.4, 2.2)));
+        y = lerp(y, 185, io(seg(t, 2.5, 3.0)));
+        y = lerp(y, 140, io(seg(t, 3.2, 3.7)));
+        wr.setAttribute("y", y); wr.setAttribute("height", 440 - y);
+        op($("#w-swater"), seg(t, 2.0, 2.3));
+        var on = [seg(t, 3.6, 3.9), seg(t, 2.9, 3.2), seg(t, 2.1, 2.4)];   // HWL, extended detention, NWL
+        [[0, 3, 4], [1, 5, 6], [2, 7, 8]].forEach(function (ids, k) { ids.forEach(function (i) { if (wl[i]) wl[i].style.opacity = on[k]; }); });
+        op($("#w-dims"), seg(t, 3.8, 4.1));
+        for (var i = 0; i < wk.length; i++) op(wk[i], seg(t, 3.9 + i * 0.05, 4.15 + i * 0.05));
       }, 0.7);
     }
 
