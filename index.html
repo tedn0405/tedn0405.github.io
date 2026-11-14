@@ -104,12 +104,21 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
 .sec-head { display: grid; gap: 8px; margin-bottom: 32px; max-width: 44rem; }
 .sec-head p { color: var(--ink-soft); }
 
-/* Intro clip */
-.intro { padding-block: clamp(32px, 5vw, 64px); }
-.intro .sec-head { margin-bottom: 16px; }
-.intro-frame { border: 1px solid var(--line); background: #fbfcfa; }
-.intro-frame video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; }
-.intro-desc { margin-top: 12px; max-width: 52rem; font-size: var(--s-1); color: var(--ink-soft); }
+/* Intro clip. Default: a band at the top of the page (phones, reduced motion, no script).
+   With .intro-full on <html>: it fills the window, stays pinned, and fades as the page scrolls over it. */
+.intro { position: relative; background: #fbfcfa; border-bottom: 1px solid var(--line); }
+.intro video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; }
+.intro-skip { display: none; }
+.intro-full .intro { height: 100vh; height: 100svh; border-bottom: 0; background: none; transition: height 0.9s cubic-bezier(.65,0,.35,1); }
+.intro-full .intro-pin { position: fixed; inset: 0; z-index: 0; background: #fbfcfa; }
+.intro-full .intro-pin video { width: 100%; height: 100%; aspect-ratio: auto; object-fit: contain; }
+.intro-full .intro-skip { display: inline-block; position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 2;
+  padding: 8px 14px; border: 1px solid #c9d2cf; background: #fbfcfa; color: #4b5b60; text-decoration: none; }
+.intro-full .intro-skip:hover { border-color: #18252a; color: #18252a; }
+.intro-full .topbar, .intro-full main, .intro-full .titleblock { position: relative; z-index: 1; }
+.intro-full main, .intro-full .titleblock { background: var(--paper); }
+.intro-full.intro-done .intro { height: 0; overflow: hidden; }
+.intro-full.intro-done .intro-pin { visibility: hidden; }
 
 /* Figures */
 .figures { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 2px solid var(--ink); }
@@ -281,8 +290,15 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
 </style>
 </head>
 <body>
-
-<header class="topbar">
+<div class="intro" id="intro">
+  <div class="intro-pin">
+    <video id="intro-video" muted playsinline controls preload="metadata" poster="intro-poster.jpg" width="1920" height="1080" aria-label="Silent 25-second introduction: who I am, a dry pond with a DICB outlet in operation, my core skills, the Ontario municipalities I have worked in, and how I work between project teams and stakeholders.">
+      <source src="intro.mp4" type="video/mp4">
+    </video>
+  </div>
+  <a class="intro-skip note" href="#top">Skip intro ↓</a>
+</div>
+<header class="topbar" id="top">
   <div class="wrap">
     <span class="note">T. Ngui · Stormwater &amp; Water Resources</span>
     <nav aria-label="Sections">
@@ -311,18 +327,6 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
       </div>
     </div>
   </div>
-
-  <section class="intro" aria-labelledby="intro-h">
-    <div class="wrap">
-      <div class="sec-head"><span class="note" id="intro-h">Introduction · 25 seconds · no sound</span></div>
-      <div class="intro-frame">
-        <video id="intro-video" muted playsinline controls preload="none" poster="intro-poster.jpg" width="1920" height="1080" aria-describedby="intro-desc">
-          <source src="intro.mp4" type="video/mp4">
-        </video>
-      </div>
-      <p class="intro-desc" id="intro-desc">A silent introduction: who I am, a dry pond with a DICB outlet in operation, my core skills, the Ontario municipalities I have worked in, and how I work between project teams and stakeholders.</p>
-    </div>
-  </section>
 
   <section aria-labelledby="fig-h">
     <div class="wrap">
@@ -819,19 +823,40 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
 
 <script>
 (function () {
-  // Intro clip: starts muted when most of it is on screen, pauses when it leaves
-  var clip = document.getElementById("intro-video");
-  var calm = false;
-  try { calm = matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
-  if (clip && !calm && "IntersectionObserver" in window) {
-    var played = false;
-    new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting && !played) { played = true; var p = clip.play(); if (p && p.catch) p.catch(function () {}); }
-        else if (!en.isIntersecting && !clip.paused) { clip.pause(); }
-      });
-    }, { threshold: 0.6 }).observe(clip);
-  }
+  // Intro clip
+  (function () {
+    var root = document.documentElement, clip = document.getElementById("intro-video"), pin = clip.parentNode;
+    var skip = document.querySelector(".intro-skip");
+    var calm = false, seen = false;
+    try { calm = matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+    try { seen = sessionStorage.getItem("intro-seen") === "1"; } catch (e) {}
+    if (calm || seen) return;                      // still frame with a play button; nothing moves on its own
+    try { sessionStorage.setItem("intro-seen", "1"); } catch (e) {}
+    function play() { var p = clip.play(); if (p && p.catch) p.catch(function () { clip.controls = true; }); }
+    var wide = false;
+    try { wide = matchMedia("(min-width: 900px) and (min-aspect-ratio: 5/4)").matches; } catch (e) {}
+    if (!wide || location.hash) { play(); return; } // phones and deep links: plays in the band at the top
+    // Full window: pinned behind the page, fading as the page scrolls over it
+    root.classList.add("intro-full");
+    clip.controls = false;
+    window.scrollTo(0, 0);
+    play();
+    var ticking = false;
+    function fade() {
+      ticking = false;
+      if (root.classList.contains("intro-done")) return;
+      var p = Math.min(1, Math.max(0, window.scrollY / (window.innerHeight * 0.75)));
+      pin.style.opacity = 1 - p;
+      skip.style.opacity = 1 - Math.min(1, p * 4);
+      pin.style.visibility = p >= 1 ? "hidden" : "visible";
+      if (p >= 1 && !clip.paused) clip.pause();
+      else if (p < 1 && clip.paused && !clip.ended) play();
+    }
+    window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(fade); } }, { passive: true });
+    clip.addEventListener("ended", function () {    // finished with nobody scrolling: step aside and reveal the page
+      if (window.scrollY < 8) root.classList.add("intro-done");
+    });
+  })();
 
   // Copy email
   var btn = document.getElementById("copy");
