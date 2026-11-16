@@ -154,7 +154,14 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
 .pin text { font: 600 21px var(--f-note); fill: var(--ink); paint-order: stroke; stroke: var(--sheet); stroke-width: 6px; stroke-linejoin: round; }
 .lake { font: 500 19px var(--f-note); fill: var(--pipe); letter-spacing: 0.12em; text-transform: uppercase; text-anchor: middle; opacity: 0.75; }
 @media (max-width: 760px) {
-  .onmap { grid-template-columns: minmax(0, 1fr); }
+  .onmap { display: flex; flex-direction: column; align-items: stretch; gap: 20px; }
+  .onmap > div:first-child { display: contents; }
+  .onmap .sec-head { order: 1; margin-bottom: 0; }
+  .onmap-count { order: 2; }
+  .mapbox { order: 3; }
+  .chipset { order: 4; margin-top: 0; }
+  .onmap-ca { order: 5; margin-top: 0; }
+  .places { order: 6; margin-top: 0; }
   .pin text, .lake { display: none; }
   .places { display: block; }
 }
@@ -1064,7 +1071,7 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
     var map = $(".onmap");
     if (map) {
       var pins = $$(".pin"), chips = $$(".chips span"), cnt = $("#cnt"), ca = $(".onmap-ca");
-      add($(".mapbox"), function (p) {
+      var mapScene = function (p) {
         var t = p * 4.2, n = 0, lit = {};
         pins.forEach(function (el, i) {
           var s = 0.4 + i * 0.165, q = seg(t, s, s + 0.32), e = ease(q), txt = el.querySelector("text");
@@ -1076,7 +1083,13 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
         cnt.textContent = n;
         chips.forEach(function (el) { el.classList.toggle("on", !!lit[el.dataset.r]); });
         rise(ca, seg(t, 3.4, 3.9), 14);
-      }, 0.75);
+      };
+      add($(".mapbox"), mapScene, 0.75);
+      var countEl = $(".onmap-count"), boxEl = $(".mapbox"), sc = scenes[scenes.length - 1];
+      // Stacked (phones): start when the count comes into view and finish while count and map are both on screen.
+      sc.pick = function () { return boxEl.getBoundingClientRect().top > countEl.getBoundingClientRect().bottom ? countEl : boxEl; };
+      sc.spanFor = function (el) { return el === countEl ? 0.4 : 0.75; };
+      sc.startFor = function (el) { return el === countEl ? 0.62 : 0.92; };
     }
 
     // How I work: lines run out from the centre
@@ -1101,7 +1114,10 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
     add(tag, function (p) { rise(tag, seg(p, 0, 0.7), 40); rule.style.transform = "scaleX(" + io(seg(p, 0.45, 1)) + ")"; }, 0.5);
 
     // Each scene's progress follows how far it has come up the window, eased so it never jumps
-    function target(s) { var r = s.el.getBoundingClientRect(); return cl((window.innerHeight * 0.92 - r.top) / (window.innerHeight * s.span)); }
+    function target(s) {
+      var el = s.pick ? s.pick() : s.el, span = s.spanFor ? s.spanFor(el) : s.span, start = s.startFor ? s.startFor(el) : 0.92, r = el.getBoundingClientRect();
+      return cl((window.innerHeight * start - r.top) / (window.innerHeight * span));
+    }
     var raf = 0;
     function frame() {
       raf = 0; var busy = false;
