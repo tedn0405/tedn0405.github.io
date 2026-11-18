@@ -9,9 +9,11 @@
   --wrap: 72rem;
 }
 @media (prefers-color-scheme: dark) {
-  :root { --paper: #0f1517; --sheet: #141c1f; --ink: #e2e9e6; --ink-soft: #9fb0ad;
+  :root:not([data-theme="light"]) { --paper: #0f1517; --sheet: #141c1f; --ink: #e2e9e6; --ink-soft: #9fb0ad;
     --line: #2b383c; --pipe: #7fb2ee; --flag: #ff5c9b; --water: #26507a; --water-3: #172b3e; color-scheme: dark; }
 }
+:root[data-theme="dark"] { --paper: #0f1517; --sheet: #141c1f; --ink: #e2e9e6; --ink-soft: #9fb0ad;
+  --line: #2b383c; --pipe: #7fb2ee; --flag: #ff5c9b; --water: #26507a; --water-3: #172b3e; color-scheme: dark; }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
