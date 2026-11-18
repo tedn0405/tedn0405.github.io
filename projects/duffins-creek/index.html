@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Where does the water go? Floodplain analysis of East Duffins Creek | Ted Ngui, E.I.T.</title>
+<meta name="description" content="A floodplain analysis of East Duffins Creek, from raw data to flood maps, using ArcGIS, HEC-HMS and HEC-RAS. By Ted Ngui, E.I.T.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..800&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:ital,wght@0,400;0,600;1,400&display=swap">
+<link rel="stylesheet" href="../story.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a href="/">&larr; Ted Ngui, E.I.T.</a>
+    <nav><a href="#contact">Contact</a></nav>
+  </div>
+  <div class="progress"></div>
+</header>
+
+<!-- ============ PROJECT CONTENT STARTS HERE ============ -->
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="note">Selected work &middot; Floodplain analysis</p>
+      <h1>Where does the water go?<span>A floodplain analysis of East Duffins Creek</span></h1>
+      <p class="lede">Duffins Creek winds from forest and farmland in the north down into new subdivisions in the south. I built a model of the watershed from raw data to see how far the creek spreads when a big flow comes through.</p>
+      <div class="meta">
+        <span class="note stake">287 km&sup2; watershed</span>
+        <span class="note stake">ArcGIS &middot; HEC-HMS &middot; HEC-RAS</span>
+        <span class="note stake">2020</span>
+      </div>
+      <p class="note scroll-cue">Scroll to follow the story &darr;</p>
+    </div>
+    <img class="hero-map" src="img/flood-2015.jpg" alt="Aerial map of the East Duffins Creek study area with the modelled creek in blue" data-zoom>
+  </div>
+</section>
+
+<section class="chapter">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <p class="note">01 &middot; The setting</p>
+      <h2>A rural creek with a city growing at its outlet</h2>
+      <p>Duffins Creek sits in the northeast corner of the Toronto and Region Conservation Authority area and crosses seven municipalities. Most of it is still rural, but the south is filling in with new homes.</p>
+    </div>
+    <div class="landuse">
+      <div class="bar" aria-label="Land use: 71 percent rural, 19 percent urbanizing, 10 percent urban">
+        <div style="--v:71; background:#b9d3a8">Rural 71%</div>
+        <div style="--v:19; background:#e6cf8f">19%</div>
+        <div style="--v:10; background:#c9a6a6">10%</div>
+      </div>
+      <div class="legend"><span>Rural 71%</span><span>Urbanizing 19%</span><span>Urban 10%</span></div>
+    </div>
+    <div class="figures reveal">
+      <div class="fig"><b>287 km&sup2;</b><span>Watershed area</span></div>
+      <div class="fig"><b>7</b><span>Municipalities in the watershed</span></div>
+      <div class="fig"><b>~25%</b><span>Forest cover</span></div>
+      <div class="fig"><b>~50%</b><span>Of the urban area had stormwater controls (2013)</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="statement">
+  <div class="wrap reveal">
+    <p class="note">02 &middot; The question</p>
+    <p>If a big flow comes down this creek, where does the water go, and how close does it get to the houses?</p>
+  </div>
+</section>
+
+<section class="chapter">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <p class="note">03 &middot; Building the model</p>
+      <h2>From raw data to a working flood model</h2>
+      <p>I built the model in four stages. Each stage fed the next.</p>
+    </div>
+    <div class="sidecar">
+      <div class="steps">
+        <div class="step" data-fig="data">
+          <p class="num">Stage 1 of 4 &middot; Data</p>
+          <h3>Collecting the inputs</h3>
+          <p>I pulled together public data from several sources:</p>
+          <ul>
+            <li>A 5 m digital elevation model of the GTA</li>
+            <li>Soil and land use layers</li>
+            <li>Hourly rainfall from the Claremont gauge</li>
+            <li>Daily flows from the Duffins Creek stream gauge above Pickering (02HC019)</li>
+          </ul>
+          <p>The chart shows the 2015 stream record. The circled storm in late June became my test event.</p>
+          <div class="m-only"><img src="img/stream-2015.jpg" alt="2015 stream flow record for Duffins Creek" data-zoom></div>
+        </div>
+        <div class="step" data-fig="delin">
+          <p class="num">Stage 2 of 4 &middot; Watershed delineation</p>
+          <h3>Letting the terrain draw the boundaries</h3>
+          <p>Using Arc Hydro in ArcMap, I filled sinks, computed flow direction and flow accumulation, defined the streams and split the watershed into catchments.</p>
+          <div class="m-only"><img src="img/delineation.jpg" alt="Arc Hydro catchment and drainage line outputs" data-zoom></div>
+        </div>
+        <div class="step" data-fig="subws">
+          <p class="num">Stage 2 of 4 &middot; Watershed delineation</p>
+          <h3>Six subwatersheds</h3>
+          <p>The result was six subwatersheds. Their boundaries lined up with the TRCA's published subwatershed map, with only small differences that come from the DEM resolution.</p>
+          <div class="m-only"><img src="img/subwatersheds.jpg" alt="Six delineated subwatersheds of Duffins Creek" data-zoom></div>
+        </div>
+        <div class="step" data-fig="cn">
+          <p class="num">Stage 3 of 4 &middot; Hydrology</p>
+          <h3>How much rain becomes runoff</h3>
+          <p>I merged the soil and land use layers into a curve number grid. The grid scores every cell by how much of its rain turns into runoff.</p>
+          <div class="m-only"><img src="img/cn-grid.jpg" alt="Curve number grid for the watershed" data-zoom></div>
+        </div>
+        <div class="step" data-fig="basin">
+          <p class="num">Stage 3 of 4 &middot; Hydrology</p>
+          <h3>A rainfall-runoff model in HEC-HMS</h3>
+          <p>I built the basin model in HEC-GeoHMS and ran it in HEC-HMS:</p>
+          <ul>
+            <li>SCS curve number losses</li>
+            <li>SCS unit hydrograph transform</li>
+            <li>Muskingum routing (K = 2.3, X = 0.15)</li>
+            <li>Ten days of hourly rainfall, prepared in HEC-DSSVue</li>
+          </ul>
+          <div class="m-only"><img src="img/hec-hms.jpg" alt="HEC-HMS basin model and precipitation input" data-zoom></div>
+        </div>
+        <div class="step" data-fig="layers">
+          <p class="num">Stage 4 of 4 &middot; Hydraulics</p>
+          <h3>Drawing the river for HEC-RAS</h3>
+          <p>In HEC-GeoRAS, I digitized the river centreline, banks, flow paths and cross-sections on the terrain, then exported the geometry to HEC-RAS.</p>
+          <div class="m-only"><img src="img/ras-layers.jpg" alt="River, bank, flow path and cross-section layers digitized in ArcMap" data-zoom></div>
+        </div>
+        <div class="step" data-fig="xs">
+          <p class="num">Stage 4 of 4 &middot; Hydraulics</p>
+          <h3>Setting up the hydraulic model</h3>
+          <p>I ran a steady-flow model with these settings:</p>
+          <ul>
+            <li>Manning's n of 0.035 for the channel and 0.060 for the floodplain</li>
+            <li>Normal depth boundaries, with reach slopes from 0.0022 to 0.0088 taken from the terrain</li>
+            <li>Contraction and expansion coefficients of 0.1 and 0.3</li>
+          </ul>
+          <p>The cross-section shows how shallow the channel is. That detail matters later.</p>
+          <div class="m-only"><img src="img/cross-section.jpg" alt="HEC-RAS cross-section of East Duffins Creek" data-zoom></div>
+        </div>
+      </div>
+      <div class="stage" aria-hidden="true">
+        <figure data-id="data"><img src="img/stream-2015.jpg" alt="" data-zoom><figcaption>Duffins Creek above Pickering, 2015 daily flows</figcaption></figure>
+        <figure data-id="delin"><img src="img/delineation.jpg" alt="" data-zoom><figcaption>Arc Hydro catchments and drainage lines</figcaption></figure>
+        <figure data-id="subws"><img src="img/subwatersheds.jpg" alt="" data-zoom><figcaption>The six delineated subwatersheds</figcaption></figure>
+        <figure data-id="cn"><img src="img/cn-grid.jpg" alt="" data-zoom><figcaption>Curve number grid</figcaption></figure>
+        <figure data-id="basin"><img src="img/hec-hms.jpg" alt="" data-zoom><figcaption>HEC-HMS basin model and rainfall input</figcaption></figure>
+        <figure data-id="layers"><img src="img/ras-layers.jpg" alt="" data-zoom><figcaption>River, banks, flow paths and cross-sections</figcaption></figure>
+        <figure data-id="xs"><img src="img/cross-section.jpg" alt="" data-zoom><figcaption>A HEC-RAS cross-section on East Duffins Creek</figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <p class="note">04 &middot; The twist</p>
+      <h2>The model and the creek disagreed</h2>
+      <p>My HEC-HMS hydrograph caught the same two storm peaks as the stream gauge, on June 23 and June 28. The flow values, however, were too far off to drive the flood model.</p>
+    </div>
+    <div class="pair reveal">
+      <figure><img src="img/hms-result.jpg" alt="HEC-HMS simulated hydrograph for June 2015" data-zoom><figcaption>What my HEC-HMS model predicted</figcaption></figure>
+      <figure><img src="img/gauge-result.jpg" alt="Recorded stream gauge flows for June 21 to 30, 2015" data-zoom><figcaption>What the stream gauge recorded</figcaption></figure>
+    </div>
+    <div class="prose reveal" style="margin-top:32px">
+      <p>The cause was the inputs. There was no active rain gauge inside the study area, and the elevation data was coarse for a creek this shallow.</p>
+      <p>Rather than push weak numbers into the hydraulic model, I used the recorded peak flows from the stream gauge instead.</p>
+    </div>
+    <p class="callout reveal">A model is only as good as its inputs. When the inputs are thin, use the measured data you trust.</p>
+  </div>
+</section>
+
+<section class="chapter">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <p class="note">05 &middot; Two floods</p>
+      <h2>Same creek, two very different days</h2>
+      <p>I ran two recorded peak flows through the hydraulic model. Drag the slider across the map to compare them.</p>
+    </div>
+    <div class="swipe-grid">
+      <div class="swipe" style="--pos:50%">
+        <img src="img/flood-2015.jpg" alt="Flood extent for the 2015 peak flow of 13.4 cubic metres per second">
+        <img class="top" src="img/flood-1984.jpg" alt="Flood extent for the 1984 peak flow of 49.6 cubic metres per second">
+        <span class="tag l">1984 &middot; 49.6 m&sup3;/s</span>
+        <span class="tag r">2015 &middot; 13.4 m&sup3;/s</span>
+        <div class="handle"></div>
+        <input type="range" min="0" max="100" value="50" aria-label="Slide to compare the 1984 and 2015 flood extents">
+      </div>
+      <div class="flows">
+        <div class="flow reveal"><b>13.4 m&sup3;/s</b><span class="note">2015 peak</span><p>Most of the flow stays inside the banks across the study area.</p></div>
+        <div class="flow reveal"><b>49.6 m&sup3;/s</b><span class="note">1984 peak</span><p>Most of the flow spills over the banks. The shallow channel cannot hold it, which also means more erosion and sediment movement.</p></div>
+        <div class="flow reveal"><b>3.11 m&sup3;/s</b><span class="note">95th percentile flow</span><p>For scale: from the gauge record, 95% of daily flows are below this. Both events are far above it, and the 1984 flow happened only once in the record.</p></div>
+      </div>
+    </div>
+    <figure class="single reveal"><img src="img/ras-3d.jpg" alt="Three-dimensional view of the HEC-RAS result for the 2015 flow" data-zoom><figcaption>HEC-RAS 3D view of the 2015 result</figcaption></figure>
+  </div>
+</section>
+
+<section class="chapter">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <p class="note">06 &middot; Downstream</p>
+      <h2>Where the creek meets the houses</h2>
+    </div>
+    <div class="pair" style="margin-top:0; align-items:start">
+      <figure class="reveal"><img src="img/downstream.jpg" alt="Aerial view of the urban area downstream on East Duffins Creek" data-zoom><figcaption>The urban area near the bottom of the study area</figcaption></figure>
+      <div class="prose reveal">
+        <p>In the model, the water does not reach the houses. In the south of the study area, however, it comes very close.</p>
+        <p>The model also assumes today's land cover. The south of the watershed is still growing, and storms are getting more intense. More pavement means more runoff, so the homes near the creek are likely to see more flooding than this map shows.</p>
+        <p>That is why updated floodplain maps matter: they show planners where not to build before the houses go up.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <p class="note">07 &middot; What I would do next</p>
+      <h2>Making the model stronger</h2>
+    </div>
+    <div class="next reveal">
+      <div><h3>Run the regulatory storm</h3><p>Use the regulatory event, the greater of Hurricane Hazel and the 100-year storm, with IDF-based design storms instead of only recorded flows.</p></div>
+      <div><h3>Add the bridges</h3><p>The creek passes under several bridges. Modelling them would show where they back water up.</p></div>
+      <div><h3>Include baseflow</h3><p>Separating baseflow from storm runoff would show the true water level rise from each storm.</p></div>
+      <div><h3>Use finer terrain</h3><p>A higher resolution DEM would capture this shallow channel much better.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter close" id="contact">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <p class="note">Tools used</p>
+      <h2>Ask me about this project</h2>
+      <p>I am happy to walk through any step of this model, from the data to the flood maps.</p>
+    </div>
+    <ul class="tags">
+      <li>ArcMap</li><li>Arc Hydro</li><li>HEC-GeoHMS</li><li>HEC-HMS</li><li>HEC-DSSVue</li><li>HEC-GeoRAS</li><li>HEC-RAS</li>
+    </ul>
+    <div class="cta">
+      <a class="btn primary" href="mailto:tedn0405@gmail.com">Email me</a>
+      <a class="btn" href="/">Back to portfolio</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECT CONTENT ENDS HERE ============ -->
+
+<script src="../story.js"></script>
+</body>
+</html>
