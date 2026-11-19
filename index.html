@@ -441,6 +441,7 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
             <path d="M0,137 L400,137" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="18 8 4 8"></path>
             <path d="M30,108 L370,108" stroke="var(--pipe)" stroke-width="3" stroke-dasharray="14 5 3 5"></path>
             <g fill="var(--sheet)" stroke="var(--pipe)" stroke-width="2.5"><circle cx="50" cy="108" r="9"></circle><circle cx="200" cy="108" r="9"></circle><circle cx="350" cy="108" r="9"></circle></g>
+            <g class="g-lbl g-pipe g-halo" text-anchor="middle" style="font-size:16px"><text id="mh-a" x="50" y="134">MH1</text><text id="mh-b" x="200" y="134">MH2</text><text x="350" y="134">EX MH</text></g>
             <text x="66" y="86" class="g-lbl g-pipe g-halo">300ø STM @ 0.50%</text>
             <path d="M30,166 L370,166" stroke="var(--ink)" stroke-width="2.5" stroke-dasharray="9 6"></path>
             <g fill="var(--sheet)" stroke="var(--ink)" stroke-width="2.5"><circle cx="110" cy="166" r="9"></circle><circle cx="290" cy="166" r="9"></circle></g>
@@ -1271,6 +1272,22 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
   }
   document.getElementById("fact-next").addEventListener("click", function () { i = (i + 1) % facts.length; show(); });
   show();
+})();
+</script>
+<script>
+/* Servicing drawing: maintenance hole labels. */
+(function () {
+  var a = document.getElementById("mh-a"), b = document.getElementById("mh-b");
+  if (!a || !b || !window.fetch) return;
+  var base = "https://tedn.goatcounter.com/counter/TOTAL.json";
+  function num(j) { var v = j && (j.count_unique != null ? j.count_unique : j.count); var n = parseInt(String(v).replace(/[^0-9]/g, ""), 10); return isNaN(n) ? null : n; }
+  function tag(n) { return "MH" + (n < 10 ? "0" + n : n); }
+  function get(url, el) {
+    fetch(url).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { var n = num(j); if (n != null) el.textContent = tag(n); }).catch(function () {});
+  }
+  var d = new Date(Date.now() - 6 * 864e5), start = d.toISOString().slice(0, 10);
+  get(base, a);
+  get(base + "?start=" + start, b);
 })();
 </script>
 <script data-goatcounter="https://tedn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
