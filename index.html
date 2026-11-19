@@ -419,35 +419,51 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
       </div>
       <div class="skills">
         <div class="skill"><span class="note">01</span><h3>Grading</h3><div class="draw">
-          <svg viewBox="0 0 400 260" role="img" aria-label="Schematic lot grading plan with contours, spot elevations and slope arrows draining away from the building.">
-            <defs><marker id="g-arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--pipe)"></path></marker></defs>
-            <g fill="none" stroke="var(--contour)" stroke-width="1.6">
-              <path d="M10,60 C110,30 250,80 390,40"></path><path d="M10,105 C120,80 260,125 390,90"></path>
-              <path d="M10,150 C120,130 270,170 390,140" stroke-width="2.6"></path><path d="M10,196 C130,178 270,214 390,190"></path>
+          <svg viewBox="0 0 400 260" role="img" aria-label="Schematic lot grading plan: building with finished floor elevation, spot elevations, slopes away from the building and side yard swales draining to the street.">
+            <defs><marker id="g-arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--pipe)"></path></marker></defs>
+            <path d="M24,246 L356,246" stroke="var(--ink-soft)" stroke-width="1.4"></path>
+            <text x="190" y="259" class="g-lbl" text-anchor="middle" style="font-size:12px">STREET</text>
+            <rect x="40" y="30" width="300" height="196" fill="none" stroke="var(--ink)" stroke-width="2" stroke-dasharray="16 5 3 5"></rect>
+            <rect x="130" y="72" width="120" height="76" fill="var(--earth)" stroke="var(--ink)" stroke-width="2"></rect>
+            <text x="190" y="104" class="g-lbl g-strong" text-anchor="middle" style="font-size:14px">BLDG</text>
+            <text x="190" y="126" class="g-lbl g-strong" text-anchor="middle" style="font-size:14px">FFE 181.65</text>
+            <g stroke="var(--pipe)" stroke-width="1.6" stroke-dasharray="7 4" fill="none" marker-end="url(#g-arr)"><path d="M60,40 L60,218"></path><path d="M320,40 L320,218"></path></g>
+            <text transform="translate(74,190) rotate(-90)" class="g-lbl g-pipe" style="font-size:12px">SWALE 1.5%</text>
+            <text transform="translate(314,190) rotate(-90)" class="g-lbl g-pipe" style="font-size:12px">SWALE 1.5%</text>
+            <g stroke="var(--pipe)" stroke-width="2" fill="none" marker-end="url(#g-arr)">
+              <line x1="190" y1="68" x2="190" y2="42"></line><line x1="126" y1="110" x2="76" y2="110"></line><line x1="254" y1="110" x2="304" y2="110"></line><line x1="190" y1="152" x2="190" y2="200"></line>
             </g>
-            <rect x="70" y="50" width="260" height="170" fill="none" stroke="var(--ink)" stroke-width="2.5"></rect>
-            <rect x="150" y="96" width="110" height="74" fill="var(--earth)" stroke="var(--ink)" stroke-width="1.6"></rect>
-            <g stroke="var(--pipe)" stroke-width="2.4" fill="none" marker-end="url(#g-arr)">
-              <line x1="140" y1="84" x2="96" y2="70"></line><line x1="270" y1="84" x2="312" y2="70"></line>
-              <line x1="140" y1="184" x2="96" y2="204"></line><line x1="270" y1="184" x2="312" y2="204"></line>
-            </g>
-            <g stroke="var(--flag)" stroke-width="2"><path d="M199,127 l12,12 M211,127 l-12,12"></path><path d="M72,44 l10,10 M82,44 l-10,10"></path><path d="M320,216 l10,10 M330,216 l-10,10"></path></g>
-            <text x="205" y="118" class="g-lbl g-strong" text-anchor="middle">181.50</text><text x="92" y="42" class="g-lbl">181.20</text><text x="312" y="250" class="g-lbl" text-anchor="end">180.90</text>
-            <text x="84" y="100" class="g-lbl g-pipe">2.0%</text>
+            <text x="198" y="56" class="g-lbl g-pipe" style="font-size:12px">2.0%</text><text x="84" y="104" class="g-lbl g-pipe" style="font-size:12px">2.0%</text><text x="262" y="104" class="g-lbl g-pipe" style="font-size:12px">2.0%</text><text x="198" y="186" class="g-lbl g-pipe" style="font-size:12px">2.0%</text>
+            <g stroke="var(--flag)" stroke-width="1.8"><path d="M36,26 l8,8 M44,26 l-8,8"></path><path d="M336,26 l8,8 M344,26 l-8,8"></path><path d="M36,222 l8,8 M44,222 l-8,8"></path><path d="M336,222 l8,8 M344,222 l-8,8"></path><path d="M122,148 l8,8 M130,148 l-8,8"></path></g>
+            <g class="g-lbl" style="font-size:12px"><text x="46" y="22">181.40</text><text x="334" y="22" text-anchor="end">181.30</text><text x="46" y="241">180.90</text><text x="334" y="241" text-anchor="end">180.80</text><text x="122" y="170" text-anchor="end">181.50</text></g>
+            <g transform="translate(374,58)"><path d="M0,-18 L6,4 L0,0 L-6,4 z" fill="var(--ink)"></path><text y="18" class="g-lbl g-strong" text-anchor="middle" style="font-size:12px">N</text></g>
           </svg></div></div>
         <div class="skill"><span class="note">02</span><h3>Servicing</h3><div class="draw">
-          <svg viewBox="0 0 400 260" role="img" aria-label="Schematic servicing plan: a storm sewer with maintenance holes, a sanitary sewer and a watermain within a road right-of-way.">
-            <path d="M0,30 L400,30 M0,226 L400,226" stroke="var(--ink)" stroke-width="2"></path>
-            <path d="M0,137 L400,137" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="18 8 4 8"></path>
-            <path d="M30,108 L370,108" stroke="var(--pipe)" stroke-width="3" stroke-dasharray="14 5 3 5"></path>
+          <svg viewBox="0 0 400 260" role="img" aria-label="Schematic servicing plan of a road right-of-way: watermain with valve and hydrant, storm sewer with maintenance holes and catchbasins, and sanitary sewer with maintenance holes.">
+            <defs><marker id="s-flow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"></path></marker></defs>
+            <g stroke="var(--ink)" stroke-width="1.8" stroke-dasharray="16 5 3 5"><path d="M30,18 L388,18"></path><path d="M30,242 L388,242"></path></g>
+            <g class="g-lbl" style="font-size:11px"><text x="388" y="13" text-anchor="end">PL</text><text x="388" y="256" text-anchor="end">PL</text></g>
+            <g stroke="var(--ink-soft)" stroke-width="1.2"><path d="M30,38 L388,38"></path><path d="M30,222 L388,222"></path></g>
+            <g stroke="var(--ink-soft)" stroke-width="1"><path d="M6,18 L6,242 M1,18 L11,18 M1,242 L11,242"></path></g>
+            <text transform="translate(20,130) rotate(-90)" class="g-lbl" text-anchor="middle" style="font-size:11px">20.0 m ROW</text>
+            <path d="M34,56 L384,56" stroke="var(--ink-soft)" stroke-width="2"></path>
+            <path d="M232,50 L232,62 L248,50 L248,62 z" fill="var(--sheet)" stroke="var(--ink-soft)" stroke-width="1.6"></path>
+            <path d="M330,56 L330,44" stroke="var(--ink-soft)" stroke-width="1.6"></path><circle cx="330" cy="40" r="5" fill="var(--sheet)" stroke="var(--ink-soft)" stroke-width="1.6"></circle>
+            <text x="96" y="51" class="g-lbl g-halo" style="font-size:13px">150ø WM</text><text x="340" y="36" class="g-lbl g-halo" style="font-size:11px">HYD</text><text x="240" y="76" class="g-lbl g-halo" text-anchor="middle" style="font-size:11px">VALVE</text>
+            <g stroke="var(--pipe)" stroke-width="1.2" stroke-dasharray="3 3"><path d="M50,46 L50,100"></path><path d="M200,46 L200,100"></path></g>
+            <g fill="var(--sheet)" stroke="var(--pipe)" stroke-width="1.6"><rect x="44" y="38" width="12" height="10"></rect><rect x="194" y="38" width="12" height="10"></rect></g>
+            <path d="M34,108 L384,108" stroke="var(--pipe)" stroke-width="3" stroke-dasharray="14 5 3 5"></path>
             <g fill="var(--sheet)" stroke="var(--pipe)" stroke-width="2.5"><circle cx="50" cy="108" r="9"></circle><circle cx="200" cy="108" r="9"></circle><circle cx="350" cy="108" r="9"></circle></g>
-            <g class="g-lbl g-pipe g-halo" text-anchor="middle" style="font-size:16px"><text id="mh-a" x="50" y="134">MH1</text><text id="mh-b" x="200" y="134">MH2</text><text x="350" y="134">EX MH</text></g>
-            <text x="66" y="86" class="g-lbl g-pipe g-halo">300ø STM @ 0.50%</text>
-            <path d="M30,166 L370,166" stroke="var(--ink)" stroke-width="2.5" stroke-dasharray="9 6"></path>
-            <g fill="var(--sheet)" stroke="var(--ink)" stroke-width="2.5"><circle cx="110" cy="166" r="9"></circle><circle cx="290" cy="166" r="9"></circle></g>
-            <g class="g-lbl g-halo" text-anchor="middle" style="font-size:16px"><text x="110" y="152">MH1A</text><text x="290" y="152">MH2A</text></g>
-            <text x="126" y="198" class="g-lbl g-strong">200ø SAN</text>
-            <path d="M30,66 L370,66" stroke="var(--ink-soft)" stroke-width="1.6"></path><text x="370" y="60" class="g-lbl g-halo" text-anchor="end">150ø WM</text>
+            <g class="g-lbl g-pipe g-halo" text-anchor="middle" style="font-size:13px"><text id="mh-a" x="50" y="133">MH1</text><text id="mh-b" x="200" y="133">MH2</text><text x="350" y="133">EX MH</text></g>
+            <text x="64" y="96" class="g-lbl g-pipe g-halo" style="font-size:13px">300ø STM @ 0.50%</text>
+            <text x="210" y="47" class="g-lbl g-pipe g-halo" style="font-size:11px">CB</text>
+            <path d="M30,142 L388,142" stroke="var(--line)" stroke-width="1.4" stroke-dasharray="18 8 4 8"></path><text x="388" y="155" class="g-lbl g-halo" text-anchor="end" style="font-size:11px">℄ ROAD</text>
+            <path d="M34,176 L384,176" stroke="var(--ink)" stroke-width="2.5" stroke-dasharray="9 6"></path>
+            <g fill="var(--sheet)" stroke="var(--ink)" stroke-width="2.5"><circle cx="110" cy="176" r="9"></circle><circle cx="290" cy="176" r="9"></circle></g>
+            <g class="g-lbl g-halo" text-anchor="middle" style="font-size:13px"><text x="110" y="160">MH1A</text><text x="290" y="160">MH2A</text></g>
+            <text x="126" y="200" class="g-lbl g-strong g-halo" style="font-size:13px">200ø SAN @ 0.40%</text>
+            <path d="M340,176 L340,242" stroke="var(--ink)" stroke-width="1.4"></path><text x="334" y="236" class="g-lbl" text-anchor="end" style="font-size:11px">125ø SAN SERVICE</text>
+            <g fill="var(--pipe)"><path d="M276,103 L286,108 L276,113 z"></path></g><g fill="var(--ink)"><path d="M216,171 L226,176 L216,181 z"></path></g>
           </svg></div></div>
         <div class="skill big"><span class="note">03</span><h3>SWM design <em>and modelling</em></h3><div class="draw">
           <svg viewBox="0 0 600 260" role="img" aria-label="Schematic hydrograph: uncontrolled inflow peaks high and early; the controlled release peaks lower and later; the area between them is storage.">
