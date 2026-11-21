@@ -408,16 +408,24 @@ html { scroll-padding-top: 76px; }
 .close-line { padding-bottom: clamp(24px, 4vw, 48px); }
 .close-line .tag-line { font-size: clamp(2.5rem, 8vw, 6.5rem); }
 .close-line .tag-rule { margin: clamp(16px, 2vw, 28px) 0 0; }
+
+/* Software on each skill card */
+.sw { display: grid; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+.sw-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.sw-tags li { padding: 4px 10px; border: 1.5px solid var(--ink); border-radius: 2px; font: 600 0.8125rem/1.3 var(--f-note); color: var(--ink); background: var(--paper); }
+@media (min-width: 761px) { .topbar .wrap { flex-wrap: nowrap; } .topbar nav { flex-wrap: nowrap; gap: 4px 16px; } }
+@media (min-width: 761px) and (max-width: 1060px) { .topbar-id .note { display: none; } }
 </style>
 </head>
 <body>
-<header class="topbar" id="top">
+<header class="topbar">
   <div class="wrap">
     <div class="topbar-id">
-      <span class="note">T. Ngui · Stormwater &amp; Water Resources</span>
+      <span class="note">Ted Ngui, E.I.T.</span>
       <button class="peng-pill" type="button" aria-expanded="false" aria-controls="peng"><span class="pp-dot" aria-hidden="true"></span>P.Eng. 4 of 6<span class="pp-long"> · Under PEO review</span></button>
     </div>
     <nav aria-label="Sections" data-theme-slot>
+      <a href="#skills">Skills</a>
       <a href="#experience">Experience</a>
       <a href="#work">Work</a>
       <a href="#design">Design</a>
@@ -448,7 +456,7 @@ html { scroll-padding-top: 76px; }
 </header>
 
 <main>
-  <div class="hero">
+  <div class="hero" id="top">
     <canvas id="plan" aria-hidden="true"></canvas>
     <div class="wrap">
       <span class="note">Ted Ngui, E.I.T. · Stormwater &amp; water resources · Ontario</span>
@@ -493,7 +501,7 @@ html { scroll-padding-top: 76px; }
             <g class="g-lbl" style="font-size:14px"><text x="230" y="140">181.50</text><text x="220" y="230" text-anchor="middle">CB 181.36</text><text x="56" y="220">181.61</text><text x="384" y="220" text-anchor="end">181.61</text></g>
             <g class="g-lbl g-pipe" style="font-size:14px"><text x="230" y="165">2.0%</text><text x="140" y="203" text-anchor="middle">1.5%</text><text x="300" y="203" text-anchor="middle">1.5%</text></g>
             <g transform="translate(450,60)"><path d="M0,-20 L7,5 L0,0 L-7,5 z" fill="var(--ink)"></path><text y="22" class="g-lbl g-strong" text-anchor="middle" style="font-size:14px">N</text></g>
-          </svg></div><span class="note tools">AutoCAD Civil 3D · AutoCAD · AutoTURN</span></div>
+          </svg></div><div class="sw"><span class="note">Software</span><ul class="sw-tags"><li>AutoCAD Civil 3D</li><li>Civil 3D corridors</li><li>AutoCAD</li><li>AutoTURN</li></ul></div></div>
         <div class="skill"><span class="note">02</span><h3>Servicing</h3><div class="draw">
           <svg viewBox="0 0 400 260" role="img" aria-label="Schematic servicing plan of a road right-of-way: watermain with valve and hydrant, storm sewer with maintenance holes and catchbasins, and sanitary sewer with maintenance holes.">
             <defs><marker id="s-flow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"></path></marker></defs>
@@ -517,7 +525,7 @@ html { scroll-padding-top: 76px; }
             <g class="g-lbl g-halo" text-anchor="middle" style="font-size:16px"><text x="110" y="160">MH1A</text><text x="290" y="160">MH2A</text></g>
             <text x="126" y="200" class="g-lbl g-strong g-halo" style="font-size:16px">200ø SAN @ 0.40%</text>
             <g fill="var(--pipe)"><path d="M276,103 L286,108 L276,113 z"></path></g><g fill="var(--ink)"><path d="M216,171 L226,176 L216,181 z"></path></g>
-          </svg></div><span class="note tools">AutoCAD Civil 3D · InfoWater</span></div>
+          </svg></div><div class="sw"><span class="note">Software</span><ul class="sw-tags"><li>AutoCAD Civil 3D</li><li>InfoWater</li></ul></div></div>
         <div class="skill big"><span class="note">03</span><h3>SWM design <em>and modelling</em></h3><div class="draw">
           <svg viewBox="0 0 600 260" role="img" aria-label="Schematic hydrograph: uncontrolled inflow peaks high and early; the controlled release peaks lower and later; the area between them is storage.">
             <path d="M50.0,222.0L55.9,221.7L61.6,220.7L67.2,219.1L72.6,216.9L77.8,214.2L82.9,210.9L87.8,207.2L92.6,203.1L97.3,198.5L101.9,193.6L106.3,188.3L110.7,182.7L114.9,176.8L119.1,170.7L123.1,164.4L127.1,157.9L131.0,151.3L134.9,144.6L138.7,137.8L142.5,131.0L146.2,124.2L149.9,117.4L153.6,110.7L157.3,104.1L160.9,97.6L164.6,91.3L168.3,85.2L171.9,79.3L175.6,73.7L179.4,68.4L183.1,63.5L187.0,58.9L190.8,54.8L194.8,51.1L198.8,47.8L202.8,45.1L207.0,42.9L211.2,41.3L215.6,40.3L220.0,40.0L224.4,40.3L228.8,41.2L233.0,42.6L237.2,44.5L241.3,46.9L245.4,49.8L249.4,53.1L253.4,56.8L257.3,60.8L261.2,65.2L265.2,69.9L269.1,74.9L273.1,80.2L277.1,85.7L281.2,91.4L285.3,97.2L289.5,103.2L293.7,109.3L298.1,115.5L302.5,121.8L307.1,128.0L311.7,134.3L316.6,140.5L321.5,146.7L325.0,150.0L324.0,150.0L317.7,150.1L311.4,150.5L305.2,151.2L298.9,152.0L292.6,153.1L286.4,154.4L280.1,155.8L273.8,157.5L267.5,159.3L261.2,161.2L254.9,163.3L248.6,165.6L242.2,167.9L235.8,170.3L229.4,172.8L222.9,175.3L216.5,178.0L209.9,180.6L203.4,183.3L196.8,186.0L190.1,188.7L183.4,191.4L176.6,194.0L169.8,196.7L162.9,199.2L155.9,201.7L148.9,204.1L141.8,206.4L134.7,208.7L127.4,210.8L120.1,212.7L112.7,214.5L105.2,216.2L97.6,217.6L89.9,218.9L82.1,220.0L74.3,220.8L66.3,221.5L58.2,221.9L50.0,222.0Z" id="h-stor" fill="var(--water-2)"></path>
@@ -530,7 +538,7 @@ html { scroll-padding-top: 76px; }
             <text x="60" y="22" class="g-lbl">Flow</text><text x="580" y="248" class="g-lbl" text-anchor="end">Time</text>
             <text x="50" y="248" class="g-lbl">SCHEMATIC</text>
           </svg></div>
-          <span class="note tools">PCSWMM · Visual OTTHYMO · MIDUSS · HEC-HMS · HEC-RAS · ArcGIS Pro</span></div>
+          <div class="sw"><span class="note">Software</span><ul class="sw-tags"><li>PCSWMM</li><li>Visual OTTHYMO</li><li>MIDUSS</li><li>HEC-HMS</li><li>HEC-RAS</li><li>ArcGIS Pro</li></ul></div></div>
       </div>
       <p class="note leading"><span class="stake">Now leading: grading, servicing and SWM design for a high-rise mixed-use site</span></p>
     </div>
@@ -1002,7 +1010,7 @@ html { scroll-padding-top: 76px; }
         $$("#d-struct .flow").forEach(function (el) { op(el, seg(t, 1.8, 2.2)); });
         op($("#d-weir"), seg(t, 2.9, 3.3)); op(L[4], seg(t, 2.9, 3.3)); op(L[5], seg(t, 2.9, 3.3));
         op($("#d-emerg"), seg(t, 3.2, 3.6)); op(L[6], seg(t, 3.2, 3.6));
-      }, 0.7);
+      }, 0.5);
     }
 
     // Wet pond: draws, then fills to the permanent pool, extended detention and 100-year levels
@@ -1025,7 +1033,7 @@ html { scroll-padding-top: 76px; }
         [[0, 3, 4], [1, 5, 6], [2, 7, 8]].forEach(function (ids, k) { ids.forEach(function (i) { if (wl[i]) wl[i].style.opacity = on[k]; }); });
         op($("#w-dims"), seg(t, 3.8, 4.1));
         for (var i = 0; i < wk.length; i++) op(wk[i], seg(t, 3.9 + i * 0.05, 4.15 + i * 0.05));
-      }, 0.7);
+      }, 0.5);
     }
 
     // What I do: each panel rises and its drawing wipes in
@@ -1076,7 +1084,8 @@ html { scroll-padding-top: 76px; }
       sc.pick = function () { return boxEl.getBoundingClientRect().top > countEl.getBoundingClientRect().bottom ? countEl : boxEl; };
       sc.spanFor = function (el) { return el === countEl ? 0.4 : 0.75; };
       sc.startFor = function (el) { return el === countEl ? 0.62 : 0.92; };
-      sc.timed = 2000;   // plays on its own clock once in view, so the count never lags behind the scroll
+      sc.timed = 1200;
+      sc.trigger = function () { return boxEl.getBoundingClientRect().top < innerHeight * 0.85; };   // plays on its own clock once in view, so the count never lags behind the scroll
     }
 
     // How I work: one story. Team joins, clients, approvers, then the application moves through.
@@ -1114,14 +1123,35 @@ html { scroll-padding-top: 76px; }
         // Beat 4: the application moves through, everything arrives
         dots.forEach(function (d) {
           var u, vis;
-          if (d.inbound) { var s0 = 3.9 + d.i * 0.08; u = 1 - io(seg(t, s0, s0 + 0.6)); vis = seg(t, s0, s0 + 0.1) * (1 - seg(t, s0 + 0.55, s0 + 0.65)); }
-          else { var s1 = 4.55 + (d.i - tl.length) * 0.1; u = io(seg(t, s1, s1 + 0.6)); vis = seg(t, s1, s1 + 0.1) * (1 - seg(t, s1 + 0.55, s1 + 0.65)); }
+          if (d.inbound) { var s0 = 4.0 + d.i * 0.05; u = 1 - io(seg(t, s0, s0 + 0.6)); vis = seg(t, s0, s0 + 0.1) * (1 - seg(t, s0 + 0.55, s0 + 0.65)); }
+          else { var s1 = 4.4 + (d.i - tl.length) * 0.1; u = io(seg(t, s1, s1 + 0.5)); vis = seg(t, s1, s1 + 0.1) * (1 - seg(t, s1 + 0.45, s1 + 0.55)); }
           var pt = d.path.getPointAtLength(u * d.len);
           d.c.setAttribute("cx", pt.x); d.c.setAttribute("cy", pt.y); d.c.style.opacity = vis;
         });
-        var ph = t < 0.8 ? -1 : t < 2.0 ? 0 : t < 3.0 ? 1 : t < 3.9 ? 2 : 3;
+        var ph = t < 0.8 ? -1 : t < 2.0 ? 0 : t < 3.0 ? 1 : t < 4.0 ? 2 : 3;
         if (ph !== phase) { phase = ph; cap.style.opacity = 0; setTimeout(function () { cap.textContent = ph < 0 ? "" : words[ph]; cap.style.opacity = 1; }, ph < 0 ? 0 : 120); }
       }, 0.6);
+
+      // Pin the diagram while the story plays, when the screen is wide and tall enough to hold it
+      var tsec = $("#team"), twrap = tsec.querySelector(".wrap"), tsc = scenes[scenes.length - 1];
+      function pinTeam() {
+        tsec.style.height = ""; twrap.style.position = ""; twrap.style.top = "";
+        var bar = $(".topbar").offsetHeight, h = twrap.offsetHeight, room = innerHeight - bar;
+        tsc.pinned = innerWidth > 800 && h < room - 20;
+        if (!tsc.pinned) return;
+        var pad = parseFloat(getComputedStyle(tsec).paddingTop), top = bar + (room - h) / 2;
+        twrap.style.position = "sticky"; twrap.style.top = top + "px";
+        tsec.style.height = (h + 2 * pad + innerHeight * 1.8) + "px";
+        tsc.geo = { top: top, pad: pad, h: h };
+      }
+      tsc.pick = function () { return tsc.pinned ? tsec : team; };
+      tsc.startFor = function () { return tsc.pinned ? (tsc.geo.top - tsc.geo.pad + innerHeight * 0.25) / innerHeight : 0.92; };
+      tsc.spanFor = function () {
+        if (!tsc.pinned) return 0.6;
+        var end = tsc.geo.top + tsc.geo.h + tsc.geo.pad - tsec.offsetHeight;   // section top when the pin lets go
+        return (innerHeight * tsc.startFor() - end) / innerHeight;
+      };
+      pinTeam(); window.addEventListener("resize", pinTeam);
     }
 
     // Tagline
@@ -1138,7 +1168,7 @@ html { scroll-padding-top: 76px; }
       raf = 0; var busy = false;
       scenes.forEach(function (s) {
         if (s.timed) {
-          if (!s.t0 && target(s) > 0) s.t0 = performance.now();
+          if (!s.t0 && (s.trigger ? s.trigger() : target(s) > 0)) s.t0 = performance.now();
           var q = s.t0 ? cl((performance.now() - s.t0) / s.timed) : 0;
           s.fn(q); if (q < 1 && s.t0) busy = true; return;
         }
