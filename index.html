@@ -1102,52 +1102,48 @@ html { scroll-padding-top: 76px; }
       sc.trigger = function () { return boxEl.getBoundingClientRect().top < innerHeight * 0.85; };   // plays on its own clock once in view, so the count never lags behind the scroll
     }
 
-    // How I work: one story. Team joins, clients, approvers, then the application moves through.
+    // How I work: the three parties glide in to Ted as you scroll, and the numbered lines light up with them
     var team = $(".team svg");
     if (team) {
-      $$(".t-line").forEach(function (el) { el.style.strokeDasharray = 1; });
-      var th = $$(".team .t-head"), ts = $$(".team .t-sub"), tl = $$(".tl"), tr = $$(".tr");
-      var beats = $$(".t-steps li");
-      if (innerWidth > 800) $(".team").parentNode.classList.add("js-beats");
-      var phase = -1;
       var NS = "http://www.w3.org/2000/svg";
-      // One dot per line: it runs in from the team, then out to the clients and approvers.
-      var dots = tl.concat(tr).map(function (path, i) {
-        var c = document.createElementNS(NS, "circle");
-        c.setAttribute("r", "9"); c.setAttribute("fill", "var(--flag)"); c.style.opacity = 0;
-        team.appendChild(c);
-        return { c: c, path: path, len: path.getTotalLength(), inbound: i < tl.length, i: i };
-      });
+      var tl = $$(".tl"), tr = $$(".tr"), th = $$(".team .t-head"), ts = $$(".team .t-sub"), node = $("#t-node"), beats = $$(".t-steps li");
+      $$(".t-line").forEach(function (el) { el.style.strokeDasharray = 1; });
+      if (innerWidth > 800) $(".team").parentNode.classList.add("js-beats");
+      var gTeam = [th[0], ts[0]].concat($$(".tl-t")), gCli = [th[1], ts[1]], gApp = [th[2], ts[2]].concat($$(".tr-t"));
+      function slide(el, p, dx, dy) { if (!el) return; var e = io(p); el.style.opacity = e; el.style.transform = "translate(" + ((1 - e) * dx) + "px," + ((1 - e) * dy) + "px)"; }
+      node.style.transformOrigin = "820px 340px";
+      var lit = -2, sent = false;
+      function sendDot() {
+        // One pass: in from the team, through Ted, out to the approvers
+        var a = tl[3], b2 = tr[1], la = a.getTotalLength(), lb = b2.getTotalLength(), c = document.createElementNS(NS, "circle"), t0 = 0;
+        c.setAttribute("r", "9"); c.setAttribute("fill", "var(--flag)"); team.appendChild(c);
+        function step(now) {
+          if (!t0) t0 = now;
+          var q = cl((now - t0) / 1800), pt, e = io(q);
+          pt = e < 0.5 ? a.getPointAtLength((1 - e * 2) * la) : b2.getPointAtLength((e * 2 - 1) * lb);
+          c.setAttribute("cx", pt.x); c.setAttribute("cy", pt.y);
+          c.style.opacity = Math.min(1, q * 8, (1 - q) * 8);
+          if (q < 1) requestAnimationFrame(step); else c.remove();
+        }
+        requestAnimationFrame(step);
+      }
       add(team, function (p) {
-        var t = p * 5.2;
-        op($("#t-node"), seg(t, 0, 0.4));
-        // Beat 1: the team
-        op(th[0], seg(t, 0.3, 0.7)); op(ts[0], seg(t, 0.4, 0.8));
-        tl.forEach(function (el, i) { var s = 0.5 + i * 0.14; el.style.strokeDashoffset = 1 - io(seg(t, s, s + 0.5)); });
-        $$(".tl-t").forEach(function (el, i) { var s = 0.8 + i * 0.14; op(el, seg(t, s, s + 0.35)); });
-        // Beat 2: the clients
-        op(th[1], seg(t, 2.0, 2.4)); op(ts[1], seg(t, 2.1, 2.5));
-        tr[0].style.strokeDashoffset = 1 - io(seg(t, 2.1, 2.7));
-        // Beat 3: the approvers
-        op(th[2], seg(t, 3.0, 3.4)); op(ts[2], seg(t, 3.1, 3.5));
-        tr.slice(1).forEach(function (el, i) { var s = 3.1 + i * 0.2; el.style.strokeDashoffset = 1 - io(seg(t, s, s + 0.5)); });
-        $$(".tr-t").forEach(function (el, i) { var s = 3.4 + i * 0.2; op(el, seg(t, s, s + 0.35)); });
-        // Beat 4: the application moves through, everything arrives
-        dots.forEach(function (d) {
-          var u, vis;
-          if (d.inbound) { var s0 = 4.0 + d.i * 0.05; u = 1 - io(seg(t, s0, s0 + 0.6)); vis = seg(t, s0, s0 + 0.1) * (1 - seg(t, s0 + 0.55, s0 + 0.65)); }
-          else { var s1 = 4.4 + (d.i - tl.length) * 0.1; u = io(seg(t, s1, s1 + 0.5)); vis = seg(t, s1, s1 + 0.1) * (1 - seg(t, s1 + 0.45, s1 + 0.55)); }
-          var pt = d.path.getPointAtLength(u * d.len);
-          d.c.setAttribute("cx", pt.x); d.c.setAttribute("cy", pt.y); d.c.style.opacity = vis;
-        });
-        var ph = t < 0.8 ? -1 : t < 2.0 ? 0 : t < 3.0 ? 1 : t < 4.0 ? 2 : 3;
-        if (ph !== phase) { phase = ph; beats.forEach(function (el, i) { el.classList.toggle("lit", i <= ph); el.classList.toggle("now", i === ph); }); }
-      }, 0.6);
-
-      // Plays on its own clock once the diagram is on screen: no pinning, scrolling stays normal
+        var t = p * 4, n = io(seg(t, 0, 0.5));
+        node.style.opacity = n; node.style.transform = "scale(" + (0.85 + 0.15 * n) + ")";
+        gTeam.forEach(function (el, i) { slide(el, seg(t, 0.15 + i * 0.05, 0.85 + i * 0.05), -140, 0); });
+        tl.forEach(function (el, i) { el.style.strokeDashoffset = 1 - io(seg(t, 0.35 + i * 0.06, 1.05 + i * 0.06)); });
+        gCli.forEach(function (el) { slide(el, seg(t, 1.3, 2.0), 140, -50); });
+        tr[0].style.strokeDashoffset = 1 - io(seg(t, 1.3, 1.9));
+        gApp.forEach(function (el, i) { slide(el, seg(t, 2.0 + i * 0.06, 2.7 + i * 0.06), 140, 50); });
+        tr.slice(1).forEach(function (el, i) { el.style.strokeDashoffset = 1 - io(seg(t, 2.0 + i * 0.1, 2.6 + i * 0.1)); });
+        var ph = t < 0.9 ? -1 : t < 1.8 ? 0 : t < 2.6 ? 1 : t < 3.3 ? 2 : 3;
+        if (ph !== lit) { lit = ph; beats.forEach(function (el, i) { el.classList.toggle("lit", i <= ph); el.classList.toggle("now", i === ph); }); }
+        if (p > 0.995 && !sent && innerWidth > 800) { sent = true; sendDot(); }
+      });
+      // Starts as the diagram comes up and is finished when it sits in the middle of the screen
       var tsc = scenes[scenes.length - 1];
-      tsc.timed = 6000;
-      tsc.trigger = function () { var r = team.getBoundingClientRect(); return r.height > 0 && r.top < innerHeight * 0.55 && r.bottom > innerHeight * 0.2; };
+      tsc.startFor = function () { return 0.95; };
+      tsc.spanFor = function () { var h = team.getBoundingClientRect().height; return Math.max(0.3, 0.95 - (innerHeight - h) / 2 / innerHeight); };
     }
 
     // Tagline
