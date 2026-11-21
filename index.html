@@ -1076,6 +1076,7 @@ html { scroll-padding-top: 76px; }
       sc.pick = function () { return boxEl.getBoundingClientRect().top > countEl.getBoundingClientRect().bottom ? countEl : boxEl; };
       sc.spanFor = function (el) { return el === countEl ? 0.4 : 0.75; };
       sc.startFor = function (el) { return el === countEl ? 0.62 : 0.92; };
+      sc.timed = 2000;   // plays on its own clock once in view, so the count never lags behind the scroll
     }
 
     // How I work: one story. Team joins, clients, approvers, then the application moves through.
@@ -1136,6 +1137,11 @@ html { scroll-padding-top: 76px; }
     function frame() {
       raf = 0; var busy = false;
       scenes.forEach(function (s) {
+        if (s.timed) {
+          if (!s.t0 && target(s) > 0) s.t0 = performance.now();
+          var q = s.t0 ? cl((performance.now() - s.t0) / s.timed) : 0;
+          s.fn(q); if (q < 1 && s.t0) busy = true; return;
+        }
         var t = target(s);
         if (s.cur < 0) s.cur = t;
         var d = t - s.cur;
