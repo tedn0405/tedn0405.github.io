@@ -175,11 +175,12 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
 .t-lbl { font: 500 36px var(--f-body); fill: var(--ink); }
 .t-line { fill: none; stroke: var(--ink); stroke-width: 2.5; }
 .t-me { font: 800 60px var(--f-display); font-stretch: 78%; fill: var(--ink); }
+.t-cap { margin: 20px 0 0; min-height: 3.2em; font: 650 var(--s2) var(--f-body); color: var(--ink); transition: opacity 0.25s; }
 .team-lists { display: none; }
 .team-lists h3 { font-size: var(--s2); font-stretch: 80%; }
 .team-lists .t-flag-h { color: var(--flag); }
 .team-lists ul { margin: 10px 0 0; padding-left: 1.1rem; display: grid; gap: 4px; font-size: var(--s1); }
-@media (max-width: 800px) { .team svg { display: none; } .team-lists { display: grid; gap: 28px; } }
+@media (max-width: 800px) { .team svg, .t-cap { display: none; } .team-lists { display: grid; gap: 28px; } }
 
 /* Tagline */
 .tagline { background: var(--sheet); padding-block: clamp(96px, 18vw, 220px); text-align: center; }
@@ -1106,20 +1107,48 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
       sc.startFor = function (el) { return el === countEl ? 0.62 : 0.92; };
     }
 
-    // How I work: lines run out from the centre
+    // How I work: one story. Team joins, clients, approvers, then the application moves through.
     var team = $(".team svg");
     if (team) {
       $$(".t-line").forEach(function (el) { el.style.strokeDasharray = 1; });
-      var th = $$(".team .t-head"), ts = $$(".team .t-sub");
+      var th = $$(".team .t-head"), ts = $$(".team .t-sub"), tl = $$(".tl"), tr = $$(".tr");
+      var cap = document.createElement("p");
+      cap.className = "t-cap"; cap.setAttribute("aria-hidden", "true");
+      team.parentNode.insertBefore(cap, team.nextSibling);
+      var words = ["I work with internal and external teams", "to serve clients,", "and I coordinate with municipalities and Conservation Authorities", "so the application goes smoothly."];
+      var phase = -1;
+      var NS = "http://www.w3.org/2000/svg";
+      // One dot per line: it runs in from the team, then out to the clients and approvers.
+      var dots = tl.concat(tr).map(function (path, i) {
+        var c = document.createElementNS(NS, "circle");
+        c.setAttribute("r", "9"); c.setAttribute("fill", "var(--flag)"); c.style.opacity = 0;
+        team.appendChild(c);
+        return { c: c, path: path, len: path.getTotalLength(), inbound: i < tl.length, i: i };
+      });
       add(team, function (p) {
-        var t = p * 3;
+        var t = p * 5.2;
         op($("#t-node"), seg(t, 0, 0.4));
+        // Beat 1: the team
         op(th[0], seg(t, 0.3, 0.7)); op(ts[0], seg(t, 0.4, 0.8));
-        $$(".tl").forEach(function (el, i) { var s = 0.5 + i * 0.14; el.style.strokeDashoffset = 1 - io(seg(t, s, s + 0.5)); });
+        tl.forEach(function (el, i) { var s = 0.5 + i * 0.14; el.style.strokeDashoffset = 1 - io(seg(t, s, s + 0.5)); });
         $$(".tl-t").forEach(function (el, i) { var s = 0.8 + i * 0.14; op(el, seg(t, s, s + 0.35)); });
-        th.slice(1).forEach(function (el, i) { op(el, seg(t, 1.3 + i * 0.2, 1.7 + i * 0.2)); }); ts.slice(1).forEach(function (el, i) { op(el, seg(t, 1.4 + i * 0.2, 1.8 + i * 0.2)); });
-        $$(".tr").forEach(function (el, i) { var s = 1.5 + i * 0.14; el.style.strokeDashoffset = 1 - io(seg(t, s, s + 0.5)); });
-        $$(".tr-t").forEach(function (el, i) { var s = 1.8 + i * 0.14; op(el, seg(t, s, s + 0.35)); });
+        // Beat 2: the clients
+        op(th[1], seg(t, 2.0, 2.4)); op(ts[1], seg(t, 2.1, 2.5));
+        tr[0].style.strokeDashoffset = 1 - io(seg(t, 2.1, 2.7));
+        // Beat 3: the approvers
+        op(th[2], seg(t, 3.0, 3.4)); op(ts[2], seg(t, 3.1, 3.5));
+        tr.slice(1).forEach(function (el, i) { var s = 3.1 + i * 0.2; el.style.strokeDashoffset = 1 - io(seg(t, s, s + 0.5)); });
+        $$(".tr-t").forEach(function (el, i) { var s = 3.4 + i * 0.2; op(el, seg(t, s, s + 0.35)); });
+        // Beat 4: the application moves through, everything arrives
+        dots.forEach(function (d) {
+          var u, vis;
+          if (d.inbound) { var s0 = 3.9 + d.i * 0.08; u = 1 - io(seg(t, s0, s0 + 0.6)); vis = seg(t, s0, s0 + 0.1) * (1 - seg(t, s0 + 0.55, s0 + 0.65)); }
+          else { var s1 = 4.55 + (d.i - tl.length) * 0.1; u = io(seg(t, s1, s1 + 0.6)); vis = seg(t, s1, s1 + 0.1) * (1 - seg(t, s1 + 0.55, s1 + 0.65)); }
+          var pt = d.path.getPointAtLength(u * d.len);
+          d.c.setAttribute("cx", pt.x); d.c.setAttribute("cy", pt.y); d.c.style.opacity = vis;
+        });
+        var ph = t < 0.8 ? -1 : t < 2.0 ? 0 : t < 3.0 ? 1 : t < 3.9 ? 2 : 3;
+        if (ph !== phase) { phase = ph; cap.style.opacity = 0; setTimeout(function () { cap.textContent = ph < 0 ? "" : words.slice(0, ph + 1).join(" "); cap.style.opacity = 1; }, ph < 0 ? 0 : 120); }
       }, 0.6);
     }
 
