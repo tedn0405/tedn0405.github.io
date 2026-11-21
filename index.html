@@ -361,45 +361,70 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
   .tb > div:nth-child(3) { border-left: 0; }
   .tb > div:nth-child(n+3) { border-top: 1px solid var(--ink); }
 }
+
+/* Pinned top bar with the P.Eng. status */
+.topbar { position: sticky; top: 0; z-index: 40; }
+html { scroll-padding-top: 76px; }
+.topbar-id { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.peng-pill { display: inline-flex; align-items: center; gap: 8px; min-height: 32px; padding: 4px 12px; border: 1.5px solid var(--flag); border-radius: 999px; background: var(--flag-wash); color: var(--flag); font: 600 var(--s-1) var(--f-note); letter-spacing: 0.04em; text-transform: uppercase; cursor: pointer; }
+.peng-pill:hover, .peng-pill[aria-expanded="true"] { background: var(--flag); color: #fff; }
+.pp-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+@media (prefers-reduced-motion: no-preference) { .pp-dot { animation: ping 2.4s ease-in-out infinite; } }
+.peng-panel { border-top: 1px solid var(--line); background: var(--sheet); padding-block: 28px 32px; box-shadow: 0 18px 30px -18px rgba(0,0,0,0.35); max-height: calc(100vh - 70px); overflow: auto; }
+@media (max-width: 760px) { .topbar nav a:not(.nav-cta) { display: none; } .pp-long, .topbar-id .note { display: none; } .topbar .wrap { flex-wrap: nowrap; padding-block: 8px; } html { scroll-padding-top: 60px; } }
+
+/* Experience: a career line, oldest to now */
+.career { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; position: relative; }
+.career::before, .career::after { content: ""; position: absolute; top: 13px; left: 15px; height: 4px; border-radius: 2px; }
+.career::before { width: calc(75% + 18px); background: repeating-linear-gradient(90deg, var(--line) 0 10px, transparent 10px 14px); }
+.career::after { width: calc((75% + 18px) * var(--p, 1)); background: var(--pipe); }
+.career li { position: relative; z-index: 1; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.career .mh { margin-bottom: 8px; }
+.career .done .mh { background: var(--pipe); border-color: var(--pipe); }
+.career .now .mh { border-color: var(--flag); box-shadow: 0 0 0 5px var(--flag-wash); }
+.career .now .mh::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--flag); }
+.career .now .note { color: var(--flag); }
+@media (prefers-reduced-motion: no-preference) { .career .now .mh { animation: ping 2.4s ease-in-out infinite; } }
+.career strong { font-family: var(--f-display); font-stretch: 88%; font-size: 1.0625rem; line-height: 1.25; }
+.career .firm { color: var(--ink-soft); font-size: 0.9375rem; }
+.career p { font-size: 0.9375rem; line-height: 1.5; margin-top: 4px; padding-top: 10px; border-top: 1px solid var(--line); }
+@media (max-width: 760px) {
+  .career { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .career::before, .career::after { display: none; }
+  .career li { padding: 0 0 28px 46px; }
+  .career .mh { position: absolute; left: 0; top: 0; }
+  .career li:not(:last-child)::before { content: ""; position: absolute; left: 13px; top: 30px; bottom: 0; width: 4px; background: var(--pipe); border-radius: 2px; }
+}
+
+/* What I design: one section, two ponds */
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: -8px 0 28px; }
+.tabs [role="tab"] { min-height: 44px; padding: 8px 16px; border: 1.5px solid var(--ink); border-radius: 2px; background: transparent; color: var(--ink); font: 500 var(--s-1) var(--f-note); letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; }
+.tabs [role="tab"]:hover { border-color: var(--flag); color: var(--flag); }
+.tabs [aria-selected="true"], .tabs [aria-selected="true"]:hover { background: var(--ink); border-color: var(--ink); color: var(--sheet); }
+.pond-panel .sec-head h3 { font-size: var(--s2); font-weight: 750; font-stretch: 80%; line-height: 1.1; }
+
+/* Contact: the tagline closes the story */
+.close-line { padding-bottom: clamp(24px, 4vw, 48px); }
+.close-line .tag-line { font-size: clamp(2.5rem, 8vw, 6.5rem); }
+.close-line .tag-rule { margin: clamp(16px, 2vw, 28px) 0 0; }
 </style>
 </head>
 <body>
 <header class="topbar" id="top">
   <div class="wrap">
-    <span class="note">T. Ngui · Stormwater &amp; Water Resources</span>
+    <div class="topbar-id">
+      <span class="note">T. Ngui · Stormwater &amp; Water Resources</span>
+      <button class="peng-pill" type="button" aria-expanded="false" aria-controls="peng"><span class="pp-dot" aria-hidden="true"></span>P.Eng. 4 of 6<span class="pp-long"> · Under PEO review</span></button>
+    </div>
     <nav aria-label="Sections" data-theme-slot>
-      <a href="#peng">P.Eng.</a>
-      <a href="#work">Work</a>
       <a href="#experience">Experience</a>
-      <a href="#toolkit">Software</a>
+      <a href="#work">Work</a>
+      <a href="#design">Design</a>
       <a href="#research">Research</a>
-      <a href="#toolkit-swm">Free tools</a>
       <a class="nav-cta" href="#contact">Contact</a>
     </nav>
   </div>
-</header>
-
-<main>
-  <div class="hero">
-    <canvas id="plan" aria-hidden="true"></canvas>
-    <div class="wrap">
-      <span class="note">Ted Ngui, E.I.T. · Stormwater &amp; water resources · Ontario</span>
-      <h1>Hi, I am Ted.</h1>
-      <p class="lede">I lead land development and stormwater design on projects across Ontario.</p>
-      <p class="lede-more">I am a land development engineer focused on stormwater management and water resources. I design SWM systems for residential, industrial and commercial sites across the GTA, together with the grading, servicing and erosion and sediment control around them, and carry them through municipal and Conservation Authority approval.</p>
-      <div class="meta note">
-        <span class="stake">3+ years in Ontario land development</span>
-        <span class="stake">5.5+ years in engineering, Canada and U.S.</span>
-        <span class="stake">NPPE passed · P.Eng. application submitted</span>
-      </div>
-      <div class="hero-cta">
-        <a class="btn btn-solid" href="mailto:tedn0405@gmail.com">Email me</a>
-        <a class="btn" href="#work">See my work</a>
-      </div>
-    </div>
-  </div>
-
-  <section id="peng" aria-labelledby="peng-h">
+  <div class="peng-panel" id="peng" role="region" aria-labelledby="peng-h" hidden>
     <div class="wrap peng">
       <div class="peng-head">
         <div class="sec-head" style="margin-bottom:0">
@@ -418,7 +443,29 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
         <li><span class="mh" aria-hidden="true"><span>6</span></span><strong>P.Eng. licence</strong><small>Goal</small></li>
       </ol>
     </div>
-  </section>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <canvas id="plan" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <span class="note">Ted Ngui, E.I.T. · Stormwater &amp; water resources · Ontario</span>
+      <h1>Hi, I am Ted.</h1>
+      <p class="lede">I design stormwater, grading and servicing for land development across Ontario, with a background in water resources.</p>
+      <p class="lede-more">I take residential, industrial and commercial sites from concept through municipal and Conservation Authority approval.</p>
+      <div class="meta note">
+        <span class="stake">3+ years in Ontario land development</span>
+        <span class="stake">5.5+ years in engineering, Canada and U.S.</span>
+        <span class="stake">NPPE passed · P.Eng. application submitted</span>
+      </div>
+      <div class="hero-cta">
+        <a class="btn btn-solid" href="mailto:tedn0405@gmail.com">Email me</a>
+        <a class="btn" href="#work">See my work</a>
+      </div>
+    </div>
+  </div>
+
 
   <section id="skills" aria-labelledby="skills-h">
     <div class="wrap">
@@ -445,7 +492,7 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
             <g class="g-lbl" style="font-size:14px"><text x="230" y="140">181.50</text><text x="220" y="230" text-anchor="middle">CB 181.36</text><text x="56" y="220">181.61</text><text x="384" y="220" text-anchor="end">181.61</text></g>
             <g class="g-lbl g-pipe" style="font-size:14px"><text x="230" y="165">2.0%</text><text x="140" y="203" text-anchor="middle">1.5%</text><text x="300" y="203" text-anchor="middle">1.5%</text></g>
             <g transform="translate(450,60)"><path d="M0,-20 L7,5 L0,0 L-7,5 z" fill="var(--ink)"></path><text y="22" class="g-lbl g-strong" text-anchor="middle" style="font-size:14px">N</text></g>
-          </svg></div></div>
+          </svg></div><span class="note tools">AutoCAD Civil 3D · AutoCAD · AutoTURN</span></div>
         <div class="skill"><span class="note">02</span><h3>Servicing</h3><div class="draw">
           <svg viewBox="0 0 400 260" role="img" aria-label="Schematic servicing plan of a road right-of-way: watermain with valve and hydrant, storm sewer with maintenance holes and catchbasins, and sanitary sewer with maintenance holes.">
             <defs><marker id="s-flow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"></path></marker></defs>
@@ -469,7 +516,7 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
             <g class="g-lbl g-halo" text-anchor="middle" style="font-size:16px"><text x="110" y="160">MH1A</text><text x="290" y="160">MH2A</text></g>
             <text x="126" y="200" class="g-lbl g-strong g-halo" style="font-size:16px">200ø SAN @ 0.40%</text>
             <g fill="var(--pipe)"><path d="M276,103 L286,108 L276,113 z"></path></g><g fill="var(--ink)"><path d="M216,171 L226,176 L216,181 z"></path></g>
-          </svg></div></div>
+          </svg></div><span class="note tools">AutoCAD Civil 3D · InfoWater</span></div>
         <div class="skill big"><span class="note">03</span><h3>SWM design <em>and modelling</em></h3><div class="draw">
           <svg viewBox="0 0 600 260" role="img" aria-label="Schematic hydrograph: uncontrolled inflow peaks high and early; the controlled release peaks lower and later; the area between them is storage.">
             <path d="M50.0,222.0L55.9,221.7L61.6,220.7L67.2,219.1L72.6,216.9L77.8,214.2L82.9,210.9L87.8,207.2L92.6,203.1L97.3,198.5L101.9,193.6L106.3,188.3L110.7,182.7L114.9,176.8L119.1,170.7L123.1,164.4L127.1,157.9L131.0,151.3L134.9,144.6L138.7,137.8L142.5,131.0L146.2,124.2L149.9,117.4L153.6,110.7L157.3,104.1L160.9,97.6L164.6,91.3L168.3,85.2L171.9,79.3L175.6,73.7L179.4,68.4L183.1,63.5L187.0,58.9L190.8,54.8L194.8,51.1L198.8,47.8L202.8,45.1L207.0,42.9L211.2,41.3L215.6,40.3L220.0,40.0L224.4,40.3L228.8,41.2L233.0,42.6L237.2,44.5L241.3,46.9L245.4,49.8L249.4,53.1L253.4,56.8L257.3,60.8L261.2,65.2L265.2,69.9L269.1,74.9L273.1,80.2L277.1,85.7L281.2,91.4L285.3,97.2L289.5,103.2L293.7,109.3L298.1,115.5L302.5,121.8L307.1,128.0L311.7,134.3L316.6,140.5L321.5,146.7L325.0,150.0L324.0,150.0L317.7,150.1L311.4,150.5L305.2,151.2L298.9,152.0L292.6,153.1L286.4,154.4L280.1,155.8L273.8,157.5L267.5,159.3L261.2,161.2L254.9,163.3L248.6,165.6L242.2,167.9L235.8,170.3L229.4,172.8L222.9,175.3L216.5,178.0L209.9,180.6L203.4,183.3L196.8,186.0L190.1,188.7L183.4,191.4L176.6,194.0L169.8,196.7L162.9,199.2L155.9,201.7L148.9,204.1L141.8,206.4L134.7,208.7L127.4,210.8L120.1,212.7L112.7,214.5L105.2,216.2L97.6,217.6L89.9,218.9L82.1,220.0L74.3,220.8L66.3,221.5L58.2,221.9L50.0,222.0Z" id="h-stor" fill="var(--water-2)"></path>
@@ -482,9 +529,25 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
             <text x="60" y="22" class="g-lbl">Flow</text><text x="580" y="248" class="g-lbl" text-anchor="end">Time</text>
             <text x="50" y="248" class="g-lbl">SCHEMATIC</text>
           </svg></div>
-          <span class="note tools">PCSWMM · Visual OTTHYMO · MIDUSS · HEC-RAS</span></div>
+          <span class="note tools">PCSWMM · Visual OTTHYMO · MIDUSS · HEC-HMS · HEC-RAS · ArcGIS Pro</span></div>
       </div>
       <p class="note leading"><span class="stake">Now leading: grading, servicing and SWM design for a high-rise mixed-use site</span></p>
+    </div>
+  </section>
+
+  <section id="experience" aria-labelledby="exp-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="note">Experience</span>
+        <h2 id="exp-h">5.5+ years of engineering in Canada and the U.S.</h2>
+        <p>Full role details are on <a href="https://www.linkedin.com/in/yeudeckngui" target="_blank" rel="noopener">LinkedIn</a>.</p>
+      </div>
+      <ol class="career">
+        <li class="done"><span class="mh" aria-hidden="true"></span><span class="note">Austin, TX</span><strong>Environmental Engineering Specialist II</strong><span class="firm">Texas Commission on Environmental Quality</span><p>Wastewater pretreatment audits for 25 municipalities and 100+ permit reviews.</p></li>
+        <li class="done"><span class="mh" aria-hidden="true"></span><span class="note">Brampton, ON</span><strong>Municipal Design Engineer in Training</strong><span class="firm">Candevcon Group Inc.</span><p>Grading, servicing and SWM on 20+ site and subdivision developments.</p></li>
+        <li class="done"><span class="mh" aria-hidden="true"></span><span class="note">Mississauga, ON</span><strong>Engineering Assistant, Land Development</strong><span class="firm">R.J. Burnside and Associates</span><p>Sewer and SWM design on municipal water and wastewater infrastructure, and solid waste approvals.</p></li>
+        <li class="now"><span class="mh" aria-hidden="true"></span><span class="note">Burlington, ON · Now</span><strong>Intermediate Project Designer</strong><span class="firm">S. Llewellyn &amp; Associates Limited (SLA)</span><p>Grading, servicing, SWM and erosion and sediment control for site plans, through municipal approval.</p></li>
+      </ol>
     </div>
   </section>
 
@@ -544,12 +607,12 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
 
   <section id="map" aria-labelledby="map-h">
     <div class="wrap">
+      <div class="sec-head">
+        <span class="note">Project locations</span>
+        <h2 id="map-h">From Niagara to Killarney</h2>
+      </div>
       <div class="onmap">
         <div>
-          <div class="sec-head">
-            <span class="note">Project locations</span>
-            <h2 id="map-h">Across Ontario</h2>
-          </div>
           <div class="onmap-count"><b id="cnt">31</b><span>municipalities</span></div>
           <p class="note onmap-ca"><span class="stake">6 Regions · 3 Counties · Conservation Authorities across Ontario</span></p>
           <div class="groups"><div class="grp" data-r="Peel"><b>Peel Region</b><span>Brampton, Mississauga, Caledon (Belfountain, Inglewood)</span></div><div class="grp" data-r="Halton"><b>Halton Region</b><span>Oakville, Burlington, Halton Hills</span></div><div class="grp" data-r="York"><b>York Region</b><span>Markham, Vaughan, Richmond Hill</span></div><div class="grp" data-r="Durham"><b>Durham Region</b><span>Scugog (Port Perry), Whitby, Ajax, Pickering</span></div><div class="grp" data-r="Waterloo"><b>Region of Waterloo</b><span>Kitchener, Cambridge, Woolwich (Breslau)</span></div><div class="grp" data-r="Niagara"><b>Niagara Region</b><span>Grimsby, Welland</span></div><div class="grp" data-r="Wellington"><b>Wellington County</b><span>Centre Wellington (Elora, Fergus), Puslinch, Erin</span></div><div class="grp" data-r="Oxford"><b>Oxford County</b><span>Ingersoll</span></div><div class="grp" data-r="Simcoe"><b>Simcoe County</b><span>Wasaga Beach</span></div><div class="grp on"><b>Single-tier and other</b><span>Toronto (Etobicoke, North York), Hamilton, Guelph, Barrie, County of Brant, Orangeville, North Huron (Wingham), Killarney</span></div></div>
@@ -563,7 +626,15 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
     <div class="wrap">
       <div class="sec-head">
         <span class="note">What I design</span>
-        <h2 id="design-h">Anatomy of a wet pond</h2>
+        <h2 id="design-h">The ponds I size, grade and take through approval</h2>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Pond type">
+        <button type="button" role="tab" id="tab-wet" aria-controls="pond-wet" aria-selected="true">Wet pond</button>
+        <button type="button" role="tab" id="tab-dry" aria-controls="pond-dry" aria-selected="false" tabindex="-1">Dry pond · my preference</button>
+      </div>
+      <div class="pond-panel" id="pond-wet" role="tabpanel" aria-labelledby="tab-wet">
+      <div class="sec-head">
+        <h3 id="wet-h">Anatomy of a wet pond</h3>
         <p>A wet pond treats runoff, protects the receiving stream from erosion and controls peak flows, each with its own slice of storage. This is the kind of facility I size, grade and take through approval.</p>
       </div>
       <figure class="pond">
@@ -683,13 +754,9 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
         <figcaption>Schematic, not to scale. Depth, slope and freeboard values follow the province's <a href="https://www.ontario.ca/document/stormwater-management-planning-and-design-manual" target="_blank" rel="noopener">Stormwater Management Planning and Design Manual</a> (2003). Municipal and Conservation Authority criteria can be stricter.</figcaption>
       </figure>
     </div>
-  </section>
-
-  <section id="dry-pond" aria-labelledby="dry-h">
-    <div class="wrap">
+      <div class="pond-panel" id="pond-dry" role="tabpanel" aria-labelledby="tab-dry" hidden>
       <div class="sec-head">
-        <span class="note">My approach</span>
-        <h2 id="dry-h">Dry pond with a DICB outlet</h2>
+        <h3 id="dry-h">The pond I prefer to design: a dry pond with a DICB outlet</h3>
         <p>Where the site allows it, this is the facility I prefer to design. The pond drains completely between storms, and the outlet control sits in a standard ditch inlet catch basin at the toe of the slope, where a crew can inspect it from the surface.</p>
       </div>
       <figure class="pond">
@@ -789,7 +856,10 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
         <figcaption>Schematic, not to scale. Orifice size, weir dimensions and storage levels come from the storage-discharge design for each site and the governing municipal and Conservation Authority criteria.</figcaption>
       </figure>
     </div>
+    </div>
   </section>
+
+
 
   <section id="team" aria-labelledby="team-h">
     <div class="wrap">
@@ -802,88 +872,11 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
     </div>
   </section>
 
-  <section id="experience" aria-labelledby="exp-h">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="note">Experience</span>
-        <h2 id="exp-h">Where I have worked</h2>
-      </div>
-      <div class="timeline">
-        <div class="role">
-          <div class="when"><span class="note">Burlington, ON</span></div>
-          <div class="what">
-            <h3>Intermediate Project Designer</h3>
-            <span class="firm">S. Llewellyn &amp; Associates Limited (SLA)</span>
-            <ul>
-              <li>Lead grading, servicing, SWM and erosion and sediment control design for residential, industrial and commercial site plans, from concept through municipal approval.</li>
-              <li>Carry submissions through municipal and Conservation Authority review, working with reviewers to resolve comments.</li>
-              <li>Support designs with PCSWMM and Visual OTTHYMO modelling alongside Civil 3D, including subdivision road alignment work.</li>
-              <li>Designed a 200 mm gravity sanitary sewer connecting six homes on septic systems in Hamilton to municipal servicing, with no new lift station needed.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="role">
-          <div class="when"><span class="note">Mississauga, ON</span></div>
-          <div class="what">
-            <h3>Engineering Assistant, Land Development</h3>
-            <span class="firm">R.J. Burnside and Associates · Land Development and Solid Waste</span>
-            <ul>
-              <li>Prepared grading, servicing and utility drawings in Civil 3D, including subdivision road alignments, sewer network analysis, surcharge checks and MIDUSS modelling to resize and relocate a site-constrained pond.</li>
-              <li>Contributed sanitary and storm sewer design and SWM design on a major linear municipal water and wastewater replacement infrastructure project, applying PCSWMM for storm maintenance hole flood analysis and coordinating trunk sewer and conveyance system design to municipal standards.</li>
-              <li>Wrote functional servicing and SWM reports, cost estimates and permitting documents for municipal and Conservation Authority approval.</li>
-              <li>Supported watermain design and water supply analysis in InfoWater for a residential subdivision.</li>
-              <li>Co-authored proposals and fee estimates for two service lines, with a high win rate.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="role">
-          <div class="when"><span class="note">Brampton, ON</span></div>
-          <div class="what">
-            <h3>Municipal Design Engineer in Training</h3>
-            <span class="firm">Candevcon Group Inc. · Water Infrastructure Design and Planning</span>
-            <ul>
-              <li>Worked on 20+ site and subdivision developments, meeting pre-development peak flow targets with Visual OTTHYMO and Civil 3D.</li>
-              <li>Designed a driveway end to end using Civil 3D alignments and corridors, including cut-and-fill earthwork analysis and grading design.</li>
-              <li>Managed grading and servicing for multi-million-dollar high-density residential and mid-rise apartment site plans.</li>
-              <li>Prepared tender packages and cost estimates, and set up a drawing-control protocol after tracing a field discrepancy to version control.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="role">
-          <div class="when"><span class="note">Austin, TX</span></div>
-          <div class="what">
-            <h3>Environmental Engineering Specialist II</h3>
-            <span class="firm">Texas Commission on Environmental Quality · Wastewater/Pretreatment</span>
-            <ul>
-              <li>Led annual EPA risk-based audits for 25 municipalities, raising productivity 30% and cutting project duration 50%. Named Outstanding Employee.</li>
-              <li>Managed 13 pretreatment programs and reviewed 100+ wastewater permit applications.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="toolkit" aria-labelledby="kit-h">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="note">Toolkit</span>
-        <h2 id="kit-h">Software I design with</h2>
-      </div>
-      <div class="kit">
-        <div><span class="note">Design and drafting</span><ul><li>AutoCAD Civil 3D</li><li>Civil 3D alignments &amp; corridors</li><li>AutoCAD</li><li>AutoTURN</li></ul></div>
-        <div><span class="note">Hydrology and hydraulics</span><ul><li>PCSWMM</li><li>Visual OTTHYMO</li><li>MIDUSS</li><li>HEC-HMS</li><li>HEC-RAS</li></ul></div>
-        <div><span class="note">Water distribution</span><ul><li>InfoWater</li></ul></div>
-        <div><span class="note">GIS and analysis</span><ul><li>ArcGIS Pro</li><li>R</li></ul></div>
-      </div>
-    </div>
-  </section>
-
   <section id="research" aria-labelledby="res-h">
     <div class="wrap">
       <div class="sec-head">
         <span class="note">Research and credentials</span>
-        <h2 id="res-h">Background in water resources</h2>
+        <h2 id="res-h">Published research in flood risk</h2>
       </div>
       <div class="two">
         <div>
@@ -927,18 +920,6 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
     </div>
   </section>
 
-  <section id="toolkit-swm" aria-labelledby="swm-h">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="note">Free tools</span>
-        <h2 id="swm-h">Pipe flow and velocity calculator</h2>
-        <p>A pipe flow and velocity calculator I use in practice, based on Manning's equation, with an Excel version to download.</p>
-      </div>
-      <div class="contact-row">
-        <a class="btn" href="https://tedn0405.github.io/tools.html">Open the free tools →</a>
-      </div>
-    </div>
-  </section>
 
   <aside class="fact" aria-labelledby="fact-h">
     <div class="wrap">
@@ -948,26 +929,24 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
     </div>
   </aside>
 
-  <section class="tagline" aria-label="Tagline">
-    <div class="wrap">
-      <p class="tag-line">Resilience Through Design</p>
-      <div class="tag-rule"></div>
-    </div>
-  </section>
 
   <section id="contact" aria-labelledby="con-h">
     <div class="wrap contact">
+      <div class="close-line">
+        <p class="tag-line">Resilience through design.</p>
+        <div class="tag-rule"></div>
+      </div>
       <div class="sec-head" style="margin-bottom:0">
         <span class="note">Contact</span>
-        <h2 id="con-h">Get in touch</h2>
-        <p>Hiring for land development or water resources design in the GTA? I would like to hear from you. My resume is available on request.</p>
-        <p>I am based in Toronto and work across the GTA and surrounding municipalities.</p>
+        <h2 id="con-h">Let us talk land development and water resources.</h2>
+        <p>I would like to hear from you. I am based in Toronto and work across the GTA and surrounding municipalities.</p>
       </div>
       <div class="contact-row">
         <a class="btn btn-solid" href="mailto:tedn0405@gmail.com">Email me</a>
         <span class="email" id="email">tedn0405@gmail.com</span>
         <button class="btn" id="copy" type="button">Copy email</button>
         <a class="btn" href="https://www.linkedin.com/in/yeudeckngui" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn" href="/tools.html">Free pipe flow calculator →</a>
       </div>
     </div>
   </section>
@@ -1061,6 +1040,18 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
       }, 0.55);
     });
     $$(".leading").forEach(function (el) { add(el, function (p) { rise(el, seg(p, 0, 0.6), 16); }, 0.3); });
+
+
+    // Same reveal everywhere: headings and items rise in, items in a row follow left to right
+    $$("main section .sec-head, .tabs, .case, .career li, .entry, .contact-row, .close-line").forEach(function (el) {
+      add(el, function (p) {
+        if (el._c === undefined) { el._c = 0; var x = el.previousElementSibling; while (x) { if (x.offsetTop === el.offsetTop) el._c++; x = x.previousElementSibling; } }
+        var d = Math.min(el._c, 4) * 0.12; rise(el, seg(p, d, d + 0.6), 24);
+      }, 0.35);
+    });
+    var career = $(".career");
+    add(career, function (p) { career.style.setProperty("--p", io(seg(p, 0.15, 1))); }, 0.6);
+    window.__replay = function (el) { scenes.forEach(function (s) { if (el.contains(s.el)) s.cur = 0; }); kick(); };
 
     // Across Ontario: pins drop north to south and the count runs up
     var map = $(".onmap");
@@ -1157,6 +1148,36 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
     window.addEventListener("scroll", kick, { passive: true });
     window.addEventListener("resize", kick);
     kick();
+  })();
+
+
+  // P.Eng. status: the pill opens the full tracker
+  (function () {
+    var pill = document.querySelector(".peng-pill"), panel = document.getElementById("peng");
+    if (!pill || !panel) return;
+    function set(open) { pill.setAttribute("aria-expanded", open); panel.hidden = !open; }
+    pill.addEventListener("click", function (e) { e.stopPropagation(); set(panel.hidden); });
+    document.addEventListener("click", function (e) { if (!panel.hidden && !panel.contains(e.target)) set(false); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !panel.hidden) { set(false); pill.focus(); } });
+  })();
+
+  // Pond tabs
+  (function () {
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.tabs [role="tab"]'));
+    function pick(t) {
+      tabs.forEach(function (x) {
+        var on = x === t, p = document.getElementById(x.getAttribute("aria-controls"));
+        x.setAttribute("aria-selected", on); x.tabIndex = on ? 0 : -1; p.hidden = !on;
+        if (on && window.__replay) window.__replay(p);
+      });
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener("click", function () { pick(t); });
+      t.addEventListener("keydown", function (e) {
+        var j = e.key === "ArrowRight" ? i + 1 : e.key === "ArrowLeft" ? i - 1 : -9;
+        if (j !== -9) { var n = tabs[(j + tabs.length) % tabs.length]; pick(n); n.focus(); }
+      });
+    });
   })();
 
   // Copy email
