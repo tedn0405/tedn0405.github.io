@@ -177,7 +177,6 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
 .t-me { font: 800 60px var(--f-display); font-stretch: 78%; fill: var(--ink); }
 .t-cap { margin: 20px 0 0; min-height: 3.2em; font: 650 var(--s2) var(--f-body); color: var(--ink); transition: opacity 0.25s; }
 .team-lists { display: none; }
-.t-end { font: 650 var(--s1) var(--f-body); line-height: 1.35; padding-top: 20px; border-top: 2px solid var(--ink); }
 .team-lists h3 { font-size: var(--s2); font-stretch: 80%; }
 .team-lists .t-flag-h { color: var(--flag); }
 .team-lists ul { margin: 10px 0 0; padding-left: 1.1rem; display: grid; gap: 4px; font-size: var(--s1); }
@@ -418,6 +417,16 @@ html { scroll-padding-top: 76px; }
 .next-up { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-top: 8px; padding-top: 16px; border-top: 1px solid var(--line); }
 .next-up b { font-family: var(--f-display); font-stretch: 85%; font-weight: 750; font-size: var(--s1); }
 .next-up span:last-child { color: var(--ink-soft); }
+/* How I work: the four beats stay on screen and light up in order */
+.t-steps { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+.t-steps li { display: grid; gap: 8px; align-content: start; padding-top: 14px; border-top: 2px solid var(--ink); }
+.t-steps p { font: 600 1.0625rem/1.45 var(--f-body); color: var(--ink); }
+.t-steps li:last-child p { font-weight: 750; }
+.js-beats .t-steps li { opacity: 0.28; transition: opacity 0.5s, border-color 0.5s; }
+.js-beats .t-steps li.lit { opacity: 1; }
+.js-beats .t-steps li.now { border-top-color: var(--flag); }
+.js-beats .t-steps li.now .note { color: var(--flag); }
+@media (max-width: 800px) { .t-steps { grid-template-columns: minmax(0, 1fr); gap: 16px; } .js-beats .t-steps li { opacity: 1; } }
 </style>
 </head>
 <body>
@@ -880,7 +889,8 @@ html { scroll-padding-top: 76px; }
         <span class="note">How I work</span>
         <h2 id="team-h">I connect the team, the client and the approvers</h2>
       </div>
-      <div class="team"><svg viewBox="0 0 1640 600" role="img" aria-label="Diagram: Ted in the centre, coordinating with an internal and external project team (planning, architecture, landscape architecture, geotechnical, hydrogeological, mechanical, electrical), serving clients, and coordinating the application with municipalities and Regions and Conservation Authorities."><text x="560" y="40" text-anchor="end" class="t-head t-flag">Project team</text><text x="560" y="76" text-anchor="end" class="t-sub">INTERNAL AND EXTERNAL</text><path class="t-line tl" pathLength="1" d="M720,340 L640,340 L640,124 L580,124"></path><text class="t-lbl tl-t" x="560" y="135" text-anchor="end">Planning</text><path class="t-line tl" pathLength="1" d="M720,340 L640,340 L640,188 L580,188"></path><text class="t-lbl tl-t" x="560" y="199" text-anchor="end">Architecture</text><path class="t-line tl" pathLength="1" d="M720,340 L640,340 L640,252 L580,252"></path><text class="t-lbl tl-t" x="560" y="263" text-anchor="end">Landscape architecture</text><path class="t-line tl" pathLength="1" d="M720,340 L640,340 L640,316 L580,316"></path><text class="t-lbl tl-t" x="560" y="327" text-anchor="end">Geotechnical</text><path class="t-line tl" pathLength="1" d="M720,340 L640,340 L640,380 L580,380"></path><text class="t-lbl tl-t" x="560" y="391" text-anchor="end">Hydrogeological</text><path class="t-line tl" pathLength="1" d="M720,340 L640,340 L640,444 L580,444"></path><text class="t-lbl tl-t" x="560" y="455" text-anchor="end">Mechanical</text><path class="t-line tl" pathLength="1" d="M720,340 L640,340 L640,508 L580,508"></path><text class="t-lbl tl-t" x="560" y="519" text-anchor="end">Electrical</text><text x="1080" y="110" class="t-head">Clients</text><text x="1080" y="146" class="t-sub">I SERVE</text><path class="t-line tr" pathLength="1" d="M920,340 L1000,340 L1000,95 L1060,95"></path><text x="1080" y="300" class="t-head">Approvers</text><text x="1080" y="336" class="t-sub">I COORDINATE THE APPLICATION</text><path class="t-line tr" pathLength="1" d="M920,340 L1000,340 L1000,400 L1060,400"></path><text class="t-lbl tr-t" x="1080" y="411">Municipalities and Regions</text><path class="t-line tr" pathLength="1" d="M920,340 L1000,340 L1000,464 L1060,464"></path><text class="t-lbl tr-t" x="1080" y="475">Conservation Authorities</text><g id="t-node"><rect x="720" y="280" width="200" height="120" fill="var(--sheet)" stroke="var(--ink)" stroke-width="4"></rect><rect x="742" y="330" width="20" height="20" fill="var(--flag)" transform="rotate(45 752 340)"></rect><text x="784" y="360" class="t-me">Ted</text></g></svg> <div class="team-lists"><div><h3 class="t-flag-h">Project team</h3><span class="note">Internal and external</span><ul><li>Planning</li><li>Architecture</li><li>Landscape architecture</li><li>Geotechnical</li><li>Hydrogeological</li><li>Mechanical</li><li>Electrical</li></ul></div><div><h3>Clients</h3><span class="note">I serve</span></div><div><h3>Approvers</h3><span class="note">I coordinate the application</span><ul><li>Municipalities and Regions</li><li>Conservation Authorities</li></ul></div><p class="t-end">I take the application from concept through municipal approval.</p></div></div>
+      <div class="team"><svg viewBox="0 0 1640 600" role="img" aria-label="Diagram: Ted in the centre, coordinating with an internal and external project team (planning, architecture, landscape architecture, geotechnical, hydrogeological, mechanical, electrical), serving clients, and coordinating the application with municipalities and Regions and Conservation Authorities."><text x="560" y="40" text-anchor="end" class="t-head t-flag">Project team</text><text x="560" y="76" text-anchor="end" class="t-sub">INTERNAL AND EXTERNAL</text><path class="t-line tl" pathLength="1" d="M720,340 L640,340 L640,124 L580,124"></path><text class="t-lbl tl-t" x="560" y="135" text-anchor="end">Planning</text><path class="t-line tl" pathLength="1" d="M720,340 L640,340 L640,188 L580,188"></path><text class="t-lbl tl-t" x="560" y="199" text-anchor="end">Architecture</text><path class="t-line tl" pathLength="1" d="M720,340 L640,340 L640,252 L580,252"></path><text class="t-lbl tl-t" x="560" y="263" text-anchor="end">Landscape architecture</text><path class="t-line tl" pathLength="1" d="M720,340 L640,340 L640,316 L580,316"></path><text class="t-lbl tl-t" x="560" y="327" text-anchor="end">Geotechnical</text><path class="t-line tl" pathLength="1" d="M720,340 L640,340 L640,380 L580,380"></path><text class="t-lbl tl-t" x="560" y="391" text-anchor="end">Hydrogeological</text><path class="t-line tl" pathLength="1" d="M720,340 L640,340 L640,444 L580,444"></path><text class="t-lbl tl-t" x="560" y="455" text-anchor="end">Mechanical</text><path class="t-line tl" pathLength="1" d="M720,340 L640,340 L640,508 L580,508"></path><text class="t-lbl tl-t" x="560" y="519" text-anchor="end">Electrical</text><text x="1080" y="110" class="t-head">Clients</text><text x="1080" y="146" class="t-sub">I SERVE</text><path class="t-line tr" pathLength="1" d="M920,340 L1000,340 L1000,95 L1060,95"></path><text x="1080" y="300" class="t-head">Approvers</text><text x="1080" y="336" class="t-sub">I COORDINATE THE APPLICATION</text><path class="t-line tr" pathLength="1" d="M920,340 L1000,340 L1000,400 L1060,400"></path><text class="t-lbl tr-t" x="1080" y="411">Municipalities and Regions</text><path class="t-line tr" pathLength="1" d="M920,340 L1000,340 L1000,464 L1060,464"></path><text class="t-lbl tr-t" x="1080" y="475">Conservation Authorities</text><g id="t-node"><rect x="720" y="280" width="200" height="120" fill="var(--sheet)" stroke="var(--ink)" stroke-width="4"></rect><rect x="742" y="330" width="20" height="20" fill="var(--flag)" transform="rotate(45 752 340)"></rect><text x="784" y="360" class="t-me">Ted</text></g></svg> <div class="team-lists"><div><h3 class="t-flag-h">Project team</h3><span class="note">Internal and external</span><ul><li>Planning</li><li>Architecture</li><li>Landscape architecture</li><li>Geotechnical</li><li>Hydrogeological</li><li>Mechanical</li><li>Electrical</li></ul></div><div><h3>Clients</h3><span class="note">I serve</span></div><div><h3>Approvers</h3><span class="note">I coordinate the application</span><ul><li>Municipalities and Regions</li><li>Conservation Authorities</li></ul></div></div></div>
+      <ol class="t-steps"><li><span class="note">01</span><p>I bring the internal and external team together.</p></li><li><span class="note">02</span><p>I serve the client.</p></li><li><span class="note">03</span><p>I coordinate the application with the municipality and the Conservation Authority.</p></li><li><span class="note">04</span><p>I take the application from concept through municipal approval.</p></li></ol>
     </div>
   </section>
 
@@ -1097,10 +1107,8 @@ html { scroll-padding-top: 76px; }
     if (team) {
       $$(".t-line").forEach(function (el) { el.style.strokeDasharray = 1; });
       var th = $$(".team .t-head"), ts = $$(".team .t-sub"), tl = $$(".tl"), tr = $$(".tr");
-      var cap = document.createElement("p");
-      cap.className = "t-cap"; cap.setAttribute("aria-hidden", "true");
-      team.parentNode.insertBefore(cap, team.nextSibling);
-      var words = ["I bring the internal and external team together.", "I serve the client.", "I coordinate the application with the municipality and the Conservation Authority.", "I take the application from concept through municipal approval."];
+      var beats = $$(".t-steps li");
+      if (innerWidth > 800) $(".team").parentNode.classList.add("js-beats");
       var phase = -1;
       var NS = "http://www.w3.org/2000/svg";
       // One dot per line: it runs in from the team, then out to the clients and approvers.
@@ -1133,29 +1141,13 @@ html { scroll-padding-top: 76px; }
           d.c.setAttribute("cx", pt.x); d.c.setAttribute("cy", pt.y); d.c.style.opacity = vis;
         });
         var ph = t < 0.8 ? -1 : t < 2.0 ? 0 : t < 3.0 ? 1 : t < 4.0 ? 2 : 3;
-        if (ph !== phase) { phase = ph; cap.style.opacity = 0; setTimeout(function () { cap.textContent = ph < 0 ? "" : words[ph]; cap.style.opacity = 1; }, ph < 0 ? 0 : 120); }
+        if (ph !== phase) { phase = ph; beats.forEach(function (el, i) { el.classList.toggle("lit", i <= ph); el.classList.toggle("now", i === ph); }); }
       }, 0.6);
 
-      // Pin the diagram while the story plays, when the screen is wide and tall enough to hold it
-      var tsec = $("#team"), twrap = tsec.querySelector(".wrap"), tsc = scenes[scenes.length - 1];
-      function pinTeam() {
-        tsec.style.height = ""; twrap.style.position = ""; twrap.style.top = "";
-        var bar = $(".topbar").offsetHeight, h = twrap.offsetHeight, room = innerHeight - bar;
-        tsc.pinned = innerWidth > 800 && h < room - 20;
-        if (!tsc.pinned) return;
-        var pad = parseFloat(getComputedStyle(tsec).paddingTop), top = bar + (room - h) / 2;
-        twrap.style.position = "sticky"; twrap.style.top = top + "px";
-        tsec.style.height = (h + 2 * pad + innerHeight * 1.8) + "px";
-        tsc.geo = { top: top, pad: pad, h: h };
-      }
-      tsc.pick = function () { return tsc.pinned ? tsec : team; };
-      tsc.startFor = function () { return tsc.pinned ? (tsc.geo.top - tsc.geo.pad + innerHeight * 0.25) / innerHeight : 0.92; };
-      tsc.spanFor = function () {
-        if (!tsc.pinned) return 0.6;
-        var end = tsc.geo.top + tsc.geo.h + tsc.geo.pad - tsec.offsetHeight;   // section top when the pin lets go
-        return (innerHeight * tsc.startFor() - end) / innerHeight;
-      };
-      pinTeam(); window.addEventListener("resize", pinTeam);
+      // Plays on its own clock once the diagram is on screen: no pinning, scrolling stays normal
+      var tsc = scenes[scenes.length - 1];
+      tsc.timed = 6000;
+      tsc.trigger = function () { var r = team.getBoundingClientRect(); return r.height > 0 && r.top < innerHeight * 0.55 && r.bottom > innerHeight * 0.2; };
     }
 
     // Tagline
