@@ -1115,7 +1115,7 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
       var cap = document.createElement("p");
       cap.className = "t-cap"; cap.setAttribute("aria-hidden", "true");
       team.parentNode.insertBefore(cap, team.nextSibling);
-      var words = ["I work with internal and external teams", "to serve clients,", "and I coordinate with municipalities and Conservation Authorities", "so the application goes smoothly."];
+      var words = ["I bring the internal and external team together.", "I serve the client.", "I coordinate the application with the municipality and the Conservation Authority.", "I take the application from concept through municipal approval."];
       var phase = -1;
       var NS = "http://www.w3.org/2000/svg";
       // One dot per line: it runs in from the team, then out to the clients and approvers.
@@ -1148,7 +1148,7 @@ section { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--
           d.c.setAttribute("cx", pt.x); d.c.setAttribute("cy", pt.y); d.c.style.opacity = vis;
         });
         var ph = t < 0.8 ? -1 : t < 2.0 ? 0 : t < 3.0 ? 1 : t < 3.9 ? 2 : 3;
-        if (ph !== phase) { phase = ph; cap.style.opacity = 0; setTimeout(function () { cap.textContent = ph < 0 ? "" : words.slice(0, ph + 1).join(" "); cap.style.opacity = 1; }, ph < 0 ? 0 : 120); }
+        if (ph !== phase) { phase = ph; cap.style.opacity = 0; setTimeout(function () { cap.textContent = ph < 0 ? "" : words[ph]; cap.style.opacity = 1; }, ph < 0 ? 0 : 120); }
       }, 0.6);
     }
 
